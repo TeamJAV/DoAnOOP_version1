@@ -6,7 +6,7 @@ import javax.persistence.*;
 @Table(name = "invoice_detail")
 public class InvoiceDetailEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(nullable = false, length = 10)
@@ -27,13 +27,22 @@ public class InvoiceDetailEntity {
     @JoinColumn(name = "selling_invoice")
     private SellingInvoiceEntity sellingInvoice;
 
+    protected InvoiceDetailEntity() {
+    }
+
+    public InvoiceDetailEntity(int quantity, Long price){
+        this.quantity = quantity;
+        this.price = price;
+
+    }
+
     public Integer getId() {
         return id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+//    public void setId(Integer id) {
+//        this.id = id;
+//    }
 
     public Integer getQuantity() {
         return quantity;
@@ -75,6 +84,5 @@ public class InvoiceDetailEntity {
         this.sellingInvoice = sellingInvoice;
     }
 
-    public InvoiceDetailEntity() {
-    }
+
 }

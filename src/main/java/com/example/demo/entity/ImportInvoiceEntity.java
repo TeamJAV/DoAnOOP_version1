@@ -2,13 +2,14 @@ package com.example.demo.entity;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
 @Table(name = "import_invoice")
 public class ImportInvoiceEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name = "total_cost", length = 19, nullable = false)
@@ -21,9 +22,9 @@ public class ImportInvoiceEntity {
         return id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+//    public void setId(Integer id) {
+//        this.id = id;
+//    }
 
     public Long getTotalCost() {
         return totalCost;
@@ -41,6 +42,10 @@ public class ImportInvoiceEntity {
         this.productBatches = productBatches;
     }
 
-    public ImportInvoiceEntity() {
+    protected ImportInvoiceEntity() {
+    }
+
+    public ImportInvoiceEntity(Long totalCost){
+        this.totalCost = totalCost;
     }
 }

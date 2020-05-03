@@ -10,7 +10,7 @@ import java.util.List;
 @Table(name = "products")
 public class ProductsEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column( unique = true, nullable = false, length = 100)
@@ -22,13 +22,21 @@ public class ProductsEntity {
     @OneToMany(mappedBy = "products")
     private List<ProductBatchesEntity> productBatches = new ArrayList<>();
 
+    protected ProductsEntity() {
+    }
+
+    public ProductsEntity(String name, Long price) {
+        this.name = name;
+        this.price = price;
+    }
+
     public Integer getId() {
         return id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+//    public void setId(Integer id) {
+//        this.id = id;
+//    }
 
     public String getName() {
         return name;
@@ -54,6 +62,4 @@ public class ProductsEntity {
         this.productBatches = productBatches;
     }
 
-    public ProductsEntity() {
-    }
 }

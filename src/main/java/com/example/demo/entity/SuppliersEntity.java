@@ -11,7 +11,7 @@ import java.util.List;
 public class SuppliersEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(nullable = false, length = 50)
@@ -26,6 +26,14 @@ public class SuppliersEntity {
     @OneToMany(mappedBy = "suppliers")
     private List<ProductBatchesEntity> productBatches = new ArrayList<>();
 
+    protected SuppliersEntity(){}
+
+    public SuppliersEntity(String name, String phoneNumber, String address){
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+        this.address = address;
+    }
+
     public List<ProductBatchesEntity> getProductBatches() {
         return productBatches;
     }
@@ -37,7 +45,6 @@ public class SuppliersEntity {
     public Integer getId() {
         return id;
     }
-
 
     public String getName() {
         return name;
