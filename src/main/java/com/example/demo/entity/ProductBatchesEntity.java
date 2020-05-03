@@ -13,13 +13,14 @@ public class ProductBatchesEntity {
     private String sku;
 
     @Column(name = "import_date", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date importDate;
 
     @Column(name = "expired_date", nullable = false)
     private Date expiredDate;
 
     @Column(nullable = false, length = 10)
-    private Integer quantity;
+    private int quantity;
 
     @Column(name = "import_cost", length = 20)
     private Long importCost;
@@ -38,6 +39,16 @@ public class ProductBatchesEntity {
 
     @OneToMany(mappedBy = "productBatches")
     private List<InvoiceDetailEntity> invoiceDetail = new ArrayList<>();
+
+    protected ProductBatchesEntity() {
+    }
+
+    public ProductBatchesEntity(Date importDate, Date expiredDate, int quantity, Long importCost) {
+        this.importDate = importDate;
+        this.expiredDate = expiredDate;
+        this.quantity = quantity;
+        this.importCost = importCost;
+    }
 
     public SuppliersEntity getSuppliers() {
         return suppliers;
@@ -111,7 +122,5 @@ public class ProductBatchesEntity {
         this.invoiceDetail = invoiceDetail;
     }
 
-    public ProductBatchesEntity() {
-    }
 
 }

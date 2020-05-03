@@ -9,23 +9,18 @@ import java.util.List;
 @Table(name = "selling_invoice")
 public class SellingInvoiceEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name = "total_price", nullable = false, length = 19)
     private Long totalPrice;
 
+    @Column
     private Float discount;
 
+    @Column
+    @Temporal(TemporalType.TIMESTAMP)
     private Date date;
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
 
     @OneToMany(mappedBy = "sellingInvoice")
     private List<InvoiceDetailEntity> invoiceDetail = new ArrayList<>();
@@ -33,13 +28,23 @@ public class SellingInvoiceEntity {
     @OneToMany(mappedBy = "sellingInvoice")
     private List<RefundInvoiceEntity> refundInvoice = new ArrayList<>();
 
+    public SellingInvoiceEntity(Long totalPrice, Float discount, Date date) {
+        this.totalPrice = totalPrice;
+        this.discount = discount;
+        this.date = date;
+    }
+
+    protected SellingInvoiceEntity() {
+
+    }
+
     public Integer getId() {
         return id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+//    public void setId(Integer id) {
+//        this.id = id;
+//    }
 
     public Long getTotalPrice() {
         return totalPrice;
@@ -55,6 +60,14 @@ public class SellingInvoiceEntity {
 
     public void setDiscount(Float discount) {
         this.discount = discount;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public List<InvoiceDetailEntity> getInvoiceDetail() {
@@ -73,6 +86,4 @@ public class SellingInvoiceEntity {
         this.refundInvoice = refundInvoice;
     }
 
-    public SellingInvoiceEntity() {
-    }
 }

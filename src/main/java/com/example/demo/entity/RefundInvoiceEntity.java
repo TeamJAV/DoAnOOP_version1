@@ -9,10 +9,11 @@ import java.util.List;
 @Table(name = "refund_invoice")
 public class RefundInvoiceEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date date;
 
     private String note;
@@ -24,13 +25,21 @@ public class RefundInvoiceEntity {
     @JoinColumn(name = "selling_invoice_id")
     private SellingInvoiceEntity sellingInvoice = new SellingInvoiceEntity();
 
+    protected RefundInvoiceEntity() {
+    }
+
+    public RefundInvoiceEntity(Date date, String note) {
+        this.date = date;
+        this.note = note;
+    }
+
     public Integer getId() {
         return id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+//    public void setId(Integer id) {
+//        this.id = id;
+//    }
 
     public Date getDate() {
         return date;
@@ -64,6 +73,4 @@ public class RefundInvoiceEntity {
         this.sellingInvoice = sellingInvoice;
     }
 
-    public RefundInvoiceEntity() {
-    }
 }
