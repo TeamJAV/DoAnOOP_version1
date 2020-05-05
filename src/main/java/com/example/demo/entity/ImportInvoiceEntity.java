@@ -12,10 +12,10 @@ public class ImportInvoiceEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "total_cost", length = 19, nullable = false)
+    @Column(name = "total_cost", length = 19)
     private Long totalCost;
 
-    @OneToMany(mappedBy = "importInvoice")
+    @OneToMany(mappedBy = "importInvoice", cascade = CascadeType.ALL)
     private List<ProductBatchesEntity> productBatches = new ArrayList<>();
 
     public Integer getId() {

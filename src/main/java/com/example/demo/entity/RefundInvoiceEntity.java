@@ -1,5 +1,7 @@
 package com.example.demo.entity;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -12,20 +14,21 @@ public class RefundInvoiceEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false)
+    @Column
     @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date date;
 
     private String note;
 
-    @OneToMany(mappedBy = "refundInvoice")
+    @OneToMany(mappedBy = "refundInvoice",cascade = CascadeType.ALL)
     private List<InvoiceDetailEntity> invoiceDetail = new ArrayList<>();
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "selling_invoice_id")
     private SellingInvoiceEntity sellingInvoice = new SellingInvoiceEntity();
 
-    protected RefundInvoiceEntity() {
+    public RefundInvoiceEntity() {
     }
 
     public RefundInvoiceEntity(Date date, String note) {
@@ -37,9 +40,9 @@ public class RefundInvoiceEntity {
         return id;
     }
 
-//    public void setId(Integer id) {
-//        this.id = id;
-//    }
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public Date getDate() {
         return date;

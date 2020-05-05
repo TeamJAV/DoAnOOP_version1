@@ -9,21 +9,21 @@ public class InvoiceDetailEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false, length = 10)
+    @Column(length = 10)
     private Integer quantity;
 
-    @Column(nullable = false, length = 20)
+    @Column(length = 20)
     private Long price;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "sku")
     private ProductBatchesEntity productBatches;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "refund_invoice_id")
     private RefundInvoiceEntity refundInvoice;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "selling_invoice")
     private SellingInvoiceEntity sellingInvoice;
 

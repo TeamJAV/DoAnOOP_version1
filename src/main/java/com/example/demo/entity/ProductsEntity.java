@@ -13,13 +13,13 @@ public class ProductsEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column( unique = true, nullable = false, length = 100)
+    @Column( unique = true, length = 100)
     private  String name;
 
-    @Column(length = 19, nullable = false)
+    @Column(length = 19)
     private Long price;
 
-    @OneToMany(mappedBy = "products")
+    @OneToMany(mappedBy = "products", cascade = CascadeType.ALL)
     private List<ProductBatchesEntity> productBatches = new ArrayList<>();
 
     protected ProductsEntity() {

@@ -12,32 +12,32 @@ public class ProductBatchesEntity {
     @Column(unique = true, nullable = false, length = 12)
     private String sku;
 
-    @Column(name = "import_date", nullable = false)
+    @Column(name = "import_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date importDate;
 
-    @Column(name = "expired_date", nullable = false)
+    @Column(name = "expired_date")
     private Date expiredDate;
 
-    @Column(nullable = false, length = 10)
+    @Column(length = 10)
     private int quantity;
 
     @Column(name = "import_cost", length = 20)
     private Long importCost;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "supplier_id")
     private SuppliersEntity suppliers;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "products_id")
     private ProductsEntity products;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "import_Invoice_id")
     private ImportInvoiceEntity importInvoice;
 
-    @OneToMany(mappedBy = "productBatches")
+    @OneToMany(mappedBy = "productBatches", cascade = CascadeType.ALL)
     private List<InvoiceDetailEntity> invoiceDetail = new ArrayList<>();
 
     protected ProductBatchesEntity() {

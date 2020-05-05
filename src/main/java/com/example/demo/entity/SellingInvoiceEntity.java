@@ -12,7 +12,7 @@ public class SellingInvoiceEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "total_price", nullable = false, length = 19)
+    @Column(name = "total_price", length = 19)
     private Long totalPrice;
 
     @Column
@@ -22,10 +22,10 @@ public class SellingInvoiceEntity {
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
 
-    @OneToMany(mappedBy = "sellingInvoice")
+    @OneToMany(mappedBy = "sellingInvoice", cascade = CascadeType.ALL)
     private List<InvoiceDetailEntity> invoiceDetail = new ArrayList<>();
 
-    @OneToMany(mappedBy = "sellingInvoice")
+    @OneToMany(mappedBy = "sellingInvoice", cascade = CascadeType.ALL)
     private List<RefundInvoiceEntity> refundInvoice = new ArrayList<>();
 
     public SellingInvoiceEntity(Long totalPrice, Float discount, Date date) {

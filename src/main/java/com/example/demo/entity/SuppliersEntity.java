@@ -14,16 +14,16 @@ public class SuppliersEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false, length = 50)
+    @Column(length = 50)
     private String name;
 
-    @Column(name = "phone_number", unique = true, length = 12, nullable = false)
+    @Column(name = "phone_number", unique = true, length = 12)
     private String phoneNumber;
 
-    @Column(unique = true, nullable = false, length = 100)
+    @Column(unique = true, length = 100)
     private String address;
 
-    @OneToMany(mappedBy = "suppliers")
+    @OneToMany(mappedBy = "suppliers",cascade = CascadeType.ALL)
     private List<ProductBatchesEntity> productBatches = new ArrayList<>();
 
     protected SuppliersEntity(){}
