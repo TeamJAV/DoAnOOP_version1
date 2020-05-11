@@ -1,5 +1,7 @@
 package com.example.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 
 @Entity
@@ -17,14 +19,17 @@ public class InvoiceDetailEntity {
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "sku")
+    @JsonIgnoreProperties("invoiceDetail")
     private ProductBatchesEntity productBatches;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "refund_invoice_id")
+    @JsonIgnoreProperties("invoiceDetail")
     private RefundInvoiceEntity refundInvoice;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "selling_invoice")
+    @JsonIgnoreProperties("invoiceDetail")
     private SellingInvoiceEntity sellingInvoice;
 
     protected InvoiceDetailEntity() {

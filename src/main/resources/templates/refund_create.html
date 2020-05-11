@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <title>create refund invoice</title>
+    <script>
+        function new_product() {
+            const table = document.getElementById("table_product");
+            const product_list = document.getElementById("product_list");
+            const product_select = product_list.options[product_list.selectedIndex].value;
+            const quantity = document.getElementById("quantity").value;
+            const lent = table.rows.length;
+            const row = table.insertRow(lent);
+            const cell_stt = row.insertCell(0);
+            const cell_sp = row.insertCell(1);
+            const cell_sl = row.insertCell(2);
+            const cell_dg = row.insertCell(3);
+            const cell_tt = row.insertCell(4);
+            const cell_cs = row.insertCell(5);
+            cell_stt.innerHTML = lent;
+            cell_sp.innerHTML = product_select;
+            cell_sl.innerHTML = quantity;
+            cell_dg.innerHTML = product_select;
+            cell_tt.innerHTML = "value";
+            cell_cs.innerHTML = "<button type='button' onclick = 'deleteRow(this)'>Xoa</button>";
+
+        }
+        function deleteRow(btn) {
+            var row = btn.parentNode.parentNode;
+            row.parentNode.removeChild(row);
+        }
+    </script>
+</head>
+<body>
+<div>
+    <h1>Tạo hóa đơn trả lại</h1>
+    <br />
+    <h3 th:text="'Tham chiếu từ hóa đơn ' + ${selling_invoice.id}"></h3>
+    <form>
+        <label>Sản phẩm</label>
+        <select id="product_list">
+            <option value="none" selected disabled hidden>Lựa chọn mã sản phẩm</option>
+            <option th:each="product : ${selling_invoice.getInvoiceDetail()}"
+                    th:value="${product.getProductBatches().getProducts().getName()}"
+                    th:text="${product.getProductBatches().getSku()}+'  ' +${product.getProductBatches().getProducts().getName()}"></option>
+        </select>
+        <label>Số lượng</label>
+        <input type="number" id="quantity">
+        <button type="button" onclick="new_product()">Thêm</button>
+    </form>
+    <hr>
+    <form th:action="@{'/save/refund/'+ ${selling_invoice.id}}" th:object="${refund}" method="post">
+            <table id="table_product" border="1">
+                <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Sản phẩm</th>
+                            <th>Số lượng</th>
+                            <th>Đơn giá</th>
+                            <th>Thành tiền</th>
+                            <th>Chỉnh sửa</th>
+                        </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <input th:field="${selling_invoice.invoiceDetail}">
+                    </tr>
+                </tbody>
+            </table>
+            <p>Ghi chú:</p>
+            <textarea rows="4" cols="50" th:field="*{note}">Nhập ghi chú....</textarea>
+                <hr>
+            <button type="submit">Lưu thay đổi</button>
+    </form>
+</div>
+</body>

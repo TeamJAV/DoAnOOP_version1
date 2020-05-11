@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/main_layout}">
+<head>
+    <title>Tìm kiếm Hóa đơn</title>
+</head>
+<body>
+
+<div layout:fragment="content" class="container mySpace">
+    <form action="/refund" class="form-inline">
+        <div class="form-group mb-2">
+            <input type="text" class="form-control" name="ID" placeholder="Nhập mã hóa đơn" />
+            <input type="submit" value="Tìm kiếm"  class="btn btn-primary"/>
+        </div>
+    </form>
+
+
+    <div th:if="${selling_invoice}">
+        Mã hóa đơn:<p th:text="${selling_invoice.id}">Text</p>
+        <p>Thời gian:<p th:text="${selling_invoice.date}">Text
+        <p>Khuyến mại:</p> <p th:text="${selling_invoice.discount}">Text</p>
+        <p>Tổng số tiền:</p><p th:text="${selling_invoice.totalPrice}">Text</p>
+
+        <table>
+            <thead>
+            <tr>
+                <th>Mã hàng</th>
+                <th>Tên sản phẩm</th>
+                <th>Số lượng</th>
+                <th>Thành tiền</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="product: ${detail}">
+                <td th:text="${product.productBatches.sku}"></td>
+                <td th:text="${product.productBatches.getProducts().getName()}"></td>
+                <td th:text="${product.quantity}"></td>
+                <td th:text="${product.price}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <div th:if="${message}">
+            <p th:text="${message}"></p>
+        </div>
+        <div th:if="${message} == null">
+                <form th:action="@{'/create/refund/'+ ${selling_invoice.id}}">
+                    <button type="submit">Tao phieu tra hang</button>
+                </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

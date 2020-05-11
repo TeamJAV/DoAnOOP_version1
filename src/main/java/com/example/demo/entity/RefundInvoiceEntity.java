@@ -1,5 +1,7 @@
 package com.example.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.annotations.Cascade;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -11,7 +13,7 @@ import java.util.List;
 @Table(name = "refund_invoice")
 public class RefundInvoiceEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     @Column
@@ -22,10 +24,12 @@ public class RefundInvoiceEntity {
     private String note;
 
     @OneToMany(mappedBy = "refundInvoice",cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("refundInvoice")
     private List<InvoiceDetailEntity> invoiceDetail = new ArrayList<>();
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "selling_invoice_id")
+    @JsonIgnoreProperties("refundInvoice")
     private SellingInvoiceEntity sellingInvoice = new SellingInvoiceEntity();
 
     public RefundInvoiceEntity() {
