@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
@@ -24,6 +25,7 @@ public class SuppliersEntity {
     private String address;
 
     @OneToMany(mappedBy = "suppliers")
+    @JsonIgnoreProperties("suppliers")
     private List<ProductBatchesEntity> productBatches = new ArrayList<>();
 
     protected SuppliersEntity(){}

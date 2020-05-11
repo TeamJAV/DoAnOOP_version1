@@ -1,5 +1,7 @@
 package com.example.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -16,6 +18,7 @@ public class ImportInvoiceEntity {
     private Long totalCost;
 
     @OneToMany(mappedBy = "importInvoice")
+    @JsonIgnoreProperties("importInvoice")
     private List<ProductBatchesEntity> productBatches = new ArrayList<>();
 
     public Integer getId() {

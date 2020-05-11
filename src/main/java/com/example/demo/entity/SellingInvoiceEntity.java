@@ -1,5 +1,7 @@
 package com.example.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -23,9 +25,11 @@ public class SellingInvoiceEntity {
     private Date date;
 
     @OneToMany(mappedBy = "sellingInvoice")
+    @JsonIgnoreProperties("sellingInvoice")
     private List<InvoiceDetailEntity> invoiceDetail = new ArrayList<>();
 
     @OneToMany(mappedBy = "sellingInvoice")
+    @JsonIgnoreProperties("sellingInvoice")
     private List<RefundInvoiceEntity> refundInvoice = new ArrayList<>();
 
     public SellingInvoiceEntity(Long totalPrice, Float discount, Date date) {

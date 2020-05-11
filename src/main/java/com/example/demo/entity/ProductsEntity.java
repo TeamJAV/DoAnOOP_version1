@@ -1,5 +1,9 @@
 package com.example.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
@@ -20,6 +24,7 @@ public class ProductsEntity {
     private Long price;
 
     @OneToMany(mappedBy = "products")
+    @JsonIgnoreProperties("products")
     private List<ProductBatchesEntity> productBatches = new ArrayList<>();
 
     protected ProductsEntity() {

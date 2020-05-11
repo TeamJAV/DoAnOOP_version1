@@ -1,5 +1,7 @@
 package com.example.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -27,17 +29,21 @@ public class ProductBatchesEntity {
 
     @ManyToOne
     @JoinColumn(name = "supplier_id")
+    @JsonIgnoreProperties("productBatches")
     private SuppliersEntity suppliers;
 
     @ManyToOne
     @JoinColumn(name = "products_id")
+    @JsonIgnoreProperties("productBatches")
     private ProductsEntity products;
 
     @ManyToOne
     @JoinColumn(name = "import_Invoice_id")
+    @JsonIgnoreProperties("productBatches")
     private ImportInvoiceEntity importInvoice;
 
     @OneToMany(mappedBy = "productBatches")
+    @JsonIgnoreProperties("productBatches")
     private List<InvoiceDetailEntity> invoiceDetail = new ArrayList<>();
 
     protected ProductBatchesEntity() {
@@ -121,6 +127,5 @@ public class ProductBatchesEntity {
     public void setInvoiceDetail(List<InvoiceDetailEntity> invoiceDetail) {
         this.invoiceDetail = invoiceDetail;
     }
-
 
 }
