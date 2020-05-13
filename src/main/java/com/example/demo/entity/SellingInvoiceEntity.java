@@ -1,6 +1,6 @@
 package com.example.demo.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -9,6 +9,9 @@ import java.util.List;
 
 @Entity
 @Table(name = "selling_invoice")
+//@JsonIdentityInfo(
+//        generator = ObjectIdGenerators.PropertyGenerator.class,
+//        property = "id")
 public class SellingInvoiceEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,11 +28,15 @@ public class SellingInvoiceEntity {
     private Date date;
 
     @OneToMany(mappedBy = "sellingInvoice", cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("sellingInvoice")
+//    @JsonIgnoreProperties("sellingInvoice")
+//    @JsonBackReference
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "sellingInvoice"})
     private List<InvoiceDetailEntity> invoiceDetail = new ArrayList<>();
 
     @OneToMany(mappedBy = "sellingInvoice", cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("sellingInvoice")
+//    @JsonIgnoreProperties("sellingInvoice")
+//    @JsonBackReference
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "sellingInvoice"})
     private List<RefundInvoiceEntity> refundInvoice = new ArrayList<>();
 
     public SellingInvoiceEntity(Long totalPrice, Float discount, Date date) {

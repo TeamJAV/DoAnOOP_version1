@@ -1,6 +1,6 @@
 package com.example.demo.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -9,6 +9,9 @@ import java.util.List;
 
 @Entity
 @Table(name = "product_batches")
+//@JsonIdentityInfo(
+//        generator = ObjectIdGenerators.PropertyGenerator.class,
+//        property = "sku")
 public class ProductBatchesEntity {
     @Id
     @Column(unique = true, nullable = false, length = 12)
@@ -29,22 +32,46 @@ public class ProductBatchesEntity {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "supplier_id")
-    @JsonIgnoreProperties("productBatches")
+//    @JsonIgnoreProperties("productBatches")
+//    @JsonManagedReference
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "productBatches"})
     private SuppliersEntity suppliers;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "products_id")
-    @JsonIgnoreProperties("productBatches")
+//    @JsonIgnoreProperties("productBatches")
+//    @JsonManagedReference
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "productBatches"})
     private ProductsEntity products;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("productBatches")
+//    @JsonIgnoreProperties("productBatches")
     @JoinColumn(name = "import_Invoice_id")
+//    @JsonManagedReference
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "productBatches"})
     private ImportInvoiceEntity importInvoice;
 
     @OneToMany(mappedBy = "productBatches", cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("productBatches")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "productBatches"})
+//    @JsonIgnoreProperties("productBatches")
+    @JsonBackReference
     private List<InvoiceDetailEntity> invoiceDetail = new ArrayList<>();
+
+    @OneToMany(mappedBy = "productBatches", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "productBatches"})
+    private List<RefundInvoiceDetailEntity> refundInvoiceDetail;
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public List<RefundInvoiceDetailEntity> getRefundInvoiceDetail() {
+        return refundInvoiceDetail;
+    }
+
+    public void setRefundInvoiceDetail(List<RefundInvoiceDetailEntity> refundInvoiceDetail) {
+        this.refundInvoiceDetail = refundInvoiceDetail;
+    }
 
     protected ProductBatchesEntity() {
     }

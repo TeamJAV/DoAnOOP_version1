@@ -1,6 +1,6 @@
 package com.example.demo.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.*;
 import org.hibernate.annotations.Cascade;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -11,6 +11,9 @@ import java.util.List;
 
 @Entity
 @Table(name = "refund_invoice")
+//@JsonIdentityInfo(
+//        generator = ObjectIdGenerators.PropertyGenerator.class,
+//        property = "id")
 public class RefundInvoiceEntity {
     @Id
 //    @GeneratedValue(strategy = GenerationType.AUTO)
@@ -23,13 +26,17 @@ public class RefundInvoiceEntity {
 
     private String note;
 
-    @OneToMany(mappedBy = "refundInvoice",cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("refundInvoice")
-    private List<InvoiceDetailEntity> invoiceDetail = new ArrayList<>();
+//    @OneToMany(mappedBy = "refundInvoice",cascade = CascadeType.ALL)
+////    @JsonIgnoreProperties("refundInvoice")
+////    @JsonBackReference
+//    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "refundInvoice"})
+//    private List<InvoiceDetailEntity> invoiceDetail = new ArrayList<>();
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "selling_invoice_id")
-    @JsonIgnoreProperties("refundInvoice")
+//    @JsonIgnoreProperties("refundInvoice")
+//    @JsonManagedReference
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "refundInvoice"})
     private SellingInvoiceEntity sellingInvoice = new SellingInvoiceEntity();
 
     public RefundInvoiceEntity() {
@@ -64,13 +71,13 @@ public class RefundInvoiceEntity {
         this.note = note;
     }
 
-    public List<InvoiceDetailEntity> getInvoiceDetail() {
-        return invoiceDetail;
-    }
-
-    public void setInvoiceDetail(List<InvoiceDetailEntity> invoiceDetail) {
-        this.invoiceDetail = invoiceDetail;
-    }
+//    public List<InvoiceDetailEntity> getInvoiceDetail() {
+//        return invoiceDetail;
+//    }
+//
+//    public void setInvoiceDetail(List<InvoiceDetailEntity> invoiceDetail) {
+//        this.invoiceDetail = invoiceDetail;
+//    }
 
     public SellingInvoiceEntity getSellingInvoice() {
         return sellingInvoice;

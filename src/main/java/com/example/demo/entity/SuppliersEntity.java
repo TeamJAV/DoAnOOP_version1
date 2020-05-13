@@ -1,12 +1,16 @@
 package com.example.demo.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.*;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "Suppliers")
+//@JsonIdentityInfo(
+//        generator = ObjectIdGenerators.PropertyGenerator.class,
+//        property = "id")
 public class SuppliersEntity {
 
     @Id
@@ -23,7 +27,9 @@ public class SuppliersEntity {
     private String address;
 
     @OneToMany(mappedBy = "suppliers",cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("suppliers")
+//    @JsonIgnoreProperties("suppliers")
+//    @JsonBackReference
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "suppliers"})
     private List<ProductBatchesEntity> productBatches = new ArrayList<>();
 
     protected SuppliersEntity(){}

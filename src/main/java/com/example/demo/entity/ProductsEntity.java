@@ -1,6 +1,6 @@
 package com.example.demo.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -10,6 +10,9 @@ import java.util.List;
 
 @Entity
 @Table(name = "products")
+//@JsonIdentityInfo(
+//        generator = ObjectIdGenerators.PropertyGenerator.class,
+//        property = "id")
 public class ProductsEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +25,9 @@ public class ProductsEntity {
     private Long price;
 
     @OneToMany(mappedBy = "products", cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("products")
+//    @JsonIgnoreProperties("products")
+//    @JsonBackReference
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "products"})
     private List<ProductBatchesEntity> productBatches = new ArrayList<>();
 
     protected ProductsEntity() {
