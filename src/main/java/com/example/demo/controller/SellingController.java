@@ -65,4 +65,11 @@ public class SellingController {
         return new ResponseEntity<List<InvoiceDetailEntity>>(invoiceDetailService.findAll(), HttpStatus.OK);
     }
 
+    @RequestMapping(
+            value = "/findAllInvoice",
+            method = RequestMethod.GET)
+    public ResponseEntity<List<SellingInvoiceEntity>> findAllInvoice () {
+        return new ResponseEntity<List<SellingInvoiceEntity>>(sellingInvoiceService.findAll(), HttpStatus.OK);
+    }
+
 }
