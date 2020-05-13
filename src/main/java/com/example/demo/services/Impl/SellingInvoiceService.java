@@ -16,4 +16,5 @@ public class SellingInvoiceService implements ISellingInvoice {
 
     public SellingInvoiceEntity findByID(Integer id){ return sellingInvoiceRepository.findById(id).orElse(null);}
     public void save(SellingInvoiceEntity sellingInvoiceEntity){ sellingInvoiceRepository.save(sellingInvoiceEntity);}
+    public List<SellingInvoiceEntity> findList(){ return  sellingInvoiceRepository.findAll();}
 }
