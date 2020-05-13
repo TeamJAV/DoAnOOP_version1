@@ -1,0 +1,21 @@
+.container {
+  margin: 0 auto;
+  width: 100%;
+}
+
+.change-quantity div {
+  display: inline-block;
+  text-align: center;
+}
+
+.change-quantity .value-button{
+  width: 33%;
+}
+
+.change-quantity .quantity-value{
+  width: 33%;
+}
+
+.discount,.total-price {
+  text-align: right;
+}
