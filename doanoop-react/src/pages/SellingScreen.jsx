@@ -31,7 +31,7 @@ export default class SellingScreen extends Component {
     const index = this.state.invoiceDetail.findIndex((e) => {
       return e.sku === sku;
     });
-    console.log(index)
+    console.log(index);
     return index;
   };
 
@@ -40,6 +40,14 @@ export default class SellingScreen extends Component {
       return quantity + 1;
     } else {
       return quantity - 1;
+    }
+  }
+
+  isArrayNull(arr) {
+    if (arr && arr.length > 0) {
+      return false;
+    } else {
+      return true;
     }
   }
 
@@ -128,7 +136,7 @@ export default class SellingScreen extends Component {
   handleSelectResult = (event) => {
     const sku = event.currentTarget.dataset.sku;
     if (this.findIndexOfDetail(sku) !== -1) {
-      this.updateQuantity(sku, true)
+      this.updateQuantity(sku, true);
       return;
     }
     const result = this.state.searchResults.find((e) => {
@@ -181,43 +189,99 @@ export default class SellingScreen extends Component {
     this.updateQuantity(sku, true);
   };
 
-  renderInvoiceResult() {
-    if (this.state.invoiceDetail && this.state.invoiceDetail.length > 0) {
-      let detail = this.state.invoiceDetail.map((result) => {
-        return (
-          <tr key={result.sku} data-sku={result.sku}>
-            <th scope="row">{result.sku}</th>
-            <td>{result.name}</td>
-            <td data-remain={result.remain}>{result.remain}</td>
-            <td className="change-quantity">
-              <div
-                className="value-button decrease"
-                onClick={this.handleDecreaseValue}
-                value="Decrease Value"
-              >
-                -
-              </div>
-              <div className="quantity-value" data-quantity={result.quantity}>
-                {result.quantity}
-              </div>
-              <div
-                className="value-button increase"
-                onClick={this.handleIncreaseValue}
-                value="Increase Value"
-              >
-                +
-              </div>
-            </td>
-            <td>{result.unitPrice}</td>
-            <td>{result.price}</td>
-            <td onClick={this.handleDeleteDetail}>Xóa</td>
-          </tr>
-        );
+  handleOpenModal = (event) => {
+    if (this.isArrayNull(this.state.invoiceDetail)) {
+      return;
+    }
+    let date = new Date();
+    const urlSelling = "http://localhost:8081/saveSellingInvoice";
+    const urlDetail = "http://localhost:8081/saveInvoiceDetail";
+    fetch(urlSelling, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        date: date.getTime(),
+        totalPrice: this.state.totalPrice,
+        discount: this.state.discount,
+      }),
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        let invoiceDetail = [...this.state.invoiceDetail];
+        invoiceDetail.forEach((detail) => {
+          detail.sellingInvoice = {
+            id: data.id,
+          };
+          detail.productBatches = {
+            sku: detail.sku
+          };
+          delete detail.sku;
+          delete detail.name;
+          delete detail.unitPrice;
+          delete detail.remain;
+        });
+        fetch(urlDetail, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(invoiceDetail),
+        })
+          .then((res) => {
+            return res.json();
+          })
+          .then((data) => {
+            console.log(data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      })
+      .catch((err) => {
+        console.log(err);
       });
-      return detail;
-    } else {
+  };
+
+  renderInvoiceResult() {
+    if (this.isArrayNull(this.state.invoiceDetail)) {
       return null;
     }
+    let detail = this.state.invoiceDetail.map((result) => {
+      return (
+        <tr key={result.sku} data-sku={result.sku}>
+          <th scope="row">{result.sku}</th>
+          <td>{result.name}</td>
+          <td data-remain={result.remain}>{result.remain}</td>
+          <td className="change-quantity">
+            <div
+              className="value-button decrease"
+              onClick={this.handleDecreaseValue}
+              value="Decrease Value"
+            >
+              -
+            </div>
+            <div className="quantity-value" data-quantity={result.quantity}>
+              {result.quantity}
+            </div>
+            <div
+              className="value-button increase"
+              onClick={this.handleIncreaseValue}
+              value="Increase Value"
+            >
+              +
+            </div>
+          </td>
+          <td>{result.unitPrice}</td>
+          <td>{result.price}</td>
+          <td onClick={this.handleDeleteDetail}>Xóa</td>
+        </tr>
+      );
+    });
+    return detail;
   }
 
   renderSearchResults() {
@@ -279,6 +343,8 @@ export default class SellingScreen extends Component {
           </div>
           <h4 className="discount">Giảm giá: {this.state.discount}</h4>
           <h2 className="total-price">Thành tiền: {this.state.totalPrice}</h2>
+          <button>Hủy bỏ</button>
+          <button onClick={this.handleOpenModal}>Thanh toán</button>
         </div>
       </div>
     );
