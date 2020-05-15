@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
@@ -21,13 +22,14 @@ public class RefundInvoiceEntity {
     private String note;
 
     @OneToMany(mappedBy = "refundInvoice")
+//    @JsonIgnoreProperties("refundInvoice")
     @JsonIgnoreProperties("refundInvoice")
     private List<InvoiceDetailEntity> invoiceDetail = new ArrayList<>();
 
-    @ManyToOne
-    @JoinColumn(name = "selling_invoice_id")
-    @JsonIgnoreProperties("refundInvoice")
-    private SellingInvoiceEntity sellingInvoice = new SellingInvoiceEntity();
+//    @ManyToOne
+//    @JoinColumn(name = "selling_invoice_id")
+//    @JsonBackReference
+//    private SellingInvoiceEntity sellingInvoice = new SellingInvoiceEntity();
 
     protected RefundInvoiceEntity() {
     }
@@ -69,12 +71,12 @@ public class RefundInvoiceEntity {
         this.invoiceDetail = invoiceDetail;
     }
 
-    public SellingInvoiceEntity getSellingInvoice() {
-        return sellingInvoice;
-    }
-
-    public void setSellingInvoice(SellingInvoiceEntity sellingInvoice) {
-        this.sellingInvoice = sellingInvoice;
-    }
+//    public SellingInvoiceEntity getSellingInvoice() {
+//        return sellingInvoice;
+//    }
+//
+//    public void setSellingInvoice(SellingInvoiceEntity sellingInvoice) {
+//        this.sellingInvoice = sellingInvoice;
+//    }
 
 }

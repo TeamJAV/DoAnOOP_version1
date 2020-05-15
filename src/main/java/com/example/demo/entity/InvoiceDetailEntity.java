@@ -1,11 +1,13 @@
 package com.example.demo.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "invoice_detail")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class InvoiceDetailEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,11 +26,13 @@ public class InvoiceDetailEntity {
 
     @ManyToOne
     @JoinColumn(name = "refund_invoice_id")
+//    @JsonIgnoreProperties("invoiceDetail")
     @JsonIgnoreProperties("invoiceDetail")
     private RefundInvoiceEntity refundInvoice;
 
     @ManyToOne
     @JoinColumn(name = "selling_invoice")
+//    @JsonIgnoreProperties("invoiceDetail")
     @JsonIgnoreProperties("invoiceDetail")
     private SellingInvoiceEntity sellingInvoice;
 

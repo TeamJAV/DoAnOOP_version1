@@ -9,6 +9,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "product_batches")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ProductBatchesEntity {
     @Id
     @Column(unique = true, nullable = false, length = 12)
