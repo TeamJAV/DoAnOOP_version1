@@ -9,6 +9,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "product_batches")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ProductBatchesEntity {
     @Id
     @Column(unique = true, nullable = false, length = 12)
@@ -23,6 +24,9 @@ public class ProductBatchesEntity {
 
     @Column(nullable = false, length = 10)
     private int quantity;
+
+    @Column(nullable = false, length = 10)
+    private int importQuantity;
 
     @Column(name = "import_cost", length = 20)
     private Long importCost;
@@ -94,6 +98,14 @@ public class ProductBatchesEntity {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+    }
+
+    public Integer getImportQuantity() {
+        return importQuantity;
+    }
+
+    public void setImportQuantity(Integer importQuantity) {
+        this.importQuantity = importQuantity;
     }
 
     public Long getImportCost() {
