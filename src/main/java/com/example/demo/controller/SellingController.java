@@ -29,8 +29,7 @@ public class SellingController {
 
     @RequestMapping(
             value = "/find-sku/{sku}",
-            method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE)
+            method = RequestMethod.GET)
     public ResponseEntity<List<ProductBatchesEntity>> viewListProducts (@PathVariable String sku) {
         List<ProductBatchesEntity> listProductBatches = productBatchesService.findBySKU(sku);
         return new ResponseEntity<>(listProductBatches, HttpStatus.OK);
@@ -73,5 +72,4 @@ public class SellingController {
     public ResponseEntity<List<SellingInvoiceEntity>> findAllInvoice () {
         return new ResponseEntity<>(sellingInvoiceService.findAll(), HttpStatus.OK);
     }
-
 }
