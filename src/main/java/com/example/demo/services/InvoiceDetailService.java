@@ -1,9 +1,7 @@
 package com.example.demo.services;
 
 import com.example.demo.entity.InvoiceDetailEntity;
-import com.example.demo.entity.SellingInvoiceEntity;
 import com.example.demo.repository.InvoiceDetailRepository;
-import com.example.demo.repository.SellingInvoiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
