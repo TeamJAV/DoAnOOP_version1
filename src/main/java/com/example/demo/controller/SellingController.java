@@ -41,7 +41,7 @@ public class SellingController {
             method = RequestMethod.POST)
     public ResponseEntity<SellingInvoiceEntity> saveSellingInvoice (@RequestBody SellingInvoiceEntity reqSellingInvoice) {
         SellingInvoiceEntity resSellingInvoice = sellingInvoiceService.save(reqSellingInvoice);
-        return new ResponseEntity<SellingInvoiceEntity>(resSellingInvoice, HttpStatus.OK);
+        return new ResponseEntity<>(resSellingInvoice, HttpStatus.OK);
     }
 
     @RequestMapping(
@@ -49,29 +49,29 @@ public class SellingController {
             method = RequestMethod.POST)
     public ResponseEntity<List<InvoiceDetailEntity>> saveInvoiceDetail (@RequestBody List<InvoiceDetailEntity> reqInvoiceDetail) {
 
-        List<InvoiceDetailEntity> resInvoiceDetail = new ArrayList<InvoiceDetailEntity>();
+        List<InvoiceDetailEntity> resInvoiceDetail = new ArrayList<>();
 
         if (reqInvoiceDetail == null) {
-            return new ResponseEntity<List<InvoiceDetailEntity>>(resInvoiceDetail, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(resInvoiceDetail, HttpStatus.BAD_REQUEST);
         }
         for (InvoiceDetailEntity E : reqInvoiceDetail) {
             resInvoiceDetail.add(invoiceDetailService.save((E)));
         }
-        return new ResponseEntity<List<InvoiceDetailEntity>>(resInvoiceDetail, HttpStatus.OK);
+        return new ResponseEntity<>(resInvoiceDetail, HttpStatus.OK);
     }
 
     @RequestMapping(
             value = "/findAllDetail",
             method = RequestMethod.GET)
     public ResponseEntity<List<InvoiceDetailEntity>> findAllDetail () {
-        return new ResponseEntity<List<InvoiceDetailEntity>>(invoiceDetailService.findAll(), HttpStatus.OK);
+        return new ResponseEntity<>(invoiceDetailService.findAll(), HttpStatus.OK);
     }
 
     @RequestMapping(
             value = "/findAllInvoice",
             method = RequestMethod.GET)
     public ResponseEntity<List<SellingInvoiceEntity>> findAllInvoice () {
-        return new ResponseEntity<List<SellingInvoiceEntity>>(sellingInvoiceService.findAll(), HttpStatus.OK);
+        return new ResponseEntity<>(sellingInvoiceService.findAll(), HttpStatus.OK);
     }
 
 }
