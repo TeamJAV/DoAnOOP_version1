@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 import "../style/css/sellingScreen.css";
+import NavigationBar from "../components/NavigationBar";
+import ConfirmModal from "../components/ConfirmModal";
+import { Button } from "react-bootstrap";
 
 export default class SellingScreen extends Component {
   constructor(props) {
@@ -8,16 +11,14 @@ export default class SellingScreen extends Component {
       skuValue: "",
       searchResults: [],
       didSearch: false,
+      tempPrice: 0,
       totalPrice: 0,
       discount: 0,
       invoiceDetail: [],
+      showModal: false,
+      modalType: "",
     };
-    this.baseState = this.state;
   }
-
-  resetState = () => {
-    this.setState(this.baseState);
-  };
 
   resetSearch = () => {
     this.setState({
@@ -31,7 +32,6 @@ export default class SellingScreen extends Component {
     const index = this.state.invoiceDetail.findIndex((e) => {
       return e.sku === sku;
     });
-    console.log(index);
     return index;
   };
 
@@ -63,7 +63,6 @@ export default class SellingScreen extends Component {
     }
 
     const newQuantity = this.changeQuantity(type, quantity);
-    console.log(newQuantity);
     const newPrice = unitPrice * newQuantity;
     detail[index] = {
       ...detail[index],
@@ -82,17 +81,14 @@ export default class SellingScreen extends Component {
 
   updateTotalPrice = () => {
     let total = 0;
-    console.log(total);
     if (this.state.invoiceDetail && this.state.invoiceDetail.length > 0) {
       this.state.invoiceDetail.map((result) => {
         return (total += parseFloat(result.price));
       });
     }
-    if (this.state.discount > 0) {
-      total -= total * this.state.discount;
-    }
     this.setState({
       totalPrice: total,
+      tempPrice: total - total * this.state.discount,
     });
   };
 
@@ -108,7 +104,6 @@ export default class SellingScreen extends Component {
         didSearch: false,
       },
       () => {
-        console.log(this.state);
         const url = `http://localhost:8081/find-sku/${this.state.skuValue}`;
         fetch(url, {
           method: "GET",
@@ -167,7 +162,6 @@ export default class SellingScreen extends Component {
       invoiceDetail.findIndex((e) => e.sku === sku),
       1
     );
-    console.log(invoiceDetail);
     this.setState(
       {
         totalPrice: 0,
@@ -189,64 +183,85 @@ export default class SellingScreen extends Component {
     this.updateQuantity(sku, true);
   };
 
-  handleOpenModal = (event) => {
+  handleToggleModal = () => {
+    if (this.isArrayNull(this.state.invoiceDetail)) {
+      return;
+    }
+    this.setState(
+      {
+        modalType: "selling-confirm",
+        showModal: !this.state.showModal,
+      }
+    );
+  };
+
+  handleSaveInvoice = (event) => {
     if (this.isArrayNull(this.state.invoiceDetail)) {
       return;
     }
     let date = new Date();
     const urlSelling = "http://localhost:8081/saveSellingInvoice";
     const urlDetail = "http://localhost:8081/saveInvoiceDetail";
-    fetch(urlSelling, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
+    this.setState(
+      {
+        modalType: "selling-fetching",
       },
-      body: JSON.stringify({
-        date: date.getTime(),
-        totalPrice: this.state.totalPrice,
-        discount: this.state.discount,
-      }),
-    })
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
-        let invoiceDetail = [...this.state.invoiceDetail];
-        invoiceDetail.forEach((detail) => {
-          detail.sellingInvoice = {
-            id: data.id,
-          };
-          detail.productBatches = {
-            sku: detail.sku
-          };
-          delete detail.sku;
-          delete detail.name;
-          delete detail.unitPrice;
-          delete detail.remain;
-        });
-        fetch(urlDetail, {
+      () => {
+        fetch(urlSelling, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(invoiceDetail),
+          body: JSON.stringify({
+            date: date.getTime(),
+            totalPrice: this.state.totalPrice,
+            discount: this.state.discount,
+          }),
         })
           .then((res) => {
             return res.json();
           })
           .then((data) => {
-            console.log(data);
+            let invoiceDetail = [...this.state.invoiceDetail];
+            invoiceDetail.forEach((detail) => {
+              detail.sellingInvoice = {
+                id: data.id,
+              };
+              detail.productBatches = {
+                sku: detail.sku,
+              };
+            });
+            fetch(urlDetail, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(invoiceDetail),
+            })
+              .then((res) => {
+                return res.json();
+              })
+              .then((data) => {
+                this.setState({
+                  modalType: "selling-success",
+                });
+              })
+              .catch((err) => {
+                this.setState({
+                  modalType: "selling-failure",
+                });
+              });
           })
           .catch((err) => {
-            console.log(err);
+            this.setState({
+              modalType: "selling-failure",
+            });
           });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      }
+    );
   };
 
-  renderInvoiceResult() {
+  renderInvoiceResult = () => {
     if (this.isArrayNull(this.state.invoiceDetail)) {
       return null;
     }
@@ -284,7 +299,7 @@ export default class SellingScreen extends Component {
     return detail;
   }
 
-  renderSearchResults() {
+  renderSearchResults = () => {
     if (this.state.searchResults && this.state.searchResults.length > 0) {
       let list = this.state.searchResults.map((result) => {
         return (
@@ -312,41 +327,69 @@ export default class SellingScreen extends Component {
 
   render() {
     return (
-      <div className="container">
-        <div className="search-container">
-          <input
-            type="text"
-            className="sku-search-bar"
-            placeholder="Nhập mã sku..."
-            value={this.state.skuValue}
-            onChange={this.handleInputChange}
-            onBlur={this.handleInputOnBlur}
-          />
-        </div>
-        <div className="results-container">{this.renderSearchResults()}</div>
-        <div className="invoice-container">
-          <div className="invoice-detail">
+      <>
+        <NavigationBar></NavigationBar>
+        <div className="container">
+          <div className="search-container">
+            <input
+              type="text"
+              className="sku-search-bar"
+              placeholder="Nhập mã sku..."
+              value={this.state.skuValue}
+              onChange={this.handleInputChange}
+              onBlur={this.handleInputOnBlur}
+            />
+          </div>
+          <div className="results-container">{this.renderSearchResults()}</div>
+          <div className="invoice-container">
             <table className="table">
               <thead>
                 <tr>
                   <th scope="col">SKU</th>
-                  <th scope="col">Ten san pham</th>
-                  <th scope="col">Con lai</th>
-                  <th scope="col">So luong mua</th>
-                  <th scope="col">Don gia</th>
-                  <th scope="col">Thanh tien</th>
+                  <th scope="col">Tên sản phẩm</th>
+                  <th scope="col">Còn lại</th>
+                  <th scope="col">Số lượng mua</th>
+                  <th scope="col">Đơn giá</th>
+                  <th scope="col">Thành tiền</th>
                   <th scope="col">#</th>
                 </tr>
               </thead>
               <tbody>{this.renderInvoiceResult()}</tbody>
             </table>
           </div>
-          <h4 className="discount">Giảm giá: {this.state.discount}</h4>
-          <h2 className="total-price">Thành tiền: {this.state.totalPrice}</h2>
-          <button>Hủy bỏ</button>
-          <button onClick={this.handleOpenModal}>Thanh toán</button>
+
+          <div className="total-money">
+            <table className="total-money-table">
+              <tbody>
+                <tr>
+                  <td>Tổng tiền:</td>
+                  <td>{this.state.tempPrice}</td>
+                </tr>
+                <tr>
+                  <td>Giảm giá:</td>
+                  <td>{this.state.discount}</td>
+                </tr>
+                <tr>
+                  <td>Tổng tiền thanh toán:</td>
+                  <td>{this.state.totalPrice}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <Button variant="secondary" href="/selling">
+            Hủy bỏ
+          </Button>
+          <Button variant="primary" onClick={this.handleToggleModal}>
+            Thanh toán
+          </Button>
         </div>
-      </div>
+        <ConfirmModal
+          show={this.state.showModal}
+          type={this.state.modalType}
+          toggleModal={this.handleToggleModal}
+          saveInvoice={this.handleSaveInvoice}
+        ></ConfirmModal>
+      </>
     );
   }
 }

@@ -8,14 +8,22 @@
   text-align: center;
 }
 
-.change-quantity .value-button{
+.change-quantity .value-button {
   width: 33%;
 }
 
-.change-quantity .quantity-value{
+.change-quantity .quantity-value {
   width: 33%;
 }
 
-.discount,.total-price {
+.discount,
+.total-price {
   text-align: right;
+}
+
+@media (min-width: 992px) {
+  .navbar-expand-lg .navbar-nav .nav-link {
+    padding-right: 5rem;
+    padding-left: 5rem;
+  }
 }
