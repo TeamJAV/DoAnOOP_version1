@@ -1,0 +1,18 @@
+@media (min-width: 992px) {
+  .navbar-expand-lg .navbar-nav .nav-link {
+    padding-right: 5rem;
+    padding-left: 5rem;
+  }
+}
+
+.navbar {
+  height: 67px;
+  margin-bottom: 67px;
+  box-shadow: 0px 3px 6px 0px #d8d8d8;
+  font-size: 18px;
+  font-weight: 400;
+}
+
+.navbar-light .navbar-nav .nav-link.active {
+  color: #1da1f2;
+}

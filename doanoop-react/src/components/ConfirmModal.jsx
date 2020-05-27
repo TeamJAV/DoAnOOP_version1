@@ -1,16 +1,35 @@
 import React, { Component } from "react";
 import { Modal, Button } from "react-bootstrap";
+import "../style/css/confirmModal.css";
 
 export default class ConfirmModal extends Component {
-  
   renderModalContent = () => {
     switch (this.props.type) {
       case "selling-confirm":
-        return "Xác nhận hóa đơn đã được thanh toán?";
+        return (
+          <div>
+            <div>Xác nhận khách hàng đã thanh toán số tiền: </div>
+            <div style={{ fontSize: 30 }}>{this.props.price} VND</div>
+          </div>
+        );
       case "selling-fetching":
-        return "Hoá đơn đang được xử lý. Xin vui lòng chờ trong giây lát ...";
+        return (
+          <div>
+            <div>
+              <div>Hoá đơn đang được xử lý</div>
+              <div>Xin vui lòng chờ trong giây lát...</div>
+            </div>
+          </div>
+        );
       case "selling-success":
-        return "Hóa đơn đã được xử lý thành công. Bấm hoàn tất để kết thúc";
+        return (
+          <div>
+            <div>
+              <div>Thành công</div>
+              <div>Bấm hoàn tất để kết thúc giao dịch</div>
+            </div>
+          </div>
+        );
       case "selling-failure":
         return "Đã xảy ra lỗi. Xin vui lòng thử lại";
       default:
@@ -23,26 +42,26 @@ export default class ConfirmModal extends Component {
       case "selling-confirm":
         return (
           <>
-            <Button variant="secondary" onClick={this.props.toggleModal}>
+            <Button
+              className="btn btn-secondary btn-cancel"
+              onClick={this.props.toggleModal}
+            >
               Hủy bỏ
             </Button>
-            <Button variant="primary" onClick={this.props.saveInvoice}>
+            <Button
+              className="btn btn-primary btn-confirm"
+              onClick={this.props.saveInvoice}
+            >
               Đồng ý
             </Button>
           </>
         );
       case "selling-fetching":
-        return (
-          <>
-            <div className="spinner-border text-secondary" role="status">
-              <span className="sr-only">Loading...</span>
-            </div>
-          </>
-        );
+        return null;
       case "selling-success":
         return (
           <>
-            <Button variant="primary" href="selling">
+            <Button className="btn btn-primary btn-confirm" href="selling">
               Hoàn tất
             </Button>
           </>
@@ -62,6 +81,7 @@ export default class ConfirmModal extends Component {
           onHide={this.props.toggleModal}
           backdrop="static"
           animation={false}
+          centered={true}
         >
           <Modal.Body>{this.renderModalContent()}</Modal.Body>
           <Modal.Footer>{this.renderModalButton()}</Modal.Footer>

@@ -304,14 +304,17 @@ export default class SellingScreen extends Component {
       let list = this.state.searchResults.map((result) => {
         return (
           <div
+            className="search-result"
             key={result.sku}
             data-sku={result.sku}
             onMouseDown={this.handleSelectResult}
           >
-            <div>{result.sku}</div>
-            <div>{result.products.name}</div>
-            <div>{result.quantity}</div>
-            <div>{result.price}</div>
+            <div className="sku">{result.sku}</div>
+            <div className="information">
+              <div className="name">{result.products.name}</div>
+              <div className="remain">Còn lại: {result.quantity}</div>
+            </div>
+            <div className="price">{result.products.price} VND</div>
           </div>
         );
       });
@@ -328,24 +331,28 @@ export default class SellingScreen extends Component {
   render() {
     return (
       <>
-        <NavigationBar></NavigationBar>
+        <NavigationBar pathname="/selling"></NavigationBar>
         <div className="container">
           <div className="search-container">
-            <input
-              type="text"
-              className="sku-search-bar"
-              placeholder="Nhập mã sku..."
-              value={this.state.skuValue}
-              onChange={this.handleInputChange}
-              onBlur={this.handleInputOnBlur}
-            />
+            <div className="search-block">
+              <input
+                type="text"
+                className="sku-search-bar"
+                placeholder="Nhập mã sku..."
+                value={this.state.skuValue}
+                onChange={this.handleInputChange}
+                onBlur={this.handleInputOnBlur}
+              />
+              <div className="results-container">
+                {this.renderSearchResults()}
+              </div>
+            </div>
           </div>
-          <div className="results-container">{this.renderSearchResults()}</div>
           <div className="invoice-container">
             <table className="table">
               <thead>
                 <tr>
-                  <th scope="col">SKU</th>
+                  <th scope="col">Mã SKU</th>
                   <th scope="col">Tên sản phẩm</th>
                   <th scope="col">Còn lại</th>
                   <th scope="col">Số lượng mua</th>
@@ -357,35 +364,40 @@ export default class SellingScreen extends Component {
               <tbody>{this.renderInvoiceResult()}</tbody>
             </table>
           </div>
-
           <div className="total-money">
             <table className="total-money-table">
               <tbody>
                 <tr>
-                  <td>Tổng tiền:</td>
-                  <td>{this.state.tempPrice}</td>
+                  <td className="left-column">Tổng tiền hàng:</td>
+                  <td className="right-column">{this.state.tempPrice}</td>
                 </tr>
                 <tr>
-                  <td>Giảm giá:</td>
-                  <td>{this.state.discount}</td>
+                  <td className="left-column">Giảm giá:</td>
+                  <td className="right-column">{this.state.discount}</td>
                 </tr>
                 <tr>
-                  <td>Tổng tiền thanh toán:</td>
-                  <td>{this.state.totalPrice}</td>
+                  <td className="left-column">Thanh toán:</td>
+                  <td className="right-column">{this.state.totalPrice}</td>
                 </tr>
               </tbody>
             </table>
           </div>
-          <Button variant="secondary" href="/selling">
-            Hủy bỏ
-          </Button>
-          <Button variant="primary" onClick={this.handleToggleModal}>
-            Thanh toán
-          </Button>
+          <div className="action-button">
+            <Button
+              className="btn btn-primary btn-confirm"
+              onClick={this.handleToggleModal}
+            >
+              Thanh toán
+            </Button>
+            <Button className="btn btn-secondary btn-cancel" href="/selling">
+              Hủy bỏ
+            </Button>
+          </div>
         </div>
         <ConfirmModal
           show={this.state.showModal}
           type={this.state.modalType}
+          price={this.state.totalPrice}
           toggleModal={this.handleToggleModal}
           saveInvoice={this.handleSaveInvoice}
         ></ConfirmModal>

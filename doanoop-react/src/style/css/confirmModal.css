@@ -1,0 +1,14 @@
+.modal-content {
+  height: 35vh;
+}
+
+.modal-content .modal-body {
+  font-size: 20px;
+  margin: auto;
+  display: table;
+  text-align: center;
+}
+
+.modal-content .modal-body > div > div:first-child {
+  padding-bottom: 60px;
+}
