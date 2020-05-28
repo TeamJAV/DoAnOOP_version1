@@ -14,10 +14,10 @@ public class ImportInvoiceEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "total_cost", length = 19, nullable = false)
+    @Column(name = "total_cost", length = 19, nullable = true)
     private Long totalCost;
 
-    @OneToMany(mappedBy = "importInvoice")
+    @OneToMany(mappedBy = "importInvoice", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnoreProperties("importInvoice")
     private List<ProductBatchesEntity> productBatches = new ArrayList<>();
 
@@ -45,7 +45,7 @@ public class ImportInvoiceEntity {
         this.productBatches = productBatches;
     }
 
-    protected ImportInvoiceEntity() {
+    public ImportInvoiceEntity() {
     }
 
     public ImportInvoiceEntity(Long totalCost){

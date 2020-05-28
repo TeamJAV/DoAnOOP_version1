@@ -11,4 +11,5 @@ public interface ProductBatchesRepository extends JpaRepository<ProductBatchesEn
 
     @Query(value = "select * from product_batches pb where pb.sku like :sku%", nativeQuery = true)
     List<ProductBatchesEntity> findBySKU(String sku);
+
 }

@@ -28,7 +28,7 @@ public class SuppliersEntity {
     @JsonIgnoreProperties("suppliers")
     private List<ProductBatchesEntity> productBatches = new ArrayList<>();
 
-    protected SuppliersEntity(){}
+    public SuppliersEntity(){}
 
     public SuppliersEntity(String name, String phoneNumber, String address){
         this.name = name;
