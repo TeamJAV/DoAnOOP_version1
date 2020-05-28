@@ -27,7 +27,7 @@ public class ProductsEntity {
     @JsonIgnoreProperties("products")
     private List<ProductBatchesEntity> productBatches = new ArrayList<>();
 
-    protected ProductsEntity() {
+    public ProductsEntity() {
     }
 
     public ProductsEntity(String name, Long price) {

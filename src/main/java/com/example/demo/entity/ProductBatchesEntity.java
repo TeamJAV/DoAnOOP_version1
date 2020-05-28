@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
@@ -16,10 +17,11 @@ public class ProductBatchesEntity {
     private String sku;
 
     @Column(name = "import_date", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
+    @JsonFormat(pattern = "yyyy-mm-dd")
     private Date importDate;
 
     @Column(name = "expired_date", nullable = false)
+    @JsonFormat(pattern = "yyyy-mm-dd")
     private Date expiredDate;
 
     @Column(nullable = false, length = 10)
@@ -41,7 +43,7 @@ public class ProductBatchesEntity {
     @JsonIgnoreProperties("productBatches")
     private ProductsEntity products;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "import_Invoice_id")
     @JsonIgnoreProperties("productBatches")
     private ImportInvoiceEntity importInvoice;
@@ -50,7 +52,7 @@ public class ProductBatchesEntity {
     @JsonIgnoreProperties("productBatches")
     private List<InvoiceDetailEntity> invoiceDetail = new ArrayList<>();
 
-    protected ProductBatchesEntity() {
+    public ProductBatchesEntity() {
     }
 
     public ProductBatchesEntity(Date importDate, Date expiredDate, int quantity, Long importCost) {
