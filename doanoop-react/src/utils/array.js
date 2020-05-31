@@ -13,4 +13,16 @@ const findIndexById = (id, array) => {
   return index;
 };
 
-export { isArrayNull, findIndexById };
+const sortByProductName = (a, b) => {
+  const textA = a.products.name.toUpperCase();
+  const textB = b.products.name.toUpperCase();
+  if (textA < textB) {
+    return -1;
+  } else if (textA > textB) {
+    return 1;
+  } else {
+    return 0;
+  }
+}
+
+export { isArrayNull, findIndexById, sortByProductName };

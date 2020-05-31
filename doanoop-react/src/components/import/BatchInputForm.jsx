@@ -5,11 +5,11 @@ export default class BatchInputForm extends Component {
   constructor(props) {
     super(props);
     this.baseState = {
-      importDate: "2020-12-12",
-      expiredDate: "2020-12-12",
-      quantity: null,
-      importQuantity: null,
-      importCost: null,
+      importDate: new Date().toISOString().split("T")[0],
+      expiredDate: "",
+      importQuantity: "",
+      quantity: "",
+      importCost: "",
       products: {
         id: "",
         name: "",
@@ -60,8 +60,18 @@ export default class BatchInputForm extends Component {
   };
 
   handleInputChange = (event) => {
-    
-  }
+    const target = event.target;
+    if (target.name === "importQuantity") {
+      this.setState({
+        [target.name]: target.value,
+        quantity: target.value,
+      });
+    } else {
+      this.setState({
+        [target.name]: target.value,
+      });
+    }
+  };
 
   render() {
     return (
@@ -103,8 +113,8 @@ export default class BatchInputForm extends Component {
               <span>Số lượng: </span>
               <input
                 type="text"
-                name="quantity"
-                value={this.state.quantity}
+                name="importQuantity"
+                value={this.state.importQuantity}
                 onChange={this.handleInputChange}
               ></input>
             </div>

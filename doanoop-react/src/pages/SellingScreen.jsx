@@ -187,12 +187,10 @@ export default class SellingScreen extends Component {
     if (this.isArrayNull(this.state.invoiceDetail)) {
       return;
     }
-    this.setState(
-      {
-        modalType: "selling-confirm",
-        showModal: !this.state.showModal,
-      }
-    );
+    this.setState({
+      modalType: "selling-confirm",
+      showModal: !this.state.showModal,
+    });
   };
 
   handleSaveInvoice = (event) => {
@@ -204,7 +202,7 @@ export default class SellingScreen extends Component {
     const urlDetail = "http://localhost:8081/saveInvoiceDetail";
     this.setState(
       {
-        modalType: "selling-fetching",
+        modalType: "fetching",
       },
       () => {
         fetch(urlSelling, {
@@ -243,18 +241,18 @@ export default class SellingScreen extends Component {
               })
               .then((data) => {
                 this.setState({
-                  modalType: "selling-success",
+                  modalType: "success",
                 });
               })
               .catch((err) => {
                 this.setState({
-                  modalType: "selling-failure",
+                  modalType: "failure",
                 });
               });
           })
           .catch((err) => {
             this.setState({
-              modalType: "selling-failure",
+              modalType: "failure",
             });
           });
       }
@@ -297,7 +295,7 @@ export default class SellingScreen extends Component {
       );
     });
     return detail;
-  }
+  };
 
   renderSearchResults = () => {
     if (this.state.searchResults && this.state.searchResults.length > 0) {
@@ -326,7 +324,7 @@ export default class SellingScreen extends Component {
         return null;
       }
     }
-  }
+  };
 
   render() {
     return (
@@ -399,7 +397,7 @@ export default class SellingScreen extends Component {
           type={this.state.modalType}
           price={this.state.totalPrice}
           toggleModal={this.handleToggleModal}
-          saveInvoice={this.handleSaveInvoice}
+          proceed={this.handleSaveInvoice}
         ></ConfirmModal>
       </>
     );

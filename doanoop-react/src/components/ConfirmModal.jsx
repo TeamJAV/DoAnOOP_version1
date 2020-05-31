@@ -12,7 +12,19 @@ export default class ConfirmModal extends Component {
             <div style={{ fontSize: 30 }}>{this.props.price} VND</div>
           </div>
         );
-      case "selling-fetching":
+      case "import-batches-confirm":
+        return (
+          <div>
+            <div>Xác nhận nhập danh sách lô hàng trên?</div>
+          </div>
+        );
+      case "import-product-confirm":
+        return (
+          <div>
+            <div>Xác nhận tạo mới mặt hàng trên?</div>
+          </div>
+        );
+      case "fetching":
         return (
           <div>
             <div>
@@ -21,7 +33,7 @@ export default class ConfirmModal extends Component {
             </div>
           </div>
         );
-      case "selling-success":
+      case "success":
         return (
           <div>
             <div>
@@ -30,7 +42,7 @@ export default class ConfirmModal extends Component {
             </div>
           </div>
         );
-      case "selling-failure":
+      case "failure":
         return "Đã xảy ra lỗi. Xin vui lòng thử lại";
       default:
         return null;
@@ -40,6 +52,8 @@ export default class ConfirmModal extends Component {
   renderModalButton = () => {
     switch (this.props.type) {
       case "selling-confirm":
+      case "import-batches-confirm":
+      case "import-product-confirm":
         return (
           <>
             <Button
@@ -50,13 +64,13 @@ export default class ConfirmModal extends Component {
             </Button>
             <Button
               className="btn btn-primary btn-confirm"
-              onClick={this.props.saveInvoice}
+              onClick={this.props.proceed}
             >
               Đồng ý
             </Button>
           </>
         );
-      case "selling-fetching":
+      case "fetching":
         return null;
       case "selling-success":
         return (

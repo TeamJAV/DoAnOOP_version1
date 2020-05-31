@@ -14,11 +14,11 @@ export default class SearchBar extends Component {
   handleInputChange = (event) => {
     const value = event.target.value;
     if (value === "") {
-          this.setState({
-            value: "",
-            searchResults: [],
-            didSearch: false,
-          });
+      this.setState({
+        value: "",
+        searchResults: [],
+        didSearch: false,
+      });
       return;
     }
     this.setState(
@@ -28,7 +28,7 @@ export default class SearchBar extends Component {
       () => {
         const data = {
           id: Math.floor(Math.random() * 101).toString(),
-          name: "ABC",
+          name: Math.floor(Math.random() * 101).toString(),
         };
         this.setState((prevState) => ({
           searchResults: [...prevState.searchResults, data],
@@ -38,10 +38,10 @@ export default class SearchBar extends Component {
   };
 
   handleInputOnBlur = () => {
-        this.setState({
-          searchResults: [],
-          didSearch: false,
-        });
+    this.setState({
+      searchResults: [],
+      didSearch: false,
+    });
   };
 
   handleSelectResult = (event) => {
