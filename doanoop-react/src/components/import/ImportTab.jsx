@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Tabs, Tab } from "react-bootstrap";
-import BatchInputForm from "./BatchInputForm";
+import BatchInputContainer from "./BatchInputContainer";
 
 export default class ImportTab extends Component {
   render() {
@@ -8,7 +8,7 @@ export default class ImportTab extends Component {
       <>
         <Tabs defaultActiveKey="batchInputForm" id="uncontrolled-tab-example">
           <Tab eventKey="batchInputForm" title="Phiếu nhập hàng">
-            <BatchInputForm />
+            <BatchInputContainer />
           </Tab>
           <Tab eventKey="profile" title="Thêm mới hàng"></Tab>
         </Tabs>
