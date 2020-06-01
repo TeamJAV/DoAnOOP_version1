@@ -11,33 +11,22 @@ import java.util.List;
 
 @Entity
 @Table(name = "refund_invoice")
-//@JsonIdentityInfo(
-//        generator = ObjectIdGenerators.PropertyGenerator.class,
-//        property = "id")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class RefundInvoiceEntity {
     @Id
-//    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column
+    @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date date;
 
     private String note;
 
-//    @OneToMany(mappedBy = "refundInvoice",cascade = CascadeType.ALL)
-////    @JsonIgnoreProperties("refundInvoice")
-////    @JsonBackReference
-//    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "refundInvoice"})
-//    private List<InvoiceDetailEntity> invoiceDetail = new ArrayList<>();
-
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "selling_invoice_id")
-//    @JsonIgnoreProperties("refundInvoice")
-//    @JsonManagedReference
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "refundInvoice"})
-    private SellingInvoiceEntity sellingInvoice = new SellingInvoiceEntity();
+    @OneToMany(mappedBy = "refundInvoice",cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("refundInvoice")
+    private List<InvoiceDetailEntity> invoiceDetail = new ArrayList<>();
 
     public RefundInvoiceEntity() {
     }
@@ -47,13 +36,14 @@ public class RefundInvoiceEntity {
         this.note = note;
     }
 
+
     public Integer getId() {
         return id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+//    public void setId(Integer id) {
+//        this.id = id;
+//    }
 
     public Date getDate() {
         return date;
@@ -71,20 +61,13 @@ public class RefundInvoiceEntity {
         this.note = note;
     }
 
-//    public List<InvoiceDetailEntity> getInvoiceDetail() {
-//        return invoiceDetail;
-//    }
-//
-//    public void setInvoiceDetail(List<InvoiceDetailEntity> invoiceDetail) {
-//        this.invoiceDetail = invoiceDetail;
-//    }
-
-    public SellingInvoiceEntity getSellingInvoice() {
-        return sellingInvoice;
+    public List<InvoiceDetailEntity> getInvoiceDetail() {
+        return invoiceDetail;
     }
 
-    public void setSellingInvoice(SellingInvoiceEntity sellingInvoice) {
-        this.sellingInvoice = sellingInvoice;
+    public void setInvoiceDetail(List<InvoiceDetailEntity> invoiceDetail) {
+        this.invoiceDetail = invoiceDetail;
     }
-
 }
+
+

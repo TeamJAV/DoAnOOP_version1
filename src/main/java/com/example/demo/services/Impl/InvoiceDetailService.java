@@ -1,23 +1,21 @@
 package com.example.demo.services.Impl;
 
 import com.example.demo.entity.InvoiceDetailEntity;
-import com.example.demo.entity.ProductBatchesEntity;
-import com.example.demo.entity.SellingInvoiceEntity;
 import com.example.demo.repository.InvoiceDetailRepository;
-import com.example.demo.services.IInvoiceDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.List;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class InvoiceDetailService implements IInvoiceDetailService {
+@Transactional
+public class InvoiceDetailService{
     @Autowired
     private InvoiceDetailRepository invoiceDetailRepository;
 
-    public List<InvoiceDetailEntity> findInvoiceDetailEntityList(SellingInvoiceEntity sellingInvoiceEntity){
-        return invoiceDetailRepository.findAllBySellingInvoice(sellingInvoiceEntity);
+    public void save(InvoiceDetailEntity invoiceDetailEntity){
+        invoiceDetailRepository.save(invoiceDetailEntity);
     }
-    public List<InvoiceDetailEntity> findByProductBatches(ProductBatchesEntity productBatchesEntity){
-        return invoiceDetailRepository.findByProductBatches(productBatchesEntity);
+    public InvoiceDetailEntity findById(int id){
+        return invoiceDetailRepository.findById(id).orElse(null);
     }
 }

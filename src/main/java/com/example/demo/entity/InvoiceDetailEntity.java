@@ -1,44 +1,43 @@
 package com.example.demo.entity;
 
 import com.fasterxml.jackson.annotation.*;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "invoice_detail")
-//@JsonIdentityInfo(
-//        generator = ObjectIdGenerators.PropertyGenerator.class,
-//        property = "id")
+@JsonIgnoreProperties(ignoreUnknown = true)
+@DynamicInsert
 public class InvoiceDetailEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(length = 10)
+    @Column(length = 10, nullable = false)
     private Integer quantity;
 
-    @Column(length = 20)
+    @Column(length = 20, nullable = false)
     private Long price;
+
+    @Column(length = 10)
+    @ColumnDefault("0")
+    private Integer quantityRefund;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "sku")
-//    @JsonIgnoreProperties("invoiceDetail")
-//    @JsonManagedReference
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "invoiceDetail"})
+    @JsonIgnoreProperties("invoiceDetail")
     private ProductBatchesEntity productBatches;
 
-//    @ManyToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "refund_invoice_id")
-////    @JsonIgnoreProperties("invoiceDetail")
-////    @JsonManagedReference
-//    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "invoiceDetail"})
-//    private RefundInvoiceEntity refundInvoice;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "refund_invoice_id")
+    @JsonIgnoreProperties("invoiceDetail")
+    private RefundInvoiceEntity refundInvoice;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "selling_invoice")
-//    @JsonIgnoreProperties("invoiceDetail")
-//    @JsonManagedReference
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "invoiceDetail"})
+    @JsonIgnoreProperties("invoiceDetail")
     private SellingInvoiceEntity sellingInvoice;
 
     protected InvoiceDetailEntity() {
@@ -82,13 +81,13 @@ public class InvoiceDetailEntity {
         this.productBatches = productBatches;
     }
 
-//    public RefundInvoiceEntity getRefundInvoice() {
-//        return refundInvoice;
-//    }
-//
-//    public void setRefundInvoice(RefundInvoiceEntity refundInvoice) {
-//        this.refundInvoice = refundInvoice;
-//    }
+    public RefundInvoiceEntity getRefundInvoice() {
+        return refundInvoice;
+    }
+
+    public void setRefundInvoice(RefundInvoiceEntity refundInvoice) {
+        this.refundInvoice = refundInvoice;
+    }
 
     public SellingInvoiceEntity getSellingInvoice() {
         return sellingInvoice;
@@ -98,5 +97,11 @@ public class InvoiceDetailEntity {
         this.sellingInvoice = sellingInvoice;
     }
 
+    public Integer getQuantityRefund() {
+        return quantityRefund;
+    }
 
+    public void setQuantityRefund(Integer quantityRefund) {
+        this.quantityRefund = quantityRefund;
+    }
 }

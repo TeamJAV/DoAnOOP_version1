@@ -9,68 +9,49 @@ import java.util.List;
 
 @Entity
 @Table(name = "product_batches")
-//@JsonIdentityInfo(
-//        generator = ObjectIdGenerators.PropertyGenerator.class,
-//        property = "sku")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ProductBatchesEntity {
     @Id
     @Column(unique = true, nullable = false, length = 12)
     private String sku;
 
-    @Column(name = "import_date")
+    @Column(name = "import_date", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date importDate;
 
-    @Column(name = "expired_date")
+    @Column(name = "expired_date", nullable = false)
     private Date expiredDate;
 
-    @Column(length = 10)
+    @Column(length = 10, nullable = false)
     private int quantity;
+
+    @Column(nullable = false, length = 10)
+    private int importQuantity;
 
     @Column(name = "import_cost", length = 20)
     private Long importCost;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "supplier_id")
-//    @JsonIgnoreProperties("productBatches")
-//    @JsonManagedReference
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "productBatches"})
+    @JsonIgnoreProperties("productBatches")
     private SuppliersEntity suppliers;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "products_id")
-//    @JsonIgnoreProperties("productBatches")
-//    @JsonManagedReference
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "productBatches"})
+    @JsonIgnoreProperties("productBatches")
     private ProductsEntity products;
 
     @ManyToOne(cascade = CascadeType.ALL)
-//    @JsonIgnoreProperties("productBatches")
     @JoinColumn(name = "import_Invoice_id")
-//    @JsonManagedReference
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "productBatches"})
+    @JsonIgnoreProperties("productBatches")
     private ImportInvoiceEntity importInvoice;
 
     @OneToMany(mappedBy = "productBatches", cascade = CascadeType.ALL)
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "productBatches"})
-//    @JsonIgnoreProperties("productBatches")
-    @JsonBackReference
+    @JsonIgnoreProperties( "productBatches")
     private List<InvoiceDetailEntity> invoiceDetail = new ArrayList<>();
-
-    @OneToMany(mappedBy = "productBatches", cascade = CascadeType.ALL)
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "productBatches"})
-    private List<RefundInvoiceDetailEntity> refundInvoiceDetail;
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
-    }
-
-    public List<RefundInvoiceDetailEntity> getRefundInvoiceDetail() {
-        return refundInvoiceDetail;
-    }
-
-    public void setRefundInvoiceDetail(List<RefundInvoiceDetailEntity> refundInvoiceDetail) {
-        this.refundInvoiceDetail = refundInvoiceDetail;
     }
 
     protected ProductBatchesEntity() {
@@ -155,5 +136,11 @@ public class ProductBatchesEntity {
         this.invoiceDetail = invoiceDetail;
     }
 
+    public int getImportQuantity() {
+        return importQuantity;
+    }
 
+    public void setImportQuantity(int importQuantity) {
+        this.importQuantity = importQuantity;
+    }
 }

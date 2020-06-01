@@ -3,31 +3,25 @@ package com.example.demo.entity;
 import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
 
 @Entity
 @Table(name = "products")
-//@JsonIdentityInfo(
-//        generator = ObjectIdGenerators.PropertyGenerator.class,
-//        property = "id")
 public class ProductsEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column( unique = true, length = 100)
+    @Column( unique = true, length = 100, nullable = false)
     private  String name;
 
-    @Column(length = 19)
+    @Column(length = 19, nullable = false)
     private Long price;
 
     @OneToMany(mappedBy = "products", cascade = CascadeType.ALL)
-//    @JsonIgnoreProperties("products")
-//    @JsonBackReference
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "products"})
+    @JsonIgnoreProperties("products")
     private List<ProductBatchesEntity> productBatches = new ArrayList<>();
 
     protected ProductsEntity() {

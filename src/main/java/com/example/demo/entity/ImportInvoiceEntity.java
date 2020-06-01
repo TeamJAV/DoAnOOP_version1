@@ -4,14 +4,10 @@ import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Entity
 @Table(name = "import_invoice")
-//@JsonIdentityInfo(
-//        generator = ObjectIdGenerators.PropertyGenerator.class,
-//        property = "id")
 public class ImportInvoiceEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,10 +16,8 @@ public class ImportInvoiceEntity {
     @Column(name = "total_cost", length = 19)
     private Long totalCost;
 
-    @OneToMany(mappedBy = "importInvoice", cascade = CascadeType.ALL)
-//    @JsonIgnoreProperties("importInvoice")
-//    @JsonBackReference
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "importInvoice"})
+    @OneToMany(mappedBy = "importInvoice", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnoreProperties("importInvoice")
     private List<ProductBatchesEntity> productBatches = new ArrayList<>();
 
     public Integer getId() {
