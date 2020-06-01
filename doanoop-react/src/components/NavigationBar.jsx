@@ -16,7 +16,7 @@ export default class NavigationBar extends Component {
             <Nav className="mr-auto" activeKey={this.props.pathname}>
               <Nav.Link href="/import">Nhập hàng</Nav.Link>
               <Nav.Link href="/selling">Bán hàng</Nav.Link>
-              <Nav.Link href="#link">Trả hàng</Nav.Link>
+              <Nav.Link href="/refund">Trả hàng</Nav.Link>
               <Nav.Link href="#link">Thống kê</Nav.Link>
             </Nav>
           </Navbar.Collapse>

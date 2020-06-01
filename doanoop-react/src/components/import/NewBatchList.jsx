@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { isArrayNull } from "../../utils/array";
 
-export default class BatchList extends Component {
+export default class NewBatchList extends Component {
   handleDeleteBatch = (event) => {
     const batchIndex = event.target.parentNode.dataset.key - 1;
     this.props.deleteBatch(batchIndex);

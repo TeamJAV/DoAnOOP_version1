@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import BatchInputForm from "./BatchInputForm";
-import BatchList from "./BatchList";
+import NewBatchList from "./NewBatchList";
 import { sortByProductName, isArrayNull } from "../../utils/array";
 import { Button } from "react-bootstrap";
 import ConfirmModal from "../ConfirmModal";
@@ -55,10 +55,10 @@ export default class BatchInputContainer extends Component {
     return (
       <>
         <BatchInputForm setBatches={this.setProductBatches} />
-        <BatchList
+        <NewBatchList
           listBatches={this.state.productBatches}
           deleteBatch={this.deleteProductBatch}
-        ></BatchList>
+        ></NewBatchList>
         <div className="action-button">
           <Button
             className="btn btn-primary btn-confirm"

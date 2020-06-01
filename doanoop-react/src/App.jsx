@@ -3,6 +3,7 @@ import "./App.css";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import SellingScreen from "./pages/SellingScreen";
 import ImportScreen from "./pages/ImportScreen";
+import RefundScreen from "./pages/RefundScreen";
 
 export default class App extends React.Component {
   render() {
@@ -12,6 +13,7 @@ export default class App extends React.Component {
           <Redirect exact from="/" to="/selling"></Redirect>
           <Route path="/selling" component={SellingScreen}></Route>
           <Route path="/import" component={ImportScreen}></Route>
+          <Route path="/refund" component={RefundScreen}></Route>
         </Switch>
       </BrowserRouter>
     );
