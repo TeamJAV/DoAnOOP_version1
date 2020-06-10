@@ -1,6 +1,5 @@
 package com.example.demo.services;
 
-import com.example.demo.repository.RefundInvoiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +10,7 @@ import javax.transaction.Transactional;
 public class RefundInvoiceService {
 
     @Autowired
-    private RefundInvoiceRepository refundInvoiceRepository;
+    private RefundInvoiceService refundInvoiceRepository;
 
     //It's coding time!!!
 }

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <title>create refund invoice</title>
+    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+    <script>
+        function deleteRow(btn) {
+            var row = btn.parentNode.parentNode;
+            row.parentNode.removeChild(row);
+        }
+        function addFields()
+        {
+            const product_list = document.getElementById("product_list").value;
+            const quantity = document.getElementById("quantity").value;
+            document.getElementById("table_product").insertRow(1).innerHTML =
+        '                <td><input th:field="*{typeOfWork}" id="sku_field" readonly="readonly"/></td>\n' +
+        '                <td><input th:field="*{typeOfWork}" id="product_field" readonly="readonly"/></td>\n' +
+        '                <td><input th:field="*{person}" id="quantity_field" readonly="readonly"/> </td>\n' +
+        '                <td><input th:field="*{initialRisk}" /> </td>\n' +
+        '                <td><input th:field="*{countermeasure}" id="total_price_field" readonly="readonly"/> </td>\n' +
+        '                <td><button type="button" onclick="deleteRow(this)">Xóa</button></td>';
+
+            var product_field = document.getElementById("product_field");
+            var quantity_field = document.getElementById("quantity_field");
+            var total_price_field = document.getElementById("total_price_field");
+            product_field.value = product_list;
+            quantity_field.value = quantity;
+            total_price_field.value = Number(quantity)*3;
+        }
+    </script>
+</head>
+<body>
+<div>
+    <h1>Tạo hóa đơn trả lại</h1>
+    <br />
+    <h3 th:text="'Tham chiếu từ hóa đơn ' + ${selling_invoice.id}"></h3>
+    <form>
+        <label>Sản phẩm</label>
+        <select id="product_list">
+            <option value="none" selected disabled hidden>Lựa chọn mã sản phẩm</option>
+            <option th:each="product : ${selling_invoice.getInvoiceDetail()}"
+                    th:value="${product.getProductBatches().getSku()}"
+                    th:text="${product.getProductBatches().getSku()}+'  ' +${product.getProductBatches().getProducts().getName()}"></option>
+        </select>
+        <label>Số lượng</label>
+        <input type="number" id="quantity">
+        <button type="button" onclick="addFields()">Thêm</button>
+    </form>
+    <hr>
+    <form th:action="@{'/save/refund/'+ ${selling_invoice.id}}" th:object="${refund}" method="post">
+        <form th:object="${selling_invoice.invoiceDetail}">
+               <table id="table_product" border="1">
+                   <thead>
+                       <tr>
+                           <th>Mã SKU</th>
+                           <th>Sản phẩm</th>
+                           <th>Số lượng</th>
+                           <th>Đơn giá</th>
+                           <th>Thành tiền</th>
+                           <th>Chỉnh sửa</th>
+                       </tr>
+                   </thead>
+               </table>
+               <button type="button" name="save_product">Lưu</button>
+        </form>
+            <p>Ghi chú:</p>
+            <textarea rows="4" cols="50" th:field="*{note}">Nhập ghi chú....</textarea>
+                <hr>
+            <button type="submit">Lưu thay đổi</button>
+    </form>
+</div>
+</body>

@@ -1,38 +1,42 @@
 package com.example.demo.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "invoice_detail")
 @JsonIgnoreProperties(ignoreUnknown = true)
+@DynamicInsert
 public class InvoiceDetailEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false, length = 10)
+    @Column(length = 10, nullable = false)
     private Integer quantity;
 
-    @Column(nullable = false, length = 20)
+    @Column(length = 20, nullable = false)
     private Long price;
 
-    @ManyToOne
+    @Column(length = 10)
+    @ColumnDefault("0")
+    private Integer quantityRefund;
+
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "sku")
     @JsonIgnoreProperties("invoiceDetail")
     private ProductBatchesEntity productBatches;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "refund_invoice_id")
-//    @JsonIgnoreProperties("invoiceDetail")
     @JsonIgnoreProperties("invoiceDetail")
     private RefundInvoiceEntity refundInvoice;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "selling_invoice")
-//    @JsonIgnoreProperties("invoiceDetail")
     @JsonIgnoreProperties("invoiceDetail")
     private SellingInvoiceEntity sellingInvoice;
 
@@ -93,5 +97,11 @@ public class InvoiceDetailEntity {
         this.sellingInvoice = sellingInvoice;
     }
 
+    public Integer getQuantityRefund() {
+        return quantityRefund;
+    }
 
+    public void setQuantityRefund(Integer quantityRefund) {
+        this.quantityRefund = quantityRefund;
+    }
 }

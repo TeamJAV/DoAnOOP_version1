@@ -15,13 +15,13 @@ public class SuppliersEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false, length = 50)
+    @Column(length = 50, nullable = false)
     private String name;
 
     @Column(name = "phone_number", unique = true, length = 12, nullable = false)
     private String phoneNumber;
 
-    @Column(unique = true, nullable = false, length = 100)
+    @Column(unique = true, nullable =false, length = 100)
     private String address;
 
     @OneToMany(mappedBy = "suppliers")

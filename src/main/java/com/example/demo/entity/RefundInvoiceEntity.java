@@ -1,7 +1,8 @@
 package com.example.demo.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.*;
+import org.hibernate.annotations.Cascade;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "refund_invoice")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class RefundInvoiceEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,27 +19,23 @@ public class RefundInvoiceEntity {
 
     @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date date;
 
     private String note;
 
-    @OneToMany(mappedBy = "refundInvoice")
-//    @JsonIgnoreProperties("refundInvoice")
+    @OneToMany(mappedBy = "refundInvoice",cascade = CascadeType.ALL)
     @JsonIgnoreProperties("refundInvoice")
     private List<InvoiceDetailEntity> invoiceDetail = new ArrayList<>();
 
-//    @ManyToOne
-//    @JoinColumn(name = "selling_invoice_id")
-//    @JsonBackReference
-//    private SellingInvoiceEntity sellingInvoice = new SellingInvoiceEntity();
-
-    protected RefundInvoiceEntity() {
+    public RefundInvoiceEntity() {
     }
 
     public RefundInvoiceEntity(Date date, String note) {
         this.date = date;
         this.note = note;
     }
+
 
     public Integer getId() {
         return id;
@@ -70,6 +68,7 @@ public class RefundInvoiceEntity {
     public void setInvoiceDetail(List<InvoiceDetailEntity> invoiceDetail) {
         this.invoiceDetail = invoiceDetail;
     }
+}
 
 //    public SellingInvoiceEntity getSellingInvoice() {
 //        return sellingInvoice;
@@ -79,4 +78,3 @@ public class RefundInvoiceEntity {
 //        this.sellingInvoice = sellingInvoice;
 //    }
 
-}

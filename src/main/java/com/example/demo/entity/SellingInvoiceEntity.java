@@ -1,7 +1,9 @@
 package com.example.demo.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.*;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -10,12 +12,13 @@ import java.util.List;
 
 @Entity
 @Table(name = "selling_invoice")
+@DynamicInsert
 public class SellingInvoiceEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "total_price", nullable = false, length = 19)
+    @Column(name = "total_price", length = 19, nullable = false)
     private Long totalPrice;
 
     @Column
@@ -25,15 +28,13 @@ public class SellingInvoiceEntity {
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
 
-    @OneToMany(mappedBy = "sellingInvoice")
-//    @JsonIgnoreProperties("sellingInvoice")
+    @Column(columnDefinition = "TINYINT(1)")
+    @ColumnDefault("0")
+    private boolean isRefund;
+
+    @OneToMany(mappedBy = "sellingInvoice", cascade = CascadeType.ALL)
     @JsonIgnoreProperties("sellingInvoice")
     private List<InvoiceDetailEntity> invoiceDetail = new ArrayList<>();
-
-//    @OneToMany(mappedBy = "sellingInvoice")
-////    @JsonIgnoreProperties("sellingInvoice")
-//    @JsonBackReference
-//    private List<RefundInvoiceEntity> refundInvoice = new ArrayList<>();
 
     public SellingInvoiceEntity(Long totalPrice, Float discount, Date date) {
         this.totalPrice = totalPrice;
@@ -85,12 +86,11 @@ public class SellingInvoiceEntity {
         this.invoiceDetail = invoiceDetail;
     }
 
-//    public List<RefundInvoiceEntity> getRefundInvoice() {
-//        return refundInvoice;
-//    }
-//
-//    public void setRefundInvoice(List<RefundInvoiceEntity> refundInvoice) {
-//        this.refundInvoice = refundInvoice;
-//    }
+    public boolean isRefunded() {
+        return isRefund;
+    }
 
+    public void setRefunded(boolean refunded) {
+        isRefund = refunded;
+    }
 }

@@ -79,17 +79,4 @@ public class ImportController {
         }
         return new ResponseEntity<>(importInvoice, HttpStatus.OK);
     }
-
-    @GetMapping("/statistic_invoice")
-    public List<ImportInvoiceEntity> statistic(@RequestParam Optional<String> date){
-        List<ImportInvoiceEntity> import_list =  importRepo.findByDate(date);
-        int total = 0;
-        for(ImportInvoiceEntity i : import_list){
-            total += i.getTotalCost();
-        }
-        System.out.println(total);
-        return import_list;
-    }
-
-
 }

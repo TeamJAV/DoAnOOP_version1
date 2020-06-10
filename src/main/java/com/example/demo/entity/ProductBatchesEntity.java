@@ -1,8 +1,6 @@
 package com.example.demo.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
+import com.fasterxml.jackson.annotation.*;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -17,14 +15,14 @@ public class ProductBatchesEntity {
     private String sku;
 
     @Column(name = "import_date", nullable = false)
-    @JsonFormat(pattern = "yyyy-mm-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date importDate;
 
     @Column(name = "expired_date", nullable = false)
-    @JsonFormat(pattern = "yyyy-mm-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date expiredDate;
 
-    @Column(nullable = false, length = 10)
+    @Column(length = 10, nullable = false)
     private int quantity;
 
     @Column(nullable = false, length = 10)
@@ -33,12 +31,12 @@ public class ProductBatchesEntity {
     @Column(name = "import_cost", length = 20)
     private Long importCost;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "supplier_id")
     @JsonIgnoreProperties("productBatches")
     private SuppliersEntity suppliers;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "products_id")
     @JsonIgnoreProperties("productBatches")
     private ProductsEntity products;
@@ -48,11 +46,15 @@ public class ProductBatchesEntity {
     @JsonIgnoreProperties("productBatches")
     private ImportInvoiceEntity importInvoice;
 
-    @OneToMany(mappedBy = "productBatches")
-    @JsonIgnoreProperties("productBatches")
+    @OneToMany(mappedBy = "productBatches", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties( "productBatches")
     private List<InvoiceDetailEntity> invoiceDetail = new ArrayList<>();
 
-    public ProductBatchesEntity() {
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    protected ProductBatchesEntity() {
     }
 
     public ProductBatchesEntity(Date importDate, Date expiredDate, int quantity, Long importCost) {
@@ -142,4 +144,7 @@ public class ProductBatchesEntity {
         this.invoiceDetail = invoiceDetail;
     }
 
+    public void setImportQuantity(int importQuantity) {
+        this.importQuantity = importQuantity;
+    }
 }
