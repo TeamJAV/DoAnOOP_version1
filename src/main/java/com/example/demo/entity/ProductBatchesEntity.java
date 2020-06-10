@@ -1,7 +1,6 @@
 package com.example.demo.entity;
 
 import com.fasterxml.jackson.annotation.*;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -16,10 +15,11 @@ public class ProductBatchesEntity {
     private String sku;
 
     @Column(name = "import_date", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date importDate;
 
     @Column(name = "expired_date", nullable = false)
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date expiredDate;
 
     @Column(length = 10, nullable = false)
@@ -104,6 +104,14 @@ public class ProductBatchesEntity {
         this.quantity = quantity;
     }
 
+    public Integer getImportQuantity() {
+        return importQuantity;
+    }
+
+    public void setImportQuantity(Integer importQuantity) {
+        this.importQuantity = importQuantity;
+    }
+
     public Long getImportCost() {
         return importCost;
     }
@@ -134,10 +142,6 @@ public class ProductBatchesEntity {
 
     public void setInvoiceDetail(List<InvoiceDetailEntity> invoiceDetail) {
         this.invoiceDetail = invoiceDetail;
-    }
-
-    public int getImportQuantity() {
-        return importQuantity;
     }
 
     public void setImportQuantity(int importQuantity) {

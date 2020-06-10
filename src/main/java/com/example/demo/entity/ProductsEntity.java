@@ -1,7 +1,6 @@
 package com.example.demo.entity;
 
 import com.fasterxml.jackson.annotation.*;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,11 +19,11 @@ public class ProductsEntity {
     @Column(length = 19, nullable = false)
     private Long price;
 
-    @OneToMany(mappedBy = "products", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "products")
     @JsonIgnoreProperties("products")
     private List<ProductBatchesEntity> productBatches = new ArrayList<>();
 
-    protected ProductsEntity() {
+    public ProductsEntity() {
     }
 
     public ProductsEntity(String name, Long price) {

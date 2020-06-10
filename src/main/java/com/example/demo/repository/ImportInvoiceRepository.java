@@ -2,15 +2,22 @@ package com.example.demo.repository;
 
 
 import com.example.demo.entity.ImportInvoiceEntity;
-import com.example.demo.entity.SellingInvoiceEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.transaction.annotation.Transactional;
-
+import javax.transaction.Transactional;
 import java.util.List;
 
 public interface ImportInvoiceRepository extends JpaRepository<ImportInvoiceEntity, Integer> {
+    @Modifying
+    @Query(value = "UPDATE import_invoice i \n" +
+            "INNER JOIN(\n" +
+            "   SELECT import_invoice_id, SUM(import_quantity * import_cost) AS \"total\"\n" +
+            "   FROM product_batches\n" +
+            "   GROUP BY import_invoice_id\n" +
+            ") b ON i.id = b.import_invoice_id\n" +
+            "SET i.total_cost = b.total", nativeQuery = true)
+    void updateTotalCost();
 
     @Transactional
     @Modifying

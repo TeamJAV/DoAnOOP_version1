@@ -1,6 +1,7 @@
 package com.example.demo.entity;
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -23,11 +24,11 @@ public class SuppliersEntity {
     @Column(unique = true, nullable =false, length = 100)
     private String address;
 
-    @OneToMany(mappedBy = "suppliers",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "suppliers")
     @JsonIgnoreProperties("suppliers")
     private List<ProductBatchesEntity> productBatches = new ArrayList<>();
 
-    protected SuppliersEntity(){}
+    public SuppliersEntity(){}
 
     public SuppliersEntity(String name, String phoneNumber, String address){
         this.name = name;

@@ -25,3 +25,4 @@ public interface RefundInvoiceRepository extends JpaRepository<RefundInvoiceEnti
     @Query(nativeQuery = true, value = "select * from refund_invoice where month(date) = month(current_date)")
     List<RefundInvoiceEntity> RefundTransThisMonth();
 }
+

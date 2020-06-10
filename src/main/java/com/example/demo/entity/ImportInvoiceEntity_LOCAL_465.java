@@ -1,6 +1,7 @@
 package com.example.demo.entity;
 
 import com.fasterxml.jackson.annotation.*;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +13,7 @@ public class ImportInvoiceEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "total_cost", length = 19, nullable = true)
+    @Column(name = "total_cost", length = 19)
     private Long totalCost;
 
     @OneToMany(mappedBy = "importInvoice", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -43,7 +44,7 @@ public class ImportInvoiceEntity {
         this.productBatches = productBatches;
     }
 
-    public ImportInvoiceEntity() {
+    protected ImportInvoiceEntity() {
     }
 
     public ImportInvoiceEntity(Long totalCost){

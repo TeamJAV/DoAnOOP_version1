@@ -70,4 +70,11 @@ public class RefundInvoiceEntity {
     }
 }
 
+//    public SellingInvoiceEntity getSellingInvoice() {
+//        return sellingInvoice;
+//    }
+//
+//    public void setSellingInvoice(SellingInvoiceEntity sellingInvoice) {
+//        this.sellingInvoice = sellingInvoice;
+//    }
 
