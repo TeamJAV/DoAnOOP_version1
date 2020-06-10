@@ -27,6 +27,9 @@ public class RefundInvoiceService{
     @Autowired
     private SellingInvoiceService sellingInvoiceService;
 
+    @Autowired
+    private ImportInvoiceService importInvoiceService;
+
     public RefundInvoiceEntity save(RefundInvoiceEntity refundInvoiceEntity){
          return refundInvoiceRepository.save(refundInvoiceEntity);
     }
@@ -50,7 +53,7 @@ public class RefundInvoiceService{
             sellingInvoiceService.updateTotalPrice(invoiceDetailEntity.getSellingInvoice().getId());
         }
     }
-    public void RefeshRefund(JSONArray jsonInvoiceDetail, RefundInvoiceEntity refundInvoiceEntity) throws JSONException{
+    public void RefreshRefund(JSONArray jsonInvoiceDetail, RefundInvoiceEntity refundInvoiceEntity) throws JSONException{
         for(int i=0; i<jsonInvoiceDetail.length(); i++){
             int id_of_invoiceDetail = (int) jsonInvoiceDetail.getJSONObject(i).get("id");
             InvoiceDetailEntity invoiceDetailEntity =  invoiceDetailService.findById(id_of_invoiceDetail);
@@ -76,6 +79,8 @@ public class RefundInvoiceService{
                         return sellingInvoiceService.SellingTransToday();
                     case "refund":
                         return refundInvoiceRepository.RefundTransToday();
+                    case "import":
+                        return importInvoiceService.ImportTransToday();
                 }
             case "this_week":
                 switch (type){
@@ -83,6 +88,8 @@ public class RefundInvoiceService{
                         return sellingInvoiceService.SellingTransThisWeek();
                     case "refund":
                         return refundInvoiceRepository.RefundTransThisWeek();
+                    case "import":
+                        return importInvoiceService.ImportTransThisWeek();
                 }
             case "this_month":
                 switch (type){
@@ -90,6 +97,8 @@ public class RefundInvoiceService{
                         return sellingInvoiceService.SellingTransThisMonth();
                     case "refund":
                         return  refundInvoiceRepository.RefundTransThisMonth();
+                    case "import":
+                        return importInvoiceService.ImportTransThisMonth();
                 }
 
         }
@@ -98,17 +107,11 @@ public class RefundInvoiceService{
     public List<Map<String, Object>> RevenueInTime(String time){
         switch (time){
             case "today":
-//                if (sellingInvoiceService.RevenueToday() != null)
                     return sellingInvoiceService.RevenueToday();
-//                return null;
             case "this_week":
-//                if (sellingInvoiceService.RevenueThisWeek() != null)
                     return sellingInvoiceService.RevenueThisWeek();
-//                return null;
             case "this_month":
-//                if (sellingInvoiceService.RevenueThisMonth() != null)
                     return sellingInvoiceService.RevenueThisMonth();
-//                return null;
         }
         return null;
     }

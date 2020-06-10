@@ -39,25 +39,25 @@ public interface SellingInvoiceRepository extends JpaRepository<SellingInvoiceEn
 
     @Transactional
     @Modifying
-    @Query(nativeQuery = true, value = "select SUM(selling_invoice.total_price) as 'Tổng số tiền thu được',\n" +
-            "(select  SUM(total_cost) from import_invoice where date_format(date, \"%Y %m %d\") = date_format(now(), \"%Y %m %d\")) as 'Tổng số tiền chi',\n" +
-            "(SUM(selling_invoice.total_price) -  (select  SUM(total_cost) from import_invoice where date_format(date, \"%Y %m %d\") = date_format(date(now()), \"%Y %m %d\"))) as 'Tổng lãi'\n" +
+    @Query(nativeQuery = true, value = "select SUM(selling_invoice.total_price) as 'TotalCollect',\n" +
+            "(select  SUM(total_cost) from import_invoice where date_format(date, \"%Y %m %d\") = date_format(now(), \"%Y %m %d\")) as 'TotalPay',\n" +
+            "(SUM(selling_invoice.total_price) -  (select  SUM(total_cost) from import_invoice where date_format(date, \"%Y %m %d\") = date_format(date(now()), \"%Y %m %d\"))) as 'TotalInterest'\n" +
             "from selling_invoice where date_format(date, \"%Y %m %d\") = date_format(date(now()), \"%Y %m %d\")")
     List<Map<String, Object>> MoneyToday();
 
     @Transactional
     @Modifying
-    @Query(nativeQuery = true, value = "select SUM(selling_invoice.total_price) as 'Tổng số tiền thu được',\n" +
-            "       (select  SUM(total_cost) from import_invoice where yearweek(date, 1) = yearweek(current_date, 1)) as 'Tổng số tiền chi',\n" +
-            "       (SUM(selling_invoice.total_price) -  (select  SUM(total_cost) from import_invoice where yearweek(date, 1) = yearweek(current_date, 1))) as 'Tổng lãi'\n" +
+    @Query(nativeQuery = true, value = "select SUM(selling_invoice.total_price) as 'TotalCollect',\n" +
+            "       (select  SUM(total_cost) from import_invoice where yearweek(date, 1) = yearweek(current_date, 1)) as 'TotalPay',\n" +
+            "       (SUM(selling_invoice.total_price) -  (select  SUM(total_cost) from import_invoice where yearweek(date, 1) = yearweek(current_date, 1))) as 'TotalInterest'\n" +
             "       from selling_invoice where yearweek(date, 1) = yearweek(current_date, 1)")
     List<Map<String, Object>> MoneyThisWeek();
 
     @Transactional
     @Modifying
-    @Query(nativeQuery = true, value = "select SUM(selling_invoice.total_price) as 'Tổng số tiền thu được',\n" +
-            "       (select  SUM(total_cost) from import_invoice where month(date) = month(current_date )) as 'Tổng số tiền chi',\n" +
-            "       (SUM(selling_invoice.total_price) -  (select  SUM(total_cost) from import_invoice where month(date) = month(current_date ))) as 'Tổng lãi'\n" +
+    @Query(nativeQuery = true, value = "select SUM(selling_invoice.total_price) as 'TotalCollect',\n" +
+            "       (select  SUM(total_cost) from import_invoice where month(date) = month(current_date )) as 'TotalPay',\n" +
+            "       (SUM(selling_invoice.total_price) -  (select  SUM(total_cost) from import_invoice where month(date) = month(current_date ))) as 'TotalInterest'\n" +
             "       from selling_invoice where month(date) = month(current_date)")
     List<Map<String, Object>> MoneyThisMonth();
 }

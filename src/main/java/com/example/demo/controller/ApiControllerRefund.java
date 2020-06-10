@@ -1,6 +1,5 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.InvoiceDetailEntity;
 import com.example.demo.entity.RefundInvoiceEntity;
 import com.example.demo.entity.SellingInvoiceEntity;
 import com.example.demo.services.Impl.InvoiceDetailService;
@@ -18,7 +17,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.persistence.EntityNotFoundException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/refund")
@@ -63,14 +64,18 @@ public class ApiControllerRefund {
                 produces = MediaType.APPLICATION_JSON_VALUE)
     public  ResponseEntity<?> toMakeRefund(@PathVariable("id") Integer id){
         SellingInvoiceEntity sellingInvoiceEntity =  sellingInvoiceService.findByID(id);
+        Map<String, String> map = new HashMap<String, String>();
         if(sellingInvoiceEntity == null){
-            return ResponseEntity.badRequest().body("Don't have it");
+            map.put("Error", "Don't have it");
+            return ResponseEntity.badRequest().body(map);
         }else if (!refundInvoiceService.CanCreateRefund(sellingInvoiceEntity)){
             return new ResponseEntity<>(sellingInvoiceEntity, HttpStatus.OK);
         }else if (!refundInvoiceService.CheckIsRefund(sellingInvoiceEntity)){
-            return ResponseEntity.ok().body("Can't not create refund invoice because exists");
+            map.put("Warning", "Can't not create refund invoice because it already exists");
+            return ResponseEntity.ok().body(map);
         }else{
-            return ResponseEntity.badRequest().body("Can't not create refund invoice because of expiring");
+            map.put("Warning", "Can't not create refund invoice because of expiring");
+            return ResponseEntity.badRequest().body(map);
         }
     }
 
@@ -98,7 +103,7 @@ public class ApiControllerRefund {
             refundInvoiceService.UpdateRefund(jsonInvoiceDetail, refundInvoiceEntity);
             return  ResponseEntity.ok().body(refundInvoiceEntity);
         }catch (DataAccessException e){
-            refundInvoiceService.RefeshRefund(jsonInvoiceDetail, refundInvoiceEntity);
+            refundInvoiceService.RefreshRefund(jsonInvoiceDetail, refundInvoiceEntity);
             return ResponseEntity.unprocessableEntity().body(e.getCause().getMessage());
         }
     }
