@@ -1,8 +1,9 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.ProductsEntity;
-import com.example.demo.services.Impl.ProductBatchesService;
-import com.example.demo.services.Impl.ProductService;
+
+import com.example.demo.services.ProductBatchesService;
+import com.example.demo.services.ProductsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +17,7 @@ import javax.persistence.EntityNotFoundException;
 public class ApiBranchController {
 
     @Autowired
-    private ProductService productService;
+    private ProductsService productsService;
 
     @Autowired
     private ProductBatchesService productBatchesService;
@@ -25,7 +26,7 @@ public class ApiBranchController {
                 produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> findProduct(@RequestParam(value = "q", required = false) String q){
         try{
-            return ResponseEntity.ok().body(productService.findByNameLike(q));
+            return ResponseEntity.ok().body(productsService.findByNameLike(q));
         }catch (EntityNotFoundException ex){
             return ResponseEntity.badRequest().body(ex);
         }
@@ -36,7 +37,7 @@ public class ApiBranchController {
     public ResponseEntity<?> updatePrice(@PathVariable("id") Integer id,
                                          @RequestBody ProductsEntity productsEntity){
         try{
-            return ResponseEntity.ok().body(productService.updatePriceProduct(id, productsEntity));
+            return ResponseEntity.ok().body(productsService.updatePriceProduct(id, productsEntity));
         }catch (Exception ex){
             return ResponseEntity.badRequest().body(ex);
         }

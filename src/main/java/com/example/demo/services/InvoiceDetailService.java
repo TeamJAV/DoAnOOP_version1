@@ -22,4 +22,8 @@ public class InvoiceDetailService {
     public List<InvoiceDetailEntity> findAll () {
         return invoiceDetailRepository.findAll();
     }
+    public InvoiceDetailEntity findById(int id){
+        return invoiceDetailRepository.findById(id).orElse(null);
+    }
+
 }
