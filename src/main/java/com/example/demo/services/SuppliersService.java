@@ -18,5 +18,10 @@ public class SuppliersService {
     public List<SuppliersEntity> findAll() {
         return suppliersRepository.findAll();
     }
+
+    public SuppliersEntity findById(int Id){
+        return suppliersRepository.findById(Id);
+    }
+
     //It's coding time!!!
 }

@@ -31,12 +31,13 @@ public class ProductBatchesEntity {
     @Column(name = "import_cost", length = 20)
     private Long importCost;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "supplier_id")
     @JsonIgnoreProperties("productBatches")
     private SuppliersEntity suppliers;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+//    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "products_id")
     @JsonIgnoreProperties("productBatches")
     private ProductsEntity products;

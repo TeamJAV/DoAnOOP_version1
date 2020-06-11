@@ -41,4 +41,12 @@ public class ProductsService {
         productsRepository.save(productsSelect);
         return productsSelect;
     }
+
+    public boolean existByName(String name){
+        return productsRepository.existsByName(name);
+    }
+
+    public boolean existByID(Integer id){
+        return productsRepository.existsById(id);
+    }
 }
