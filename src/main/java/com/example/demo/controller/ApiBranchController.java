@@ -1,8 +1,8 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.ProductsEntity;
-import com.example.demo.services.Impl.ProductBatchesService;
-import com.example.demo.services.Impl.ProductService;
+import com.example.demo.services.ProductBatchesService;
+import com.example.demo.services.ProductsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +16,7 @@ import javax.persistence.EntityNotFoundException;
 public class ApiBranchController {
 
     @Autowired
-    private ProductService productService;
+    private ProductsService productService;
 
     @Autowired
     private ProductBatchesService productBatchesService;

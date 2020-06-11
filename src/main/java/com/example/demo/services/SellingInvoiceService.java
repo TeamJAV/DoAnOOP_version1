@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Transactional
@@ -15,11 +16,48 @@ public class SellingInvoiceService {
     @Autowired
     private SellingInvoiceRepository sellingInvoiceRepository;
 
-    public SellingInvoiceEntity save (SellingInvoiceEntity sellingInvoice) {
+    public SellingInvoiceEntity save(SellingInvoiceEntity sellingInvoice) {
         return sellingInvoiceRepository.save(sellingInvoice);
     }
 
-    public List<SellingInvoiceEntity> findAll () {
+    public List<SellingInvoiceEntity> findAll() {
         return sellingInvoiceRepository.findAll();
+    }
+
+    public SellingInvoiceEntity findByID(Integer id) {
+        return sellingInvoiceRepository.findById(id).orElse(null);
+    }
+
+    //    public void save(SellingInvoiceEntity sellingInvoiceEntity){ sellingInvoiceRepository.save(sellingInvoiceEntity);}
+    public List<SellingInvoiceEntity> findList() {
+        return sellingInvoiceRepository.findAll();
+    }
+
+    public void updateTotalPrice(Integer id) {
+        sellingInvoiceRepository.UpdateTotalPrice(id);
+    }
+
+    public List<SellingInvoiceEntity> SellingTransToday() {
+        return sellingInvoiceRepository.SellingTransToday();
+    }
+
+    public List<SellingInvoiceEntity> SellingTransThisWeek() {
+        return sellingInvoiceRepository.SellingTransThisWeek();
+    }
+
+    public List<SellingInvoiceEntity> SellingTransThisMonth() {
+        return sellingInvoiceRepository.SellingTransThisMonth();
+    }
+
+    public List<Map<String, Object>> RevenueToday() {
+        return sellingInvoiceRepository.MoneyToday();
+    }
+
+    public List<Map<String, Object>> RevenueThisWeek() {
+        return sellingInvoiceRepository.MoneyThisWeek();
+    }
+
+    public List<Map<String, Object>> RevenueThisMonth() {
+        return sellingInvoiceRepository.MoneyThisMonth();
     }
 }

@@ -13,20 +13,32 @@ import java.util.List;
 public class ProductsService {
 
     @Autowired
-    private ProductsRepository productRepo;
+    private ProductsRepository productsRepository;
+
 
     public ProductsEntity save(ProductsEntity product){
-        return productRepo.save(product);
+        return productsRepository.save(product);
     }
 
     public List<ProductsEntity> findAll() {
-        return productRepo.findAll();
+        return productsRepository.findAll();
     }
 
     public List<ProductsEntity> findById(int Id){
-        return productRepo.findById(Id);
+        return productsRepository.findById(Id);
     }
 
-
-    //It's coding time!!!
+    public List<ProductsEntity> findByNameLike(String q) {
+        return productsRepository.findByNameContaining(q);
+    }
+    public ProductsEntity updatePriceProduct(Integer id, ProductsEntity productsEntity){
+        ProductsEntity productsSelect = productsRepository.findById(id).orElse(null);
+        if (productsEntity == null){
+            return  null;
+        }
+        assert productsSelect != null;
+        productsSelect.setPrice(productsEntity.getPrice());
+        productsRepository.save(productsSelect);
+        return productsSelect;
+    }
 }

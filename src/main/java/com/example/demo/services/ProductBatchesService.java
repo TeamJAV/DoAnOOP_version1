@@ -32,4 +32,8 @@ public class ProductBatchesService {
     public void save(ProductBatchesEntity batch){
         productBatchesRepository.save(batch);
     }
+
+    public List<ProductBatchesEntity> findBatchesByProductId(int id){
+        return productBatchesRepository.findAllByProductsId(id);
+    }
 }

@@ -32,4 +32,8 @@ public class ImportInvoiceService {
         importInvoiceRepository.updateTotalCost();
     }
     //It's coding time!!!
+
+    public List<ImportInvoiceEntity> ImportTransToday(){return importInvoiceRepository.ImportTransToday();}
+    public List<ImportInvoiceEntity> ImportTransThisWeek(){return importInvoiceRepository.ImportTransThisWeek();}
+    public List<ImportInvoiceEntity> ImportTransThisMonth(){return importInvoiceRepository.ImportTransThisMonth();}
 }
