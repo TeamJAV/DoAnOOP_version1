@@ -14,9 +14,15 @@ public class InvoiceDetailService {
 
     @Autowired
     private InvoiceDetailRepository invoiceDetailRepository;
+    @Autowired
+    private ProductBatchesService productBatchesService;
 
     public InvoiceDetailEntity save (InvoiceDetailEntity invoiceDetail) {
-        return invoiceDetailRepository.save(invoiceDetail);
+        InvoiceDetailEntity ide = invoiceDetailRepository.save(invoiceDetail);
+        String sku = ide.getProductBatches().getSku();
+        int quantity = ide.getQuantity();
+        productBatchesService.updateQuantityBySku(sku, quantity);
+        return ide;
     }
 
     public List<InvoiceDetailEntity> findAll () {

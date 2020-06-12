@@ -21,6 +21,10 @@ public class ProductBatchesService {
         return productBatchesRepository.findBySKU(sku);
     }
 
+    public void updateQuantityBySku (String sku, int quantity) {
+        productBatchesRepository.updateQuantityBySku(sku, quantity);
+    }
+
     public ProductBatchesEntity save1(ProductBatchesEntity batch){
         return productBatchesRepository.save(batch);
     }

@@ -51,7 +51,8 @@ public class SellingController {
             return new ResponseEntity<>(resInvoiceDetail, HttpStatus.BAD_REQUEST);
         }
         for (InvoiceDetailEntity E : reqInvoiceDetail) {
-            resInvoiceDetail.add(invoiceDetailService.save((E)));
+            InvoiceDetailEntity e = invoiceDetailService.save((E));
+            resInvoiceDetail.add(e);
         }
         return new ResponseEntity<>(resInvoiceDetail, HttpStatus.OK);
     }
