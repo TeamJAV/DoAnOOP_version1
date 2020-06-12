@@ -23,5 +23,8 @@ public class SuppliersService {
         return suppliersRepository.findById(Id);
     }
 
+    public List<SuppliersEntity> findByName(String name){
+        return suppliersRepository.findByNameContaining(name);
+    }
     //It's coding time!!!
 }

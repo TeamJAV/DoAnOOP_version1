@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -62,13 +63,12 @@ public class ImportController {
         }
     }
 
-    @RequestMapping(value = "/product/{id}", method = RequestMethod.GET)
-    public ResponseEntity<List<ProductsEntity>> getOneProduct (@PathVariable int id, @RequestBody ProductsEntity product) {
-        if(!productsService.existByID(id)){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }else {
-            List<ProductsEntity> oneProduct = productsService.findById(id);
-            return new ResponseEntity<>(oneProduct, HttpStatus.OK);
+    @RequestMapping(value = "/product/{name}", method = RequestMethod.GET)
+    public ResponseEntity<?> getOneProduct (@PathVariable String name, @RequestBody ProductsEntity product) {
+        try{
+            return new ResponseEntity<>(productsService.findByNameLike(name), HttpStatus.OK);
+        }catch (EntityNotFoundException e){
+            return new ResponseEntity<>(productsService.findByNameLike(name), HttpStatus.NO_CONTENT);
         }
     }
 
@@ -93,9 +93,12 @@ public class ImportController {
         return new ResponseEntity<>(importInvoice, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/supplier/{id}", method = RequestMethod.GET )
-    public ResponseEntity<SuppliersEntity> getOneSupplier (@PathVariable int id) {
-        SuppliersEntity supplier  = supService.findById(id);
-        return new ResponseEntity<>(supplier, HttpStatus.OK);
+    @RequestMapping(value = "/supplier/{name}", method = RequestMethod.GET )
+    public ResponseEntity<?> getOneSupplier (@PathVariable String name) {
+        try{
+            return new ResponseEntity<>(supService.findByName(name), HttpStatus.OK);
+        }catch(EntityNotFoundException e){
+            return new ResponseEntity<>(supService.findByName(name), HttpStatus.NO_CONTENT);
+        }
     }
 }
