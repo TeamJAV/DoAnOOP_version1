@@ -25,7 +25,7 @@ public class InvoiceDetailEntity {
     @ColumnDefault("0")
     private Integer quantityRefund;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "sku")
     @JsonIgnoreProperties("invoiceDetail")
     private ProductBatchesEntity productBatches;
@@ -35,7 +35,7 @@ public class InvoiceDetailEntity {
     @JsonIgnoreProperties("invoiceDetail")
     private RefundInvoiceEntity refundInvoice;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "selling_invoice")
     @JsonIgnoreProperties("invoiceDetail")
     private SellingInvoiceEntity sellingInvoice;
