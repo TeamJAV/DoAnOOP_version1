@@ -14,7 +14,7 @@ import javax.persistence.EntityNotFoundException;
 
 @RestController
 @RequestMapping(value = "/product")
-public class ApiBranchController {
+public class ApiProductController {
 
     @Autowired
     private ProductsService productsService;
