@@ -39,10 +39,42 @@ export default class ProductInputForm extends Component {
 
   /**-------------------------------------------------- */
   handleSaveProduct = () => {
-    console.log("xyz");
+    const url = "http://localhost:8081/import/product";
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: this.state.product.name,
+        price: this.state.product.price,
+      }),
+    })
+      .then((res) => {
+        console.log(res)
+        return res.json();
+      })
+      .then((data) => {
+        this.setState({
+          modal: {
+            type: "success",
+            show: true
+          },
+        }, () => {
+          console.log(this.state.modal)
+        });
+      })
+      .catch((err) => {
+        this.setState({
+          modal: {
+            type: "failure",
+            show: true
+          },
+        });
+      });
   };
   /**-------------------------------------------------- */
-  
+
   render() {
     return (
       <>

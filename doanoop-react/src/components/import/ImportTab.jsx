@@ -7,14 +7,21 @@ export default class ImportTab extends Component {
   render() {
     return (
       <>
-        <Tabs defaultActiveKey="batchInputForm" id="uncontrolled-tab-example" transition={false}>
-          <Tab eventKey="batchInputForm" title="Phiếu nhập hàng">
-            <BatchInputContainer />
-          </Tab>
-          <Tab eventKey="profile" title="Thêm mới hàng">
-            <ProductInputForm />
-          </Tab>
-        </Tabs>
+        <div className="import-container">
+          <Tabs
+            className="justify-content-center"
+            defaultActiveKey="batchInputForm"
+            id="uncontrolled-tab-example"
+            transition={false}
+          >
+            <Tab eventKey="batchInputForm" title="Phiếu nhập hàng">
+              <BatchInputContainer />
+            </Tab>
+            <Tab eventKey="profile" title="Thêm mới hàng">
+              <ProductInputForm />
+            </Tab>
+          </Tabs>
+        </div>
       </>
     );
   }

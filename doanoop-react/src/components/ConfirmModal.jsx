@@ -72,16 +72,30 @@ export default class ConfirmModal extends Component {
         );
       case "fetching":
         return null;
-      case "selling-success":
+      case "success":
         return (
           <>
-            <Button className="btn btn-primary btn-confirm" href="selling">
+            <Button
+              className="btn btn-primary btn-confirm"
+              onClick={() => {
+                window.location.reload();
+              }}
+            >
               Hoàn tất
             </Button>
           </>
         );
-      case "selling-failure":
-        return "Đã xảy ra lỗi. Xin vui lòng thử lại";
+      case "failure":
+        return (
+          <>
+            <Button
+              className="btn btn-secondary btn-cancel"
+              onClick={this.props.toggleModal}
+            >
+              Quay lại
+            </Button>
+          </>
+        );
       default:
         return null;
     }

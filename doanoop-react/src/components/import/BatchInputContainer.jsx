@@ -35,7 +35,41 @@ export default class BatchInputContainer extends Component {
 
   /**-------------------------------------------------- */
   handleSaveInvoice = () => {
-    console.log("abc");
+    // let abc = {
+    //   productBatches: this.state.productBatches
+    // }
+    // console.log(JSON.stringify(abc));
+    // console.log(this.state.productBatches);
+    fetch("http://localhost:8081/import/invoice", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        productBatches: this.state.productBatches,
+      }),
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        console.log(data);
+        this.setState({
+          modal: {
+            type: "success",
+            show: this.state.modal.show,
+          },
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        this.setState({
+          modal: {
+            type: "failure",
+            show: this.state.modal.show,
+          },
+        });
+      });
   };
   /**-------------------------------------------------- */
 
@@ -52,22 +86,30 @@ export default class BatchInputContainer extends Component {
   };
 
   render() {
+    const listStyle = {
+      maxWidth: "977px",
+      margin: "0 auto",
+    };
     return (
       <>
         <BatchInputForm setBatches={this.setProductBatches} />
+        <div className="batch-list__header">
+          <p>Danh sách hàng đã nhập</p>
+        </div>
         <NewBatchList
           listBatches={this.state.productBatches}
           deleteBatch={this.deleteProductBatch}
+          listStyle={listStyle}
         ></NewBatchList>
-        <div className="action-button">
+        <div className="action-button justify-center">
+          <Button className="btn-type-2 btn-cancel" href="/import">
+            Hủy bỏ
+          </Button>
           <Button
-            className="btn btn-primary btn-confirm"
+            className="btn-type-2 btn-confirm"
             onClick={this.handleToggleModal}
           >
-            Hoàn thành
-          </Button>
-          <Button className="btn btn-secondary btn-cancel" href="/import">
-            Hủy bỏ
+            Hoàn tất
           </Button>
         </div>
         <ConfirmModal

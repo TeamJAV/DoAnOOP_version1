@@ -26,13 +26,24 @@ export default class SearchBar extends Component {
         value: value,
       },
       () => {
-        const data = {
-          id: Math.floor(Math.random() * 101).toString(),
-          name: Math.floor(Math.random() * 101).toString(),
-        };
-        this.setState((prevState) => ({
-          searchResults: [...prevState.searchResults, data],
-        }));
+        fetch(
+          `http://localhost:8081/import/${this.props.type}/${this.state.value}`,
+          {
+            method: "GET",
+          }
+        )
+          .then((res) => {
+            return res.json();
+          })
+          .then((data) => {
+            this.setState({
+              searchResults: data,
+              didSearch: true,
+            });
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       }
     );
   };
@@ -47,7 +58,7 @@ export default class SearchBar extends Component {
   handleSelectResult = (event) => {
     const id = event.currentTarget.dataset.id;
     const result = this.state.searchResults.find((e) => {
-      return e.id === id;
+      return e.id === parseInt(id);
     });
     this.props.onSelect(result);
     this.setState({
@@ -60,12 +71,16 @@ export default class SearchBar extends Component {
       let list = this.state.searchResults.map((result) => {
         return (
           <div
-            className="search-result"
+            className="search-result align-center"
             key={result.id}
             data-id={result.id}
             onMouseDown={this.handleSelectResult}
+            style={{
+              padding: "0 0 0 30px",
+              height: " 50px",
+            }}
           >
-            <p>
+            <p style={{ margin: "0px" }}>
               {result.id} - {result.name}
             </p>
           </div>

@@ -32,7 +32,7 @@ export default class NewBatchList extends Component {
   render() {
     return (
       <>
-        <div className="invoice-container">
+        <div className="invoice-container" style={this.props.listStyle}>
           <table className="table">
             <thead>
               <tr>

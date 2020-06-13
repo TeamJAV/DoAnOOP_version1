@@ -76,23 +76,29 @@ export default class BatchInputForm extends Component {
   render() {
     return (
       <>
-        <form style={{ width: 900 }} className="batch-form">
+        <form className="batch-form">
           <div
             className="batch-form__product-info"
-            style={{ display: "inline-block", width: "50%" }}
+            style={{
+              display: "inline-block",
+              width: "50%",
+              verticalAlign: "top",
+            }}
           >
-            <span>Tên hàng hóa: </span>
-            <SearchBar
-              type="product"
-              onSelect={this.setProduct}
-              key={this.keyCount}
-            />
+            <div className="batch-form__name justify-between">
+              <span>Tên hàng hóa: </span>
+              <SearchBar
+                type="product"
+                onSelect={this.setProduct}
+                key={this.keyCount}
+              />
+            </div>
           </div>
           <div
             className="batch-form__batch-info"
             style={{ display: "inline-block", width: "50%" }}
           >
-            <div className="batch-form__supplier">
+            <div className="batch-form__supplier justify-between">
               <span>Nhà cung cấp: </span>
               <SearchBar
                 type="supplier"
@@ -100,7 +106,7 @@ export default class BatchInputForm extends Component {
                 key={this.keyCount}
               />
             </div>
-            <div className="batch-form__expire-date">
+            <div className="batch-form__expire-date justify-between">
               <span>Ngày hết hạn: </span>
               <input
                 type="date"
@@ -109,7 +115,7 @@ export default class BatchInputForm extends Component {
                 onChange={this.handleInputChange}
               ></input>
             </div>
-            <div className="batch-form__quantity">
+            <div className="batch-form__quantity justify-between">
               <span>Số lượng: </span>
               <input
                 type="text"
@@ -118,7 +124,7 @@ export default class BatchInputForm extends Component {
                 onChange={this.handleInputChange}
               ></input>
             </div>
-            <div className="batch-form__price">
+            <div className="batch-form__price justify-between">
               <span>Giá nhập: </span>
               <input
                 type="text"
@@ -129,8 +135,18 @@ export default class BatchInputForm extends Component {
             </div>
           </div>
           <div className="batch-form__button">
-            <button onClick={this.handleClickReset}>Tạo lại</button>
-            <button onClick={this.handleClickContinue}>Tiếp tục</button>
+            <button
+              className="btn-type-2 btn-cancel"
+              onClick={this.handleClickReset}
+            >
+              Tạo lại
+            </button>
+            <button
+              className="btn-type-2 btn-confirm"
+              onClick={this.handleClickContinue}
+            >
+              Tiếp tục
+            </button>
           </div>
         </form>
       </>

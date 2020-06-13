@@ -10,7 +10,18 @@ export default class InvoiceSearch extends Component {
 
   handleFormSubmit = (event) => {
     event.preventDefault();
-    console.log(this.state.value);
+    fetch(`http://localhost:8081/refund/selling_invoice/${this.state.value}`, {
+      method: "GET"
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        this.props.setInvoice(data);
+      })
+      .catch((err) => {
+        console.log(err)
+      });
   };
 
   handleInputChange = (event) => {
@@ -28,6 +39,7 @@ export default class InvoiceSearch extends Component {
             name="invoice-search__input"
             onChange={this.handleInputChange}
             value={this.state.value}
+            placeholder="Nhập mã hóa đơn và nhấn enter để tìm kiếm..."
           ></input>
         </form>
       </>

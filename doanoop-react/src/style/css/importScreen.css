@@ -1,0 +1,109 @@
+.import-container {
+  width: 80vw;
+  max-width: 1150px;
+  margin: 0 auto;
+}
+.import-container .nav-tabs {
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 1.3px;
+  border-bottom: none;
+  margin-bottom: 59px;
+}
+.nav-tabs .nav-link {
+  width: 290px;
+  text-align: center;
+  border-bottom: 2px solid #e1e8ed;
+  color: rgba(0, 0, 0, 0.5);
+}
+.nav-tabs .nav-link.active {
+  border-color: #fff #fff #1da1f2;
+  color: #1da1f2;
+}
+.batch-form {
+  font-size: 18px;
+  overflow: hidden;
+  color: rgba(0, 0, 0, 0.5);
+  margin: 0 auto;
+  margin-bottom: 96px;
+}
+.batch-form input {
+  width: 16.4em;
+  height: 2.2em;
+  border-radius: 20px;
+  border: none;
+  outline: none;
+  background-color: #f5f8fa;
+  padding: 0px 30px;
+}
+.batch-form input:focus {
+  border-radius: 20px;
+  border: 1px solid #1da1f2;
+}
+.batch-form > div {
+  padding: 0px 20px 0 40px;
+}
+.batch-form__name,
+.batch-form__batch-info > div {
+  margin-bottom: 18px;
+}
+.batch-form__name .product,
+.batch-form__supplier .supplier {
+  position: relative;
+}
+.product .product__results,
+.supplier .supplier__results {
+  position: absolute;
+  width: 100%;
+  max-height: 255px;
+  background-color: #ffffff;
+  border-radius: 5px;
+  box-shadow: 0px 3px 6px 0px #d8d8d8;
+  overflow: auto;
+  z-index: 1;
+}
+.batch-form__batch-info {
+  margin-bottom: 75px;
+}
+.batch-form__button {
+  display: flex;
+  justify-content: center;
+  padding: 0px !important;
+}
+.batch-list__header {
+  text-align: center;
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 50px;
+}
+.btn-type-2 {
+  width: 120px;
+  font-size: 16px;
+  border-radius: 20px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  padding: 6px 20px;
+  border: 2px solid #1da1f2;
+  margin: 0 10px;
+}
+.btn-type-2.btn-confirm {
+  color: #fff;
+}
+.btn-type-2.btn-cancel {
+  color: #1da1f2;
+  background-color: #fff;
+}
+.justify-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.justify-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.align-center {
+  display: flex;
+  align-items: center;
+}

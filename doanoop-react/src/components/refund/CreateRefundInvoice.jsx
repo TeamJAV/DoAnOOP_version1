@@ -5,7 +5,7 @@ export default class CreateRefundInvoice extends Component {
   render() {
     return (
       <>
-        <Button onClick={this.props.return}>Return</Button>
+        <Button onClick={this.props.cancel}>Return</Button>
       </>
     );
   }
