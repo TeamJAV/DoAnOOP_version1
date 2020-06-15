@@ -51,6 +51,11 @@ public class ApiControllerRefund {
     public  ResponseEntity<?> findSellingByID(@PathVariable("id") Integer id){
         try{
             SellingInvoiceEntity sellingInvoiceEntity = sellingInvoiceService.findByID(id);
+            Map<String, String> message = new HashMap<String, String>();
+            if (sellingInvoiceEntity == null) {
+                message.put("message", "Không tìm thấy hóa đơn");
+                return ResponseEntity.ok().body(message);
+            }
             return ResponseEntity.ok().body(sellingInvoiceEntity);
         }catch (EntityNotFoundException ex){
             return ResponseEntity.unprocessableEntity().body(ex);
@@ -66,16 +71,16 @@ public class ApiControllerRefund {
         SellingInvoiceEntity sellingInvoiceEntity =  sellingInvoiceService.findByID(id);
         Map<String, String> map = new HashMap<String, String>();
         if(sellingInvoiceEntity == null){
-            map.put("Error", "Don't have it");
-            return ResponseEntity.badRequest().body(map);
-        }else if (!refundInvoiceService.CanCreateRefund(sellingInvoiceEntity)){
-            return new ResponseEntity<>(sellingInvoiceEntity, HttpStatus.OK);
-        }else if (!refundInvoiceService.CheckIsRefund(sellingInvoiceEntity)){
-            map.put("Warning", "Can't not create refund invoice because it already exists");
+            map.put("message", "Hóa đơn không tồn tại");
             return ResponseEntity.ok().body(map);
-        }else{
-            map.put("Warning", "Can't not create refund invoice because of expiring");
-            return ResponseEntity.badRequest().body(map);
+        } else if (!refundInvoiceService.CheckIsRefund(sellingInvoiceEntity)){
+            map.put("message", "Không thể tiến hành do hóa đơn đã từng được hoàn tiền");
+            return ResponseEntity.ok().body(map);
+        } else if (!refundInvoiceService.CanCreateRefund(sellingInvoiceEntity)){
+            map.put("message", "Không thể tiến hành do hóa đơn đã quá thời hạn 2 ngày");
+            return ResponseEntity.ok().body(map);
+        } else {
+            return new ResponseEntity<>(sellingInvoiceEntity, HttpStatus.OK);
         }
     }
 
@@ -91,7 +96,7 @@ public class ApiControllerRefund {
     //Tạo hóa đơn trả lại
     //Request: RefundInvoiceEntity, List<InvoiceDetailEntity>
     //Response: RefundInvoiceEntity
-    @PostMapping(value = "/create", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/create",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> createRefundInvoice(@RequestBody String jsonString )throws JSONException, JsonProcessingException {
         JSONObject jsonObject = new JSONObject(jsonString);
         JSONObject jsonRefund = jsonObject.getJSONObject("refundInvoice");
