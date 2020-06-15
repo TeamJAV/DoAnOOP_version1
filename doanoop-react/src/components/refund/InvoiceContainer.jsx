@@ -10,14 +10,8 @@ export default class InvoiceContainer extends Component {
     super(props);
     this.state = {
       invoice: {},
+      message: "",
       createNew: false,
-      newRefundInvoice: {
-        refundInvoice: {
-          date: new Date().toISOString(),
-          note: "",
-        },
-        invoiceDetail: [],
-      },
     };
   }
 
@@ -28,14 +22,20 @@ export default class InvoiceContainer extends Component {
   };
 
   setInvoice = (invoice) => {
-    this.setState(
-      {
-        invoice: invoice,
-      },
-      () => {
-        console.log(this.state.invoice);
-      }
-    );
+    this.setState({
+      invoice: invoice,
+      message: "",
+    });
+  };
+
+  setMessage = (message) => {
+    this.setState({ message: message });
+  };
+
+  handleCreateButton = () => {
+    if (!isEmptyObject(this.state.invoice)) {
+      this.setCreateNew();
+    }
   };
 
   render() {
@@ -48,10 +48,16 @@ export default class InvoiceContainer extends Component {
     return (
       <>
         {this.state.createNew ? (
-          <CreateRefundInvoice cancel={this.setCreateNew}></CreateRefundInvoice>
+          <CreateRefundInvoice
+            cancel={this.setCreateNew}
+            detail={this.state.invoice.invoiceDetail}
+          ></CreateRefundInvoice>
         ) : (
           <>
-            <InvoiceSearch setInvoice={this.setInvoice} />
+            <InvoiceSearch
+              setInvoice={this.setInvoice}
+              setMessage={this.setMessage}
+            />
             <div className="invoice-info">
               <div>Thông tin hóa đơn:</div>
               <span>Mã hóa đơn: {this.state.invoice.id}</span>
@@ -83,7 +89,17 @@ export default class InvoiceContainer extends Component {
                 </tbody>
               </table>
             </div>
-            <Button onClick={this.setCreateNew}>Tạo hóa đơn trả</Button>
+            {this.state.message === "" ? (
+              <>
+                <Button onClick={this.handleCreateButton}>
+                  Tạo hóa đơn trả
+                </Button>
+              </>
+            ) : (
+              <div>
+                <p>{this.state.message}</p>
+              </div>
+            )}
           </>
         )}
       </>

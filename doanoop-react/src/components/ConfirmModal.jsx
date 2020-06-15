@@ -24,6 +24,13 @@ export default class ConfirmModal extends Component {
             <div>Xác nhận tạo mới mặt hàng trên?</div>
           </div>
         );
+      case "refund-confirm":
+        return (
+          <div>
+            <div>Xác nhận hoàn tiền cho hóa đơn trên?</div>
+            <div>(Lưu ý: Mỗi hóa đơn chỉ được hoàn tiền 1 lần)</div>
+          </div>
+        );
       case "fetching":
         return (
           <div>
@@ -54,6 +61,7 @@ export default class ConfirmModal extends Component {
       case "selling-confirm":
       case "import-batches-confirm":
       case "import-product-confirm":
+      case "refund-confirm":
         return (
           <>
             <Button

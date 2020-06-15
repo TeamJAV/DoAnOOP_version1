@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { sortByProductName } from "../../utils/array";
 
 export default class InvoiceSearch extends Component {
   constructor(props) {
@@ -10,17 +11,25 @@ export default class InvoiceSearch extends Component {
 
   handleFormSubmit = (event) => {
     event.preventDefault();
-    fetch(`http://localhost:8081/refund/selling_invoice/${this.state.value}`, {
-      method: "GET"
+    event.target.childNodes[0].blur();
+    fetch(`http://localhost:8081/refund/create_refund_by/${this.state.value}`, {
+      method: "GET",
     })
       .then((res) => {
         return res.json();
       })
       .then((data) => {
-        this.props.setInvoice(data);
+        if (data.message) {
+          this.props.setMessage(data.message);
+        } else {
+          data.invoiceDetail.sort((a, b) => {
+            return sortByProductName(a.productBatches, b.productBatches);
+          });
+          this.props.setInvoice(data);
+        }
       })
       .catch((err) => {
-        console.log(err)
+        console.log(err);
       });
   };
 
@@ -38,6 +47,9 @@ export default class InvoiceSearch extends Component {
             type="text"
             name="invoice-search__input"
             onChange={this.handleInputChange}
+            onFocus={() => {
+              this.props.setInvoice({});
+            }}
             value={this.state.value}
             placeholder="Nhập mã hóa đơn và nhấn enter để tìm kiếm..."
           ></input>
