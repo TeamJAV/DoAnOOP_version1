@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import ConfirmModal from "../ConfirmModal";
-import { Button } from "react-bootstrap";
 
 export default class ProductInputForm extends Component {
   state = {
@@ -51,24 +50,27 @@ export default class ProductInputForm extends Component {
       }),
     })
       .then((res) => {
-        console.log(res)
+        console.log(res);
         return res.json();
       })
       .then((data) => {
-        this.setState({
-          modal: {
-            type: "success",
-            show: true
+        this.setState(
+          {
+            modal: {
+              type: "success",
+              show: true,
+            },
           },
-        }, () => {
-          console.log(this.state.modal)
-        });
+          () => {
+            console.log(this.state.modal);
+          }
+        );
       })
       .catch((err) => {
         this.setState({
           modal: {
             type: "failure",
-            show: true
+            show: true,
           },
         });
       });
@@ -79,7 +81,7 @@ export default class ProductInputForm extends Component {
     return (
       <>
         <form className="product-form">
-          <div className="product-form__name">
+          <div className="product-form__name justify-between">
             <span>Tên hàng hóa: </span>
             <input
               type="text"
@@ -88,7 +90,7 @@ export default class ProductInputForm extends Component {
               onChange={this.handleInputChange}
             ></input>
           </div>
-          <div className="product-form__price">
+          <div className="product-form__price justify-between">
             <span>Giá bán: </span>
             <input
               type="text"
@@ -97,24 +99,25 @@ export default class ProductInputForm extends Component {
               onChange={this.handleInputChange}
             ></input>
           </div>
-          <div className="action-button">
-            <Button
-              className="btn btn-primary btn-confirm"
-              onClick={this.handleToggleModal}
-            >
-              Hoàn thành
-            </Button>
-            <Button className="btn btn-secondary btn-cancel" href="/import">
-              Hủy bỏ
-            </Button>
-          </div>
-          <ConfirmModal
-            show={this.state.modal.show}
-            type={this.state.modal.type}
-            toggleModal={this.handleToggleModal}
-            proceed={this.handleSaveProduct}
-          ></ConfirmModal>
         </form>
+        <div className="action-button">
+          <button className="btn-type-2 btn-cancel" href="/import">
+            Hủy bỏ
+          </button>
+          <button
+            className="btn-type-2 btn-confirm"
+            onClick={this.handleToggleModal}
+            style={{ width: "140px", padding: "6px 3px" }}
+          >
+            Hoàn thành
+          </button>
+        </div>
+        <ConfirmModal
+          show={this.state.modal.show}
+          type={this.state.modal.type}
+          toggleModal={this.handleToggleModal}
+          proceed={this.handleSaveProduct}
+        ></ConfirmModal>
       </>
     );
   }

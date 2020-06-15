@@ -110,33 +110,46 @@ export default class CreateRefundInvoice extends Component {
     }
     return (
       <>
-        <SelectRefundItem
-          detail={this.props.detail}
-          setDetail={this.setInvoiceDetail}
-        ></SelectRefundItem>
-        <BatchList
-          list={this.state.newRefundInvoice.invoiceDetail}
-          type="refund"
-          isDeleteAllowed={true}
-          delete={this.deleteDetail}
-        ></BatchList>
-        <div>Tổng tiền trả lại: {total}</div>
-        <button className="btn-type-2 btn-cancel" onClick={this.props.cancel}>
-          Quay lại
-        </button>
-        <button
-          className="btn-type-2 btn-confirm"
-          onClick={this.handleToggleModal}
-          style={{ padding: "6px 18px" }}
-        >
-          Hoàn tiền
-        </button>
-        <ConfirmModal
-          show={this.state.showModal}
-          type={this.state.modalType}
-          toggleModal={this.handleToggleModal}
-          proceed={this.createRefundInvoice}
-        ></ConfirmModal>
+        <div className="refund-invoice-container">
+          <SelectRefundItem
+            detail={this.props.detail}
+            setDetail={this.setInvoiceDetail}
+          ></SelectRefundItem>
+          <div className="center-header-18" style={{ marginBottom: "29px" }}>
+            Danh sách hàng trả lại
+          </div>
+          <BatchList
+            list={this.state.newRefundInvoice.invoiceDetail}
+            type="refund"
+            isDeleteAllowed={true}
+            delete={this.deleteDetail}
+          ></BatchList>
+          <div className="center-18" style={{ marginBottom: "30px" }}>
+            <span className="mr25">Tổng tiền trả lại:</span>
+            <span>{total}</span>
+          </div>
+          <div style={{ width: "fit-content", margin: "0 auto" }}>
+            <button
+              className="btn-type-2 btn-cancel"
+              onClick={this.props.cancel}
+            >
+              Quay lại
+            </button>
+            <button
+              className="btn-type-2 btn-confirm"
+              onClick={this.handleToggleModal}
+              style={{ padding: "6px 18px" }}
+            >
+              Hoàn tiền
+            </button>
+          </div>
+          <ConfirmModal
+            show={this.state.showModal}
+            type={this.state.modalType}
+            toggleModal={this.handleToggleModal}
+            proceed={this.createRefundInvoice}
+          ></ConfirmModal>
+        </div>
       </>
     );
   }

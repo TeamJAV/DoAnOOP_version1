@@ -20,14 +20,20 @@
   border-color: #fff #fff #1da1f2;
   color: #1da1f2;
 }
-.batch-form {
+.batch-form,
+.product-form {
   font-size: 18px;
   overflow: hidden;
   color: rgba(0, 0, 0, 0.5);
   margin: 0 auto;
   margin-bottom: 96px;
 }
-.batch-form input {
+.product-form {
+  width: 50%;
+  margin: 0 auto 50px;
+}
+.batch-form input,
+.product-form input {
   width: 16.4em;
   height: 2.2em;
   border-radius: 20px;
@@ -36,7 +42,8 @@
   background-color: #e6ecf0;
   padding: 0px 30px;
 }
-.batch-form input:focus {
+.batch-form input:focus,
+.product-form input:focus {
   border-radius: 20px;
   border: 1px solid #1da1f2;
 }
@@ -44,6 +51,7 @@
   padding: 0px 20px 0 40px;
 }
 .batch-form__name,
+.product-form__name,
 .batch-form__batch-info > div {
   margin-bottom: 18px;
 }
@@ -106,4 +114,8 @@
 .align-center {
   display: flex;
   align-items: center;
+}
+.action-button {
+  width: fit-content;
+  margin: 0 auto;
 }

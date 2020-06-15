@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import InvoiceSearch from "./InvoiceSearch";
-import { Button } from "react-bootstrap";
 import CreateRefundInvoice from "./CreateRefundInvoice";
 import BatchList from "../BatchList";
 import { isEmptyObject } from "../../utils/object";
+import "../../style/css/refundScreen.css";
 
 export default class InvoiceContainer extends Component {
   constructor(props) {
@@ -40,10 +40,12 @@ export default class InvoiceContainer extends Component {
 
   render() {
     let tempPrice = "";
+    let time = "";
     if (!isEmptyObject(this.state.invoice)) {
       tempPrice =
         this.state.invoice.totalPrice +
         this.state.invoice.totalPrice * this.state.invoice.discount;
+      time = new Date(this.state.invoice.date).toLocaleString().split(",")[0];
     }
     return (
       <>
@@ -53,22 +55,30 @@ export default class InvoiceContainer extends Component {
             detail={this.state.invoice.invoiceDetail}
           ></CreateRefundInvoice>
         ) : (
-          <>
+          <div className="refund-invoice-container">
             <InvoiceSearch
               setInvoice={this.setInvoice}
               setMessage={this.setMessage}
             />
             <div className="invoice-info">
-              <div>Thông tin hóa đơn:</div>
-              <span>Mã hóa đơn: {this.state.invoice.id}</span>
-              <span>Ngày tạo: {this.state.invoice.date}</span>
+              <div className="center-header-18">Thông tin hóa đơn</div>
+              <div id="invoice-info__info">
+                <div className="invoice-info__detail">
+                  <span>Mã hóa đơn:</span>
+                  <span>{this.state.invoice.id}</span>
+                </div>
+                <div className="invoice-info__detail">
+                  <span>Ngày tạo:</span>
+                  <span>{time}</span>
+                </div>
+              </div>
             </div>
             <BatchList
               list={this.state.invoice.invoiceDetail}
               isDeleteAllowed={false}
             />
-            <div className="total-money">
-              <table className="total-money-table">
+            <div className="total-money" style={{ marginBottom: "30px" }}>
+              <table className="total-money-table center">
                 <tbody>
                   <tr>
                     <td className="left-column">Tổng tiền hàng:</td>
@@ -89,18 +99,22 @@ export default class InvoiceContainer extends Component {
                 </tbody>
               </table>
             </div>
-            {this.state.message === "" ? (
-              <>
-                <Button onClick={this.handleCreateButton}>
-                  Tạo hóa đơn trả
-                </Button>
-              </>
-            ) : (
-              <div>
-                <p>{this.state.message}</p>
-              </div>
-            )}
-          </>
+            <div style={{ width: "100%", textAlign: "center" }}>
+              {this.state.message === "" ? (
+                <>
+                  <button
+                    className="btn-type-2 btn-confirm"
+                    onClick={this.handleCreateButton}
+                    style={{ width: "300px", margin: "0 auto" }}
+                  >
+                    Tạo hóa đơn trả
+                  </button>
+                </>
+              ) : (
+                <p id="refundMessage">{this.state.message}</p>
+              )}
+            </div>
+          </div>
         )}
       </>
     );

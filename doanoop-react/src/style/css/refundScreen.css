@@ -1,0 +1,72 @@
+.refund-invoice-container,
+.invoice-search {
+  width: 50%;
+  margin: 0 auto;
+}
+.invoice-search__input {
+  width: 100%;
+  width: 100%;
+  height: 41px;
+  background-color: #e6ecf0;
+  border-color: transparent;
+  border-radius: 20px;
+  padding: 9px 35px;
+  margin-bottom: 25px;
+}
+#invoice-info__info {
+  display: table;
+  margin: 29px auto 40px;
+}
+.invoice-info__detail {
+  display: table-cell;
+  padding-left: 20px;
+}
+.invoice-info__detail span {
+  margin-right: 15px;
+}
+.total-money-table.center {
+  float: none;
+  margin: 0 auto;
+}
+#refundMessage {
+  color: #1da1f2;
+  font-weight: 600;
+  font-size: 18px;
+  letter-spacing: 0.7px;
+}
+.center-header-18 {
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
+  letter-spacing: 0.5px;
+}
+.center-18 {
+  font-size: 18px;
+  text-align: center;
+}
+#selectRefundForm {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-bottom: 50px;
+}
+input[type="number"] {
+  width: 70px;
+}
+select {
+  width: 230px;
+  padding-left: 15px;
+}
+.input-type-1 {
+  height: 40px;
+  text-align: center;
+  border-radius: 20px;
+  border: 1px solid #e6ecf0;
+  background-color: #e6ecf0;
+}
+.inline-block {
+  display: inline-block;
+}
+.mr25 {
+  margin-right: 25px;
+}

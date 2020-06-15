@@ -69,30 +69,37 @@ export default class SelectRefundItem extends Component {
     }
     return (
       <>
-        <form>
-          <select
-            className="refund-options"
-            onChange={this.handleChangeOption}
-            defaultValue="default"
-          >
-            <option value="default" disabled hidden>
-              -- Choose here --
-            </option>
-            {this.renderOptions()}
-          </select>
-          <input
-            type="number"
-            className="refund-quantity"
-            value={this.state.refundQuantity}
-            min="1"
-            max={maxQuantity}
-            onChange={this.handleChangeQuantity}
-            disabled={!isSelected}
-          />
+        <form id="selectRefundForm">
+          <div className="inline-block">
+            <span className="mr25">Sản phẩm:</span>
+            <select
+              className="refund-options input-type-1"
+              onChange={this.handleChangeOption}
+              defaultValue="default"
+            >
+              <option value="default" disabled hidden>
+                -- --
+              </option>
+              {this.renderOptions()}
+            </select>
+          </div>
+          <div className="inline-block">
+            <span className="mr25">Số lượng:</span>
+            <input
+              type="number"
+              className="refund-quantity input-type-1"
+              value={this.state.refundQuantity}
+              min="1"
+              max={maxQuantity}
+              onChange={this.handleChangeQuantity}
+              disabled={!isSelected}
+            />
+          </div>
           <button
-            className="btn2 btn-confirm"
+            className="btn-type-2 btn-confirm"
             disabled={!isSelected}
             onClick={this.handleAddButton}
+            style={{ width: "85px", padding: "6px" }}
           >
             Thêm
           </button>

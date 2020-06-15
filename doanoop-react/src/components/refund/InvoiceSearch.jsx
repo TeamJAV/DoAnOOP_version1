@@ -45,13 +45,13 @@ export default class InvoiceSearch extends Component {
         <form className="invoice-search" onSubmit={this.handleFormSubmit}>
           <input
             type="text"
-            name="invoice-search__input"
+            className="invoice-search__input"
             onChange={this.handleInputChange}
             onFocus={() => {
               this.props.setInvoice({});
             }}
             value={this.state.value}
-            placeholder="Nhập mã hóa đơn và nhấn enter để tìm kiếm..."
+            placeholder="Nhập mã hóa đơn và nhấn enter..."
           ></input>
         </form>
       </>
