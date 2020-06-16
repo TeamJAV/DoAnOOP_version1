@@ -40,9 +40,9 @@ public interface SellingInvoiceRepository extends JpaRepository<SellingInvoiceEn
     @Transactional
     @Modifying
     @Query(nativeQuery = true, value = "select SUM(selling_invoice.total_price) as 'TotalCollect',\n" +
-            "(select  SUM(total_cost) from import_invoice where date_format(date, \"%Y %m %d\") = date_format(now(), \"%Y %m %d\")) as 'TotalPay',\n" +
-            "(SUM(selling_invoice.total_price) -  (select  SUM(total_cost) from import_invoice where date_format(date, \"%Y %m %d\") = date_format(date(now()), \"%Y %m %d\"))) as 'TotalInterest'\n" +
-            "from selling_invoice where date_format(date, \"%Y %m %d\") = date_format(date(now()), \"%Y %m %d\")")
+            "    (select  SUM(total_cost) from import_invoice inner join product_batches where date_format(import_date, \"%Y %m %d\") = date_format(now(), \"%Y %m %d\")) as 'TotalPay',\n" +
+            "    (SUM(selling_invoice.total_price) -  (select  SUM(total_cost) from import_invoice inner join product_batches  where date_format(import_date, \"%Y %m %d\") = date_format(date(now()), \"%Y %m %d\"))) as 'TotalInterest'\n" +
+            "    from selling_invoice where date_format(date, \"%Y %m %d\") = date_format(date(now()), \"%Y %m %d\")")
     List<Map<String, Object>> MoneyToday();
 
     @Transactional
