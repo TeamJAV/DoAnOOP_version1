@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import SellingScreen from "./pages/SellingScreen";
 import ImportScreen from "./pages/ImportScreen";
 import RefundScreen from "./pages/RefundScreen";
+import TransactionScreen from "./pages/TransactionScreen";
 
 export default class App extends React.Component {
   render() {
@@ -14,6 +15,7 @@ export default class App extends React.Component {
           <Route path="/selling" component={SellingScreen}></Route>
           <Route path="/import" component={ImportScreen}></Route>
           <Route path="/refund" component={RefundScreen}></Route>
+          <Route path="/trans-stats" component={TransactionScreen}></Route>
         </Switch>
       </BrowserRouter>
     );
