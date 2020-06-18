@@ -23,15 +23,10 @@ export default class ProfitSum extends Component {
         return res.json();
       })
       .then((data) => {
-        this.setState(
-          {
-            summary: data,
-            isFetching: false,
-          },
-          () => {
-            console.log(this.state);
-          }
-        );
+        this.setState({
+          summary: data,
+          isFetching: false,
+        });
       })
       .catch((err) => {
         console.log(err);
@@ -40,24 +35,32 @@ export default class ProfitSum extends Component {
   render() {
     return (
       <>
-        {this.state.isFetching ? (
-          <div>Đang tính toán...</div>
-        ) : (
-          <div>
-            <div className="total-collect">
-              <div>Tổng thu:</div>
-              <div>{this.state.summary[0].TotalCollect}</div>
-            </div>
-            <div className="total-pay">
-              <div>Tổng chi:</div>
-              <div>{this.state.summary[0].TotalPay}</div>
-            </div>
-            <div className="total-interest">
-              <div>Tổng lãi:</div>
-              <div>{this.state.summary[0].TotalInterest}</div>
-            </div>
-          </div>
-        )}
+        <div className="profit-summary">
+          {this.state.isFetching ? (
+            <div>Đang tính toán...</div>
+          ) : (
+            <>
+              <div className="profit-summary__row">
+                <div className="profit-summary__column">Tổng thu:</div>
+                <div className="profit-summary__column text-right">
+                  {this.state.summary[0].TotalCollect}
+                </div>
+              </div>
+              <div className="profit-summary__row">
+                <div className="profit-summary__column">Tổng chi:</div>
+                <div className="profit-summary__column text-right">
+                  {this.state.summary[0].TotalPay}
+                </div>
+              </div>
+              <div className="profit-summary__row">
+                <div className="profit-summary__column">Tổng lãi:</div>
+                <div className="profit-summary__column text-right">
+                  {this.state.summary[0].TotalInterest}
+                </div>
+              </div>
+            </>
+          )}
+        </div>
       </>
     );
   }

@@ -4,6 +4,7 @@ import CreateRefundInvoice from "./CreateRefundInvoice";
 import BatchList from "../BatchList";
 import { isEmptyObject } from "../../utils/object";
 import "../../style/css/refundScreen.css";
+import convertToLocaleString from "../../utils/time";
 
 export default class InvoiceContainer extends Component {
   constructor(props) {
@@ -45,7 +46,7 @@ export default class InvoiceContainer extends Component {
       tempPrice =
         this.state.invoice.totalPrice +
         this.state.invoice.totalPrice * this.state.invoice.discount;
-      time = new Date(this.state.invoice.date).toLocaleString().split(",")[0];
+      time = convertToLocaleString(this.state.invoice.date);
     }
     return (
       <>

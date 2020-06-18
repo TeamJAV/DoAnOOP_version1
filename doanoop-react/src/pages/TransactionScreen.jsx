@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import { Form, Tabs, Tab } from "react-bootstrap";
 import ProfitSum from "../components/statistic/ProfitSum";
+import NavigationBar from "../components/NavigationBar";
+import InvoiceList from "../components/InvoiceList";
+import "../style/css/transactionScreen.css"
 
 export default class TransactionScreen extends Component {
   state = {
@@ -12,6 +15,11 @@ export default class TransactionScreen extends Component {
     today: "Hôm nay",
     this_week: "Tuần này",
     this_month: "Tháng này",
+  };
+  typeOptions = {
+    selling: "Bán",
+    import: "Nhập",
+    refund: "Trả",
   };
   componentDidUpdate(prevProps, prevState) {
     if (
@@ -27,9 +35,9 @@ export default class TransactionScreen extends Component {
       time: time,
     });
   };
-  componentDidMount() {
-    console.log("abc");
-  }
+  // componentDidMount() {
+  //   console.log("abc");
+  // }
   getInvoice = () => {
     fetch(
       `http://localhost:8081/statistic/trans?time=${this.state.time}&type=${this.state.type}`,
@@ -45,9 +53,6 @@ export default class TransactionScreen extends Component {
       .then((data) => {
         this.setState({ invoice: data });
       })
-      .then(() => {
-        console.log(this.state.invoice);
-      })
       .catch((err) => {
         console.log(err);
       });
@@ -55,9 +60,10 @@ export default class TransactionScreen extends Component {
   render() {
     return (
       <>
-        <div>
-          <div>
-            <Form>
+        <NavigationBar pathname="/trans-stats"></NavigationBar>
+        <div className="container statistic-container">
+          <div className="statistic-container__invoice">
+            <Form className="statistic-form">
               {["today", "this_week", "this_month"].map((val) => (
                 <Form.Check
                   inline
@@ -71,8 +77,6 @@ export default class TransactionScreen extends Component {
                 />
               ))}
             </Form>
-          </div>
-          <div>
             <Tabs
               id="controlled-tab"
               activeKey={this.state.type}
@@ -80,19 +84,19 @@ export default class TransactionScreen extends Component {
                 this.setState({ type: type });
               }}
               transition={false}
+              unmountOnExit={true}
             >
-              <Tab eventKey="selling" title="Bán">
-                <div>abc</div>
-              </Tab>
-              <Tab eventKey="import" title="Nhập">
-                <div>abc</div>
-              </Tab>
-              <Tab eventKey="refund" title="Trả">
-                <div>abc</div>
-              </Tab>
+              {["selling", "import", "refund"].map((val) => (
+                <Tab key={val} eventKey={val} title={this.typeOptions[val]}>
+                  <InvoiceList
+                    type={this.state.type}
+                    time={this.state.time}
+                  ></InvoiceList>
+                </Tab>
+              ))}
             </Tabs>
           </div>
-          <div>
+          <div className="statistic-container__modules">
             <ProfitSum time={this.state.time}></ProfitSum>
           </div>
         </div>

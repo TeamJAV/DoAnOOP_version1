@@ -1,0 +1,56 @@
+.statistic-container {
+  display: flex;
+  height: 75vh;
+}
+.statistic-container .invoice-container {
+  height: 58.5vh;
+}
+.statistic-container__invoice {
+  flex-basis: 75%;
+  border: 2px solid #e6ecf0;
+  border-radius: 20px;
+}
+.statistic-container__modules {
+  flex-grow: 1;
+  padding-left: 20px;
+}
+.statistic-container__invoice .nav-item.nav-link {
+  width: 20%;
+}
+.statistic-form {
+  padding: 30px;
+}
+.profit-summary {
+  border: 2px solid #e6ecf0;
+  border-radius: 20px;
+  padding: 15px;
+}
+.profit-summary__column {
+  float: left;
+  width: 50%;
+}
+.profit-summary__column.text-right {
+  text-align: right;
+}
+.profit-summary__row::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+@media (min-width: 576px) {
+  .detail-modal .modal-dialog {
+    max-width: 900px;
+  }
+}
+.detail-modal .modal-content {
+  width: 75vw;
+  height: 75vh;
+}
+.detail-modal .invoice-container {
+  padding: 0px !important;
+  height: 465px;
+}
+.detail-modal .modal-body {
+  font-size: 18px;
+  width: 95%;
+}

@@ -88,6 +88,7 @@ export default class ProductInputForm extends Component {
               name="name"
               value={this.state.product.name}
               onChange={this.handleInputChange}
+              autoComplete="off"
             ></input>
           </div>
           <div className="product-form__price justify-between">
@@ -97,6 +98,7 @@ export default class ProductInputForm extends Component {
               name="price"
               value={this.state.product.price}
               onChange={this.handleInputChange}
+              autoComplete="off"
             ></input>
           </div>
         </form>

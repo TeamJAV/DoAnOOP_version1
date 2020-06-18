@@ -122,6 +122,7 @@ export default class BatchInputForm extends Component {
                 name="importQuantity"
                 value={this.state.importQuantity}
                 onChange={this.handleInputChange}
+                autoComplete="off"
               ></input>
             </div>
             <div className="batch-form__price justify-between">
@@ -131,6 +132,7 @@ export default class BatchInputForm extends Component {
                 name="importCost"
                 value={this.state.importCost}
                 onChange={this.handleInputChange}
+                autoComplete="off"
               ></input>
             </div>
           </div>

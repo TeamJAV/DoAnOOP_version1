@@ -35,6 +35,7 @@ export default class BatchInputContainer extends Component {
 
   /**-------------------------------------------------- */
   handleSaveInvoice = () => {
+    console.log(this.state.productBatches);
     fetch("http://localhost:8081/import/invoice", {
       method: "POST",
       headers: {
