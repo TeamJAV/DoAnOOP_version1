@@ -8,5 +8,5 @@ import java.util.List;
 public interface SuppliersRepository extends JpaRepository<SuppliersEntity, Integer> {
     SuppliersEntity findById(int Id);
     List<SuppliersEntity> findByNameContaining(String name);
-
+    void deleteById(int Id);
 }
