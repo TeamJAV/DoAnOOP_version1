@@ -15,8 +15,8 @@ public class ImportInvoiceEntity {
     @Column(name = "total_cost", length = 19, nullable = true)
     private Long totalCost;
 
-    @OneToMany(mappedBy = "importInvoice", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnoreProperties("importInvoice")
+    @OneToMany(mappedBy = "importInvoice", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ProductBatchesEntity> productBatches = new ArrayList<>();
 
     public Integer getId() {

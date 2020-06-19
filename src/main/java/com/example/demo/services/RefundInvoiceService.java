@@ -66,6 +66,9 @@ public class RefundInvoiceService {
     }
     public boolean CanCreateRefund(SellingInvoiceEntity sellingInvoiceEntity){
         Date date = new Date();
+        //neu ap dung cong thuc duoi day
+        //gia su tinh diff giua ngay 13 va 16 -> kqua la 2 (bao gom ngay 14 va 15)
+        //can nhac sua ve <=1
         return (int) ((date.getTime() - sellingInvoiceEntity.getDate().getTime()) / (24 * 60 * 60 * 1000)) <= 2;
     }
     public boolean CheckIsRefund(SellingInvoiceEntity sellingInvoiceEntity){

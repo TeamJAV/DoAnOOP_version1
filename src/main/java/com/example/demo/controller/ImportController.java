@@ -64,7 +64,7 @@ public class ImportController {
     }
 
     @RequestMapping(value = "/product/{name}", method = RequestMethod.GET)
-    public ResponseEntity<?> getOneProduct (@PathVariable String name, @RequestBody ProductsEntity product) {
+    public ResponseEntity<?> getOneProduct (@PathVariable String name) {
         try{
             return new ResponseEntity<>(productsService.findByNameLike(name), HttpStatus.OK);
         }catch (EntityNotFoundException e){
