@@ -25,6 +25,9 @@ public class InvoiceDetailEntity {
     @ColumnDefault("0")
     private Integer quantityRefund;
 
+    @Column(nullable = false)
+    private Long sellingPrice;
+
     @ManyToOne
     @JoinColumn(name = "sku")
     @JsonIgnoreProperties("invoiceDetail")
@@ -103,5 +106,13 @@ public class InvoiceDetailEntity {
 
     public void setQuantityRefund(Integer quantityRefund) {
         this.quantityRefund = quantityRefund;
+    }
+
+    public Long getSellingPrice() {
+        return sellingPrice;
+    }
+
+    public void setSellingPrice(Long sellingPrice) {
+        this.sellingPrice = sellingPrice;
     }
 }

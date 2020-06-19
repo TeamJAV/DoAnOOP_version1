@@ -3,6 +3,7 @@ package com.example.demo.entity;
 import com.fasterxml.jackson.annotation.*;
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -11,6 +12,10 @@ public class ImportInvoiceEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @Column(name = "import_date", nullable = false)
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private Date importDate;
 
     @Column(name = "total_cost", length = 19, nullable = true)
     private Long totalCost;
@@ -49,4 +54,13 @@ public class ImportInvoiceEntity {
     public ImportInvoiceEntity(Long totalCost){
         this.totalCost = totalCost;
     }
+
+    public Date getImportDate() {
+        return importDate;
+    }
+
+    public void setImportDate(Date importDate) {
+        this.importDate = importDate;
+    }
+
 }

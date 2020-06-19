@@ -14,10 +14,6 @@ public class ProductBatchesEntity {
     @Column(unique = true, nullable = false, length = 12)
     private String sku;
 
-    @Column(name = "import_date", nullable = false)
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    private Date importDate;
-
     @Column(name = "expired_date", nullable = false)
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date expiredDate;
@@ -59,7 +55,6 @@ public class ProductBatchesEntity {
     }
 
     public ProductBatchesEntity(Date importDate, Date expiredDate, int quantity, Long importCost) {
-        this.importDate = importDate;
         this.expiredDate = expiredDate;
         this.quantity = quantity;
         this.importCost = importCost;
@@ -79,14 +74,6 @@ public class ProductBatchesEntity {
 
     public void setSku(String sku) {
         this.sku = sku;
-    }
-
-    public Date getImportDate() {
-        return importDate;
-    }
-
-    public void setImportDate(Date importDate) {
-        this.importDate = importDate;
     }
 
     public Date getExpiredDate() {
