@@ -26,5 +26,9 @@ public class SuppliersService {
     public List<SuppliersEntity> findByName(String name){
         return suppliersRepository.findByNameContaining(name);
     }
+
+    public void deleteSupplier(int Id){
+        suppliersRepository.deleteById(Id);
+    }
     //It's coding time!!!
 }
