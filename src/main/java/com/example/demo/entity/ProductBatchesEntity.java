@@ -31,15 +31,15 @@ public class ProductBatchesEntity {
     @Column(name = "import_cost", length = 20)
     private Long importCost;
 
+    @JsonIgnoreProperties("productBatches")
     @ManyToOne
     @JoinColumn(name = "supplier_id")
-    @JsonIgnoreProperties("productBatches")
     private SuppliersEntity suppliers;
 
 //    @ManyToOne(cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("productBatches")
     @ManyToOne
     @JoinColumn(name = "products_id")
-    @JsonIgnoreProperties("productBatches")
     private ProductsEntity products;
 
     @ManyToOne(cascade = CascadeType.ALL)
@@ -47,8 +47,8 @@ public class ProductBatchesEntity {
     @JsonIgnoreProperties("productBatches")
     private ImportInvoiceEntity importInvoice;
 
-    @OneToMany(mappedBy = "productBatches", cascade = CascadeType.ALL)
     @JsonIgnoreProperties( "productBatches")
+    @OneToMany(mappedBy = "productBatches", cascade = CascadeType.ALL)
     private List<InvoiceDetailEntity> invoiceDetail = new ArrayList<>();
 
     public void setQuantity(int quantity) {
