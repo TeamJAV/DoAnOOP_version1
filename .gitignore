@@ -43,3 +43,5 @@ build/
 *.tar.gz
 *.rar
 .idea/
+pom.xml
+src/main/resources/application.properties

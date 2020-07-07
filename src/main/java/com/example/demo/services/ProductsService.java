@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -24,7 +25,7 @@ public class ProductsService {
         return productsRepository.findAll();
     }
 
-    public List<ProductsEntity> findById(int Id){
+    public Optional<ProductsEntity> findById(int Id){
         return productsRepository.findById(Id);
     }
 

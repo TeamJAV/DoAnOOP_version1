@@ -2,14 +2,17 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.ProductsEntity;
 
+import com.example.demo.entity.SuppliersEntity;
 import com.example.demo.services.ProductBatchesService;
 import com.example.demo.services.ProductsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.Optional;
 
 
 @RestController
@@ -49,6 +52,19 @@ public class ApiControllerProduct {
             return ResponseEntity.ok().body(productBatchesService.findBatchesByProductId(id));
         }catch (EntityNotFoundException ex){
             return ResponseEntity.unprocessableEntity().body(ex);
+        }
+    }
+
+    @RequestMapping(value="change/{id}", method=RequestMethod.PUT)
+    public ResponseEntity<?> changePrice(@PathVariable("id") int id, @RequestBody ProductsEntity product){
+        Optional<ProductsEntity> pro = productsService.findById(id);
+
+        if (pro.isPresent()) {
+            ProductsEntity new_pro = pro.get();
+            new_pro.setPrice(product.getPrice());
+            return new ResponseEntity<>(productsService.save(new_pro), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 

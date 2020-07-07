@@ -24,7 +24,7 @@ public class SuppliersEntity {
     @Column(unique = true, nullable = false, length = 100)
     private String address;
 
-    @OneToMany(mappedBy = "suppliers")
+    @OneToMany(mappedBy = "suppliers", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties("suppliers")
     private List<ProductBatchesEntity> productBatches = new ArrayList<>();
 
