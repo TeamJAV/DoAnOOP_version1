@@ -43,45 +43,48 @@ public interface SellingInvoiceRepository extends JpaRepository<SellingInvoiceEn
     @Modifying
     @Query(nativeQuery = true, value = "select Subtable.TotalPay as 'TotalPay', Subtable.TotalCollect as 'TotalCollect',\n" +
             "       ( Subtable.TotalCollect - Subtable.TotalPay) as 'TotalInterest'\n" +
-            "from(\n" +
-            "    select sum(selling_invoice.total_price) as 'TotalCollect',\n" +
-            "       (select (ImportMoney + RefundMoney) as 'TotalPay'\n" +
-            "            from (select sum(quantity_refund*selling_price) as 'RefundMoney', sum(total_cost) as 'ImportMoney'\n" +
-            "                  from invoice_detail inner join refund_invoice ri on invoice_detail.refund_invoice_id = ri.id, import_invoice\n" +
-            "                  where date_format(ri.date, '%Y-%m-%d') = date_format(date(now()), '%Y-%m-%d') and\n" +
-            "                        date_format(import_date, '%Y-%m-%d') = date_format(date(now()), '%Y-%m-%d')) as TablePay) as 'TotalPay'\n" +
-            "from selling_invoice\n" +
-            "where date_format(selling_invoice.date, '%Y-%m-%d') = date_format(date(now()), '%Y-%m-%d')) as Subtable")
+            "from(select sum(selling_invoice.total_price) as 'TotalCollect',\n" +
+            "               (select (ImportMoney + RefundMoney) as 'TotalPay'\n" +
+            "                from (select  sum(import_invoice.total_cost) as 'ImportMoney', Table1.RefundMoney as 'RefundMoney'\n" +
+            "                      from  (select sum(quantity_refund*selling_price) as 'RefundMoney'\n" +
+            "                             from  invoice_detail  join refund_invoice ri on invoice_detail.refund_invoice_id = ri.id\n" +
+            "                             where (date_format(date(now()), '%Y-%m-%d') = date_format(ri.date, '%Y-%m-%d'))) as Table1,\n" +
+            "                            import_invoice\n" +
+            "                      where  (date_format(date(now()), '%Y-%m-%d')= date_format(import_date, '%Y-%m-%d'))) as TablePay) as 'TotalPay'\n" +
+            "        from selling_invoice\n" +
+            "        where date_format(date(now()), '%Y-%m-%d') = date_format(selling_invoice.date, '%Y-%m-%d')) as Subtable")
     List<Map<String, Object>> MoneyToday();
 
     @Transactional
     @Modifying
     @Query(nativeQuery = true, value = "select Subtable.TotalPay as 'TotalPay', Subtable.TotalCollect as 'TotalCollect',\n" +
             "       ( Subtable.TotalCollect - Subtable.TotalPay) as 'TotalInterest'\n" +
-            "from(\n" +
-            "    select sum(selling_invoice.total_price) as 'TotalCollect',\n" +
-            "       (select (ImportMoney + RefundMoney) as 'TotalPay'\n" +
-            "            from (select sum(quantity_refund*selling_price) as 'RefundMoney', sum(total_cost) as 'ImportMoney'\n" +
-            "                  from invoice_detail inner join refund_invoice ri on invoice_detail.refund_invoice_id = ri.id, import_invoice\n" +
-            "                  where yearweek(ri.date, 1) = yearweek(date(now()), 1) and\n" +
-            "                        yearweek(import_date, 1) = yearweek(date(now()), 1)) as TablePay) as 'TotalPay'\n" +
-            "from selling_invoice\n" +
-            "where yearweek(selling_invoice.date, 1) = yearweek(date(now()), 1)) as Subtable\n")
+            "from(select sum(selling_invoice.total_price) as 'TotalCollect',\n" +
+            "               (select (ImportMoney + RefundMoney) as 'TotalPay'\n" +
+            "                from (select  sum(import_invoice.total_cost) as 'ImportMoney', Table1.RefundMoney as 'RefundMoney'\n" +
+            "                      from  (select sum(quantity_refund*selling_price) as 'RefundMoney'\n" +
+            "                             from  invoice_detail  join refund_invoice ri on invoice_detail.refund_invoice_id = ri.id\n" +
+            "                             where (yearweek(date(now()), 1) = yearweek(ri.date, 1))) as Table1,\n" +
+            "                            import_invoice\n" +
+            "                      where  (yearweek(date(now()), 1)= yearweek(import_date, 1))) as TablePay) as 'TotalPay'\n" +
+            "        from selling_invoice\n" +
+            "        where yearweek(date(now()), 1) = yearweek(selling_invoice.date, 1)) as Subtable\n")
     List<Map<String, Object>> MoneyThisWeek();
 
     @Transactional
     @Modifying
     @Query(nativeQuery = true, value = "select Subtable.TotalPay as 'TotalPay', Subtable.TotalCollect as 'TotalCollect',\n" +
             "       ( Subtable.TotalCollect - Subtable.TotalPay) as 'TotalInterest'\n" +
-            "from(\n" +
-            "    select sum(selling_invoice.total_price) as 'TotalCollect',\n" +
-            "       (select (ImportMoney + RefundMoney) as 'TotalPay'\n" +
-            "            from (select sum(quantity_refund*selling_price) as 'RefundMoney', sum(total_cost) as 'ImportMoney'\n" +
-            "                  from invoice_detail inner join refund_invoice ri on invoice_detail.refund_invoice_id = ri.id, import_invoice\n" +
-            "                  where month(ri.date) = month(date(now())) and\n" +
-            "                        month(import_date) = month(date(now()))) as TablePay) as 'TotalPay'\n" +
-            "from selling_invoice\n" +
-            "where month(selling_invoice.date) = month(date(now()))) as Subtable")
+            "from(select sum(selling_invoice.total_price) as 'TotalCollect',\n" +
+            "               (select (ImportMoney + RefundMoney) as 'TotalPay'\n" +
+            "                from (select  sum(import_invoice.total_cost) as 'ImportMoney', Table1.RefundMoney as 'RefundMoney'\n" +
+            "                      from  (select sum(quantity_refund*selling_price) as 'RefundMoney'\n" +
+            "                             from  invoice_detail  join refund_invoice ri on invoice_detail.refund_invoice_id = ri.id\n" +
+            "                             where (month(date(now())) = month(ri.date))) as Table1,\n" +
+            "                            import_invoice\n" +
+            "                      where  (month(date(now()))= month(import_date))) as TablePay) as 'TotalPay'\n" +
+            "        from selling_invoice\n" +
+            "        where month(date(now())) = month(selling_invoice.date)) as Subtable\n")
     List<Map<String, Object>> MoneyThisMonth();
 
     @Transactional
@@ -98,12 +101,14 @@ public interface SellingInvoiceRepository extends JpaRepository<SellingInvoiceEn
             "from(\n" +
             "        select sum(selling_invoice.total_price) as 'TotalCollect',\n" +
             "               (select (ImportMoney + RefundMoney) as 'TotalPay'\n" +
-            "                from (select sum(quantity_refund*selling_price) as 'RefundMoney', sum(total_cost) as 'ImportMoney'\n" +
-            "                      from invoice_detail inner join refund_invoice ri on invoice_detail.refund_invoice_id = ri.id, import_invoice\n" +
-            "                        where (:fromDate <= date_format(ri.date, '%Y-%m-%d') and date_format(ri.date, '%Y-%m-%d') <= :toDate) and\n" +
-            "                              (:fromDate <= date_format(import_date, '%Y-%m-%d') and date_format(import_date, '%Y-%m-%d') <= :toDate)) as TablePay) as 'TotalPay'\n" +
+            "                from (select  sum(import_invoice.total_cost) as 'ImportMoney', Table1.RefundMoney as 'RefundMoney'\n" +
+            "                      from  (select sum(quantity_refund*selling_price) as 'RefundMoney'\n" +
+            "                             from  invoice_detail  join refund_invoice ri on invoice_detail.refund_invoice_id = ri.id\n" +
+            "                             where (:fromDate <= date_format(ri.date, '%Y-%m-%d') and date_format(ri.date, '%Y-%m-%d') <= :toDate)) as Table1,\n" +
+            "                            import_invoice\n" +
+            "                      where  (:fromDate <= date_format(import_date, '%Y-%m-%d') and date_format(import_date, '%Y-%m-%d') <= :toDate) ) as TablePay) as 'TotalPay'\n" +
             "        from selling_invoice\n" +
-            "        where :fromDate <= date_format(selling_invoice.date, '%Y-%m-%d') and date_format(selling_invoice.date, '%Y-%m-%d') <= :toDate) as Subtable\n")
+            "        where :fromDate <= date_format(selling_invoice.date, '%Y-%m-%d') and date_format(selling_invoice.date, '%Y-%m-%d') <= :toDate) as Subtable")
     List<Map<String, Object>> MoneyInSpecificTime(@Param("fromDate") Date fromDate,
                                                   @Param("toDate") Date toDate);
 }
