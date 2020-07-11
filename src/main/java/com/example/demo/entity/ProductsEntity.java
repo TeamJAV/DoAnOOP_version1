@@ -8,6 +8,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "products")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ProductsEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
