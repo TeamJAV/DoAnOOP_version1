@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -32,9 +33,10 @@ public class SellingInvoiceService {
     public List<SellingInvoiceEntity> SellingTransToday(){return sellingInvoiceRepository.SellingTransToday();}
     public List<SellingInvoiceEntity> SellingTransThisWeek(){return sellingInvoiceRepository.SellingTransThisWeek();}
     public List<SellingInvoiceEntity> SellingTransThisMonth(){return sellingInvoiceRepository.SellingTransThisMonth();}
+    public List<SellingInvoiceEntity> SellingTransSpecificTimes(Date from, Date to){ return sellingInvoiceRepository.SellingTransSpecificTime(from, to);}
 
     public List<Map<String, Object>> RevenueToday(){ return sellingInvoiceRepository.MoneyToday();}
     public List<Map<String, Object>> RevenueThisWeek(){ return sellingInvoiceRepository.MoneyThisWeek();}
     public List<Map<String, Object>> RevenueThisMonth(){ return sellingInvoiceRepository.MoneyThisMonth();}
-
+    public List<Map<String, Object>> RevenueSpecificTime(Date from, Date to){return sellingInvoiceRepository.MoneyInSpecificTime(from, to);}
 }

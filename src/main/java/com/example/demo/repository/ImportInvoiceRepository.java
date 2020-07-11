@@ -2,10 +2,14 @@ package com.example.demo.repository;
 
 
 import com.example.demo.entity.ImportInvoiceEntity;
+import com.example.demo.entity.RefundInvoiceEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
 import javax.transaction.Transactional;
+import java.util.Date;
 import java.util.List;
 
 public interface ImportInvoiceRepository extends JpaRepository<ImportInvoiceEntity, Integer> {
@@ -41,4 +45,13 @@ public interface ImportInvoiceRepository extends JpaRepository<ImportInvoiceEnti
             "inner join product_batches on import_invoice.id = product_batches.import_invoice_id\n" +
             "where month(import_date) = month(current_date)")
     List<ImportInvoiceEntity> ImportTransThisMonth();
+
+    @org.springframework.transaction.annotation.Transactional
+    @Modifying
+    @Query(nativeQuery = true, value = "select *\n" +
+            "from import_invoice\n" +
+            "where :fromDate  <= import_invoice.import_date and import_invoice.import_date <= :toDate")
+    List<ImportInvoiceEntity> ImportTransSpecificTime(@Param("fromDate") Date fromDate,
+                                                      @Param("toDate") Date toDate);
+
 }

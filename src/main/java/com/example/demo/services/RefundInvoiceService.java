@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.sql.SQLException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -50,7 +52,7 @@ public class RefundInvoiceService {
             invoiceDetailEntity.setQuantityRefund(quantity_refund);
             invoiceDetailService.save(invoiceDetailEntity);
             invoiceDetailEntity.getSellingInvoice().setRefunded(true);
-            sellingInvoiceService.updateTotalPrice(invoiceDetailEntity.getSellingInvoice().getId());
+//            sellingInvoiceService.updateTotalPrice(invoiceDetailEntity.getSellingInvoice().getId());
         }
     }
     public void RefreshRefund(JSONArray jsonInvoiceDetail, RefundInvoiceEntity refundInvoiceEntity) throws JSONException{
@@ -103,10 +105,23 @@ public class RefundInvoiceService {
                     case "import":
                         return importInvoiceService.ImportTransThisMonth();
                 }
-
         }
         return null;
     }
+    public List<?> RefundTransServiceInSpecificTime(Date fromDate, Date toDate, String type){
+        if (type != null){
+            switch (type){
+                case "selling":
+                    return sellingInvoiceService.SellingTransSpecificTimes(fromDate, toDate);
+                case "refund":
+                    return refundInvoiceRepository.RefundTransSpecificTime(fromDate, toDate);
+                case "import":
+                    return importInvoiceService.ImportTransSpecificTime(fromDate, toDate);
+            }
+        }
+        return  null;
+    }
+
     public List<Map<String, Object>> RevenueInTime(String time){
         switch (time){
             case "today":
@@ -117,5 +132,8 @@ public class RefundInvoiceService {
                 return sellingInvoiceService.RevenueThisMonth();
         }
         return null;
+    }
+    public List<Map<String, Object>> RevenueInSpecificTime(Date from , Date to){
+            return  sellingInvoiceService.RevenueSpecificTime(from, to);
     }
 }
