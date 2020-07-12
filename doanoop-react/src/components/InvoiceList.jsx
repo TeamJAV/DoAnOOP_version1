@@ -64,7 +64,7 @@ export default class InvoiceList extends Component {
             <tr data-key={key} key={key++}>
               <th scope="row">{key}</th>
               <td>{result.id}</td>
-              <td>{result.productBatches[0].importDate}</td>
+              <td>{result.importDate}</td>
               <td>{result.totalCost}</td>
               <td onClick={this.handleClickDetail}>
                 <u>Chi tiết</u>

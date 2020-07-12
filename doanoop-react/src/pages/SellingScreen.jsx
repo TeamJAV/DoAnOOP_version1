@@ -54,7 +54,7 @@ export default class SellingScreen extends Component {
   updateQuantity = (sku, type) => {
     const index = this.findIndexOfDetail(sku);
     let detail = [...this.state.invoiceDetail];
-    const unitPrice = detail[index].unitPrice;
+    const sellingPrice = detail[index].sellingPrice;
     const quantity = detail[index].quantity;
     const remain = detail[index].remain;
 
@@ -63,7 +63,7 @@ export default class SellingScreen extends Component {
     }
 
     const newQuantity = this.changeQuantity(type, quantity);
-    const newPrice = unitPrice * newQuantity;
+    const newPrice = sellingPrice * newQuantity;
     detail[index] = {
       ...detail[index],
       quantity: newQuantity,
@@ -140,7 +140,7 @@ export default class SellingScreen extends Component {
     const newDetail = {
       sku: result.sku,
       name: result.products.name,
-      unitPrice: result.products.price,
+      sellingPrice: result.products.price,
       remain: result.quantity,
       quantity: 1,
       price: result.products.price,
@@ -288,7 +288,7 @@ export default class SellingScreen extends Component {
               +
             </div>
           </td>
-          <td>{result.unitPrice}</td>
+          <td>{result.sellingPrice}</td>
           <td>{result.price}</td>
           <td onClick={this.handleDeleteDetail}>Xóa</td>
         </tr>

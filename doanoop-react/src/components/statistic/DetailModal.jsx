@@ -32,8 +32,8 @@ class DetailModal extends Component {
               <td>{batch.products.name}</td>
               <td>{batch.expiredDate}</td>
               <td>{result.quantityRefund}</td>
-              <td>{batch.products.price}</td>
-              <td>{result.quantityRefund * batch.products.price}</td>
+              <td>{result.sellingPrice}</td>
+              <td>{result.quantityRefund * result.sellingPrice}</td>
             </tr>
           );
         default:
@@ -44,7 +44,7 @@ class DetailModal extends Component {
               <td>{batch.products.name}</td>
               <td>{batch.expiredDate}</td>
               <td>{result.quantity}</td>
-              <td>{batch.products.price}</td>
+              <td>{result.sellingPrice}</td>
               <td>{result.price}</td>
             </tr>
           );

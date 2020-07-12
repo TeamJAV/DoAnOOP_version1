@@ -17,7 +17,8 @@ export default class NavigationBar extends Component {
               <Nav.Link href="/import">Nhập hàng</Nav.Link>
               <Nav.Link href="/selling">Bán hàng</Nav.Link>
               <Nav.Link href="/refund">Trả hàng</Nav.Link>
-              <Nav.Link href="/trans-stats">Giao dịch</Nav.Link>
+              <Nav.Link href="/trans-stats">Thống kê GD</Nav.Link>
+              <Nav.Link href="/product-management">Quản lý hàng</Nav.Link>
             </Nav>
           </Navbar.Collapse>
         </div>

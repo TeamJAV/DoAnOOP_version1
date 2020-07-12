@@ -5,6 +5,7 @@ import SellingScreen from "./pages/SellingScreen";
 import ImportScreen from "./pages/ImportScreen";
 import RefundScreen from "./pages/RefundScreen";
 import TransactionScreen from "./pages/TransactionScreen";
+import ProductManagementScreen from "./pages/ProductManagementScreen";
 
 export default class App extends React.Component {
   render() {
@@ -16,6 +17,7 @@ export default class App extends React.Component {
           <Route path="/import" component={ImportScreen}></Route>
           <Route path="/refund" component={RefundScreen}></Route>
           <Route path="/trans-stats" component={TransactionScreen}></Route>
+          <Route path="/product-management" component={ProductManagementScreen}></Route>
         </Switch>
       </BrowserRouter>
     );

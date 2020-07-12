@@ -5,7 +5,7 @@ export default class BatchInputForm extends Component {
   constructor(props) {
     super(props);
     this.baseState = {
-      importDate: new Date().toISOString().split("T")[0],
+      // importDate: new Date().toISOString().split("T")[0],
       expiredDate: "",
       importQuantity: "",
       quantity: "",

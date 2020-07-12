@@ -43,6 +43,7 @@ export default class BatchInputContainer extends Component {
       },
       body: JSON.stringify({
         productBatches: this.state.productBatches,
+        importDate: new Date().toISOString().split("T")[0],
       }),
     })
       .then((res) => {

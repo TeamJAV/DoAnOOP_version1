@@ -25,7 +25,7 @@ export default class SelectRefundItem extends Component {
       value = maxQuantity;
     }
     this.setState({
-      refundQuantity: value,
+      refundQuantity: parseInt(value),
     });
   };
 
