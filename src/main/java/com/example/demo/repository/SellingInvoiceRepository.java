@@ -104,11 +104,11 @@ public interface SellingInvoiceRepository extends JpaRepository<SellingInvoiceEn
             "                from (select  sum(import_invoice.total_cost) as 'ImportMoney', Table1.RefundMoney as 'RefundMoney'\n" +
             "                      from  (select sum(quantity_refund*selling_price) as 'RefundMoney'\n" +
             "                             from  invoice_detail  join refund_invoice ri on invoice_detail.refund_invoice_id = ri.id\n" +
-            "                             where (:fromDate <= date_format(ri.date, '%Y-%m-%d') and date_format(ri.date, '%Y-%m-%d') <= :toDate)) as Table1,\n" +
+            "                             where ( date_format(ri.date, '%Y-%m-%d') between :fromDate-1 and :toDate)) as Table1,\n" +
             "                            import_invoice\n" +
-            "                      where  (:fromDate <= date_format(import_date, '%Y-%m-%d') and date_format(import_date, '%Y-%m-%d') <= :toDate) ) as TablePay) as 'TotalPay'\n" +
+            "                      where  (date_format(import_date, '%Y-%m-%d') between :fromDate-1 and :toDate) ) as TablePay) as 'TotalPay'\n" +
             "        from selling_invoice\n" +
-            "        where :fromDate <= date_format(selling_invoice.date, '%Y-%m-%d') and date_format(selling_invoice.date, '%Y-%m-%d') <= :toDate) as Subtable")
+            "        where date_format(selling_invoice.date, '%Y-%m-%d') between :fromDate-1 and :toDate) as Subtable\n")
     List<Map<String, Object>> MoneyInSpecificTime(@Param("fromDate") Date fromDate,
                                                   @Param("toDate") Date toDate);
 }
