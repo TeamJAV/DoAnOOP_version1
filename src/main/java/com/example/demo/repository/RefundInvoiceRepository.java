@@ -32,8 +32,9 @@ public interface RefundInvoiceRepository extends JpaRepository<RefundInvoiceEnti
     @Modifying
     @Query(nativeQuery = true, value = "select *\n" +
             "from refund_invoice\n" +
-            "where :fromDate  <= refund_invoice.date and refund_invoice.date <= :toDate")
-    List<RefundInvoiceEntity> RefundTransSpecificTime(@Param("fromDate") Date fromDate,
-                                                      @Param("toDate") Date toDate);
+            "where date_format(refund_invoice.date, '%Y-%m-%d') between :fromDate and :toDate")
+//            "where :fromDate  <= refund_invoice.date and refund_invoice.date <= :toDate")
+    List<RefundInvoiceEntity> RefundTransSpecificTime(@Param("fromDate") String fromDate,
+                                                      @Param("toDate") String toDate);
 }
 

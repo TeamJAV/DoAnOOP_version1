@@ -33,7 +33,7 @@ public class SellingInvoiceService {
     public List<SellingInvoiceEntity> SellingTransToday(){return sellingInvoiceRepository.SellingTransToday();}
     public List<SellingInvoiceEntity> SellingTransThisWeek(){return sellingInvoiceRepository.SellingTransThisWeek();}
     public List<SellingInvoiceEntity> SellingTransThisMonth(){return sellingInvoiceRepository.SellingTransThisMonth();}
-    public List<SellingInvoiceEntity> SellingTransSpecificTimes(Date from, Date to){ return sellingInvoiceRepository.SellingTransSpecificTime(from, to);}
+    public List<SellingInvoiceEntity> SellingTransSpecificTimes(String from, String to){ return sellingInvoiceRepository.SellingTransSpecificTime(from, to);}
 
     public List<Map<String, Object>> RevenueToday(){ return sellingInvoiceRepository.MoneyToday();}
     public List<Map<String, Object>> RevenueThisWeek(){ return sellingInvoiceRepository.MoneyThisWeek();}

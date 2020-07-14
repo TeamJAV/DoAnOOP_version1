@@ -65,8 +65,8 @@ public class ApiControllerStatistic {
     //Response: Object
     @GetMapping(value = "/specific/trans",
                 produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> GetTransactionInSpecific(@RequestParam(name = "from", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date fromDate,
-                                                      @RequestParam(name = "to", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date toDate,
+    public ResponseEntity<?> GetTransactionInSpecific(@RequestParam(name = "from", required = false) String fromDate,
+                                                      @RequestParam(name = "to", required = false) String toDate,
                                                       @RequestParam(name = "type") String  type){
         if (fromDate != null && toDate != null){
             return ResponseEntity.ok().body(refundInvoiceService.RefundTransServiceInSpecificTime(fromDate, toDate, type));

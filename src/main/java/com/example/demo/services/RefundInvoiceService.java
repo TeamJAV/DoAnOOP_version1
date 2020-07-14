@@ -108,7 +108,7 @@ public class RefundInvoiceService {
         }
         return null;
     }
-    public List<?> RefundTransServiceInSpecificTime(Date fromDate, Date toDate, String type){
+    public List<?> RefundTransServiceInSpecificTime(String fromDate, String toDate, String type){
         if (type != null){
             switch (type){
                 case "selling":

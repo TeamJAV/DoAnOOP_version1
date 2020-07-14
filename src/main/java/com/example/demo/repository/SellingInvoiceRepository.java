@@ -91,9 +91,10 @@ public interface SellingInvoiceRepository extends JpaRepository<SellingInvoiceEn
     @Modifying
     @Query(nativeQuery = true, value = "select *\n" +
             "from selling_invoice\n" +
-            "where :fromDate  <= selling_invoice.date and selling_invoice.date <= :toDate")
-    List<SellingInvoiceEntity> SellingTransSpecificTime(@Param("fromDate") Date fromDate,
-                                                      @Param("toDate") Date toDate);
+            "where date_format(selling_invoice.date, '%Y-%m-%d') between :fromDate and :toDate")
+//            "where :fromDate  <= selling_invoice.date and selling_invoice.date <= :toDate")
+    List<SellingInvoiceEntity> SellingTransSpecificTime(@Param("fromDate") String fromDate,
+                                                      @Param("toDate") String toDate);
     @Transactional
     @Modifying
     @Query(nativeQuery = true, value = "select Subtable.TotalPay as 'TotalPay', Subtable.TotalCollect as 'TotalCollect',\n" +

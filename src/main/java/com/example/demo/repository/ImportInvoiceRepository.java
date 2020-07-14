@@ -50,8 +50,9 @@ public interface ImportInvoiceRepository extends JpaRepository<ImportInvoiceEnti
     @Modifying
     @Query(nativeQuery = true, value = "select *\n" +
             "from import_invoice\n" +
-            "where :fromDate  <= import_invoice.import_date and import_invoice.import_date <= :toDate")
-    List<ImportInvoiceEntity> ImportTransSpecificTime(@Param("fromDate") Date fromDate,
-                                                      @Param("toDate") Date toDate);
+            "where date_format(import_invoice.date, '%Y-%m-%d') between :fromDate and :toDate")
+//            "where :fromDate  <= import_invoice.import_date and import_invoice.import_date <= :toDate")
+    List<ImportInvoiceEntity> ImportTransSpecificTime(@Param("fromDate") String fromDate,
+                                                      @Param("toDate") String toDate);
 
 }

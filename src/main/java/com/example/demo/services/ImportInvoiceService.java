@@ -37,5 +37,5 @@ public class ImportInvoiceService {
     public List<ImportInvoiceEntity> ImportTransToday(){return importInvoiceRepository.ImportTransToday();}
     public List<ImportInvoiceEntity> ImportTransThisWeek(){return importInvoiceRepository.ImportTransThisWeek();}
     public List<ImportInvoiceEntity> ImportTransThisMonth(){return importInvoiceRepository.ImportTransThisMonth();}
-    public List<ImportInvoiceEntity> ImportTransSpecificTime(Date from, Date to){return importInvoiceRepository.ImportTransSpecificTime(from, to);}
+    public List<ImportInvoiceEntity> ImportTransSpecificTime(String from, String to){return importInvoiceRepository.ImportTransSpecificTime(from, to);}
 }
