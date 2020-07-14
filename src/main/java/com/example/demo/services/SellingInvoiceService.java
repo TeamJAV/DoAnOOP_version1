@@ -38,5 +38,5 @@ public class SellingInvoiceService {
     public List<Map<String, Object>> RevenueToday(){ return sellingInvoiceRepository.MoneyToday();}
     public List<Map<String, Object>> RevenueThisWeek(){ return sellingInvoiceRepository.MoneyThisWeek();}
     public List<Map<String, Object>> RevenueThisMonth(){ return sellingInvoiceRepository.MoneyThisMonth();}
-    public List<Map<String, Object>> RevenueSpecificTime(Date from, Date to){return sellingInvoiceRepository.MoneyInSpecificTime(from, to);}
+    public List<Map<String, Object>> RevenueSpecificTime(String from, String to){return sellingInvoiceRepository.MoneyInSpecificTime(from, to);}
 }

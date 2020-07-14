@@ -44,8 +44,8 @@ public class ApiControllerStatistic {
     @GetMapping(value = "/money",
                 produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> Money(@RequestParam(name = "time", required = false) String time,
-                                   @RequestParam(name = "from", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date fromDate,
-                                   @RequestParam(name = "to", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date toDate){
+                                   @RequestParam(name = "from", required = false) String fromDate,
+                                   @RequestParam(name = "to", required = false) String toDate){
         Map<String, String> map = new HashMap<String, String>();
         if(fromDate == null && toDate == null && time == null){
             return null;

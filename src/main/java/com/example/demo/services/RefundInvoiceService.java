@@ -133,7 +133,7 @@ public class RefundInvoiceService {
         }
         return null;
     }
-    public List<Map<String, Object>> RevenueInSpecificTime(Date from , Date to){
+    public List<Map<String, Object>> RevenueInSpecificTime(String from , String to){
             return  sellingInvoiceService.RevenueSpecificTime(from, to);
     }
 }
