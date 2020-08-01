@@ -68,5 +68,8 @@ public class ApiControllerProduct {
         }
     }
 
-
+    @RequestMapping(value = "/outofdate", method = RequestMethod.GET)
+    public ResponseEntity<?> getOutOfDateBatches() {
+        return new ResponseEntity<>(productBatchesService.getOutOfDateBatches(), HttpStatus.OK);
+    }
 }
