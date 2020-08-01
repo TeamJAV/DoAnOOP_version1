@@ -4,6 +4,7 @@ import ProductList from "../components/product_management/ProductList";
 import { Tab, Row, Col, Nav } from "react-bootstrap";
 import SupplierList from "../components/product_management/SupplierList";
 import "../style/css/managementScreen.css";
+import OutOfDateBatchList from "../components/product_management/OutOfDateBatchList";
 
 class ProductManagementScreen extends Component {
   render() {
@@ -15,6 +16,7 @@ class ProductManagementScreen extends Component {
             id="left-tabs-example"
             defaultActiveKey="first"
             transition={false}
+            unmountOnExit={true}
           >
             <Row id="container-row">
               <Col variant="tabs" sm={2} id="management-tab">
@@ -38,7 +40,7 @@ class ProductManagementScreen extends Component {
                     <ProductList></ProductList>
                   </Tab.Pane>
                   <Tab.Pane className="h-100" eventKey="second">
-                    <div>abc</div>
+                    <OutOfDateBatchList></OutOfDateBatchList>
                   </Tab.Pane>
                   <Tab.Pane className="h-100" eventKey="third">
                     <SupplierList></SupplierList>

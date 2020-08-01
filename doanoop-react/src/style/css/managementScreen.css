@@ -97,12 +97,12 @@
 }
 .suppliers-container {
   height: 100%;
-  max-height: 645px;
+  max-height: 75vh;
   padding: 20px;
 }
 .suppliers-container .sup-table {
   margin-bottom: 0.5rem;
-  height: 92%;
+  max-height: 91%;
   overflow: auto;
 }
 .supplier-modal-content {

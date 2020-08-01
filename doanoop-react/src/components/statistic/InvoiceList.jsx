@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import { isArrayNull } from "../utils/array";
-import convertToLocaleString from "../utils/time";
-import DetailModal from "./statistic/DetailModal";
+import { isArrayNull } from "../../utils/array";
+import convertToLocaleString from "../../utils/time";
+import DetailModal from "./DetailModal";
 
 export default class InvoiceList extends Component {
   state = {
@@ -10,16 +10,54 @@ export default class InvoiceList extends Component {
     showModal: false,
   };
   componentDidMount() {
+    if (this.props.time === "specific") {
+      this.setInvoiceBySpecTime();
+      return;
+    }
     this.setInvoice();
   }
   componentDidUpdate(prevProps) {
     if (
-      prevProps.time !== this.props.time ||
-      prevProps.type !== this.props.type
+      prevProps.time === this.props.time &&
+      prevProps.type === this.props.type &&
+      prevProps.specTime === this.props.specTime
     ) {
-      this.setInvoice();
+      return;
     }
+    if (this.props.time === "specific") {
+      this.setInvoiceBySpecTime();
+      return;
+    }
+    this.setInvoice();
   }
+  setInvoiceBySpecTime = () => {
+    const specTime = this.props.specTime;
+    console.log(specTime);
+    fetch(
+      `http://localhost:8081/statistic/specific/trans?from=${specTime.from}&to=${specTime.to}&type=${this.props.type}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    )
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        this.setState(
+          {
+            invoice: data,
+          },
+          () => {
+            console.log(data);
+          }
+        );
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   setInvoice = () => {
     fetch(
       `http://localhost:8081/statistic/trans?time=${this.props.time}&type=${this.props.type}`,
@@ -33,9 +71,14 @@ export default class InvoiceList extends Component {
         return res.json();
       })
       .then((data) => {
-        this.setState({
-          invoice: data,
-        }, () => {console.log(data)});
+        this.setState(
+          {
+            invoice: data,
+          },
+          () => {
+            console.log(data);
+          }
+        );
       })
       .catch((err) => {
         console.log(err);

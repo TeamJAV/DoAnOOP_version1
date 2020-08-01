@@ -5,16 +5,27 @@ export default class ProfitSum extends Component {
     summary: "",
     isFetching: true,
   };
+
   componentDidMount() {
     this.setSummary();
   }
   componentDidUpdate(prevProps, prevState) {
-    if (prevProps.time !== this.props.time) {
-      this.setSummary();
+    if (
+      prevProps.time === this.props.time &&
+      prevProps.specTime === this.props.specTime
+    ) {
+      return;
     }
+    this.setSummary();
   }
   setSummary = () => {
-    fetch(`http://localhost:8081/statistic/money?time=${this.props.time}`, {
+    const specTime = this.props.specTime;
+    const url =
+      this.props.time === "specific"
+        ? `http://localhost:8081/statistic/money?from=${specTime.from}&to=${specTime.to}`
+        : `http://localhost:8081/statistic/money?time=${this.props.time}`;
+
+    fetch(url, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -23,6 +34,7 @@ export default class ProfitSum extends Component {
         return res.json();
       })
       .then((data) => {
+        console.log(data);
         this.setState({
           summary: data,
           isFetching: false,

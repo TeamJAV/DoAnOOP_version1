@@ -54,3 +54,9 @@
   font-size: 18px;
   width: 95%;
 }
+.inline-blck {
+  display: inline-block;
+}
+.no-mg {
+  margin: 0;
+}
