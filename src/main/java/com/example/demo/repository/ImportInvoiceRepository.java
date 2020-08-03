@@ -30,6 +30,7 @@ public interface ImportInvoiceRepository extends JpaRepository<ImportInvoiceEnti
             "inner join product_batches on import_invoice.id = product_batches.import_invoice_id\n" +
             "where date_format(import_date, \"%Y %m %d\") = date_format(date(now()), \"%Y %m %d\")")
     List<ImportInvoiceEntity> ImportTransToday();
+
     @Transactional
     @Modifying
     @Query(nativeQuery = true, value = "select DISTINCT import_invoice.*, import_date\n" +
@@ -46,11 +47,11 @@ public interface ImportInvoiceRepository extends JpaRepository<ImportInvoiceEnti
             "where month(import_date) = month(current_date)")
     List<ImportInvoiceEntity> ImportTransThisMonth();
 
-    @org.springframework.transaction.annotation.Transactional
+    @Transactional
     @Modifying
     @Query(nativeQuery = true, value = "select *\n" +
             "from import_invoice\n" +
-            "where date_format(import_invoice.date, '%Y-%m-%d') between :fromDate and :toDate")
+            "where date_format(import_invoice.import_date, '%Y-%m-%d') between :fromDate and :toDate")
 //            "where :fromDate  <= import_invoice.import_date and import_invoice.import_date <= :toDate")
     List<ImportInvoiceEntity> ImportTransSpecificTime(@Param("fromDate") String fromDate,
                                                       @Param("toDate") String toDate);
