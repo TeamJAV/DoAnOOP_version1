@@ -11,11 +11,11 @@
   border-color: transparent;
   border-radius: 20px;
   padding: 9px 35px;
-  margin-bottom: 25px;
+  margin-bottom: 20px;
 }
 #invoice-info__info {
   display: table;
-  margin: 29px auto 40px;
+  margin: 15px auto 30px;
 }
 .invoice-info__detail {
   display: table-cell;

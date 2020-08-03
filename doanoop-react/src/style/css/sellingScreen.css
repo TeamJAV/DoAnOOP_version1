@@ -80,7 +80,7 @@
 
 .search-result .information .remain{
   font-size: 12px;
-  font-weight: 300;
+  font-weight: 200;
 }
 
 .table thead th {
@@ -101,7 +101,7 @@
 }
 
 .invoice-container tbody td {
-  font-weight: 300;
+  font-weight: 200;
 }
 
 .invoice-container .table {
@@ -123,7 +123,7 @@
 
 .total-money .total-money-table .left-column {
   text-align: left;
-  font-weight: 400;
+  font-weight: normal;
 }
 
 .total-money .total-money-table .right-column {

@@ -1,3 +1,19 @@
+@font-face {
+  font-family: Lato;
+  src: url(./style/font/Lato-Medium_0.ttf);
+  font-weight: normal;
+}
+@font-face {
+  font-family: Lato;
+  src: url(./style/font/Lato-Bold_2.ttf);
+  font-weight: bold;
+}
+@font-face {
+  font-family: Lato;
+  src: url(./style/font/Lato-Light_3.ttf);
+  font-weight: 200;
+}
+
 body {
   margin: 0;
   /* font-family: 'Lato', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
