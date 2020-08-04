@@ -56,7 +56,7 @@ export default class InvoiceContainer extends Component {
             detail={this.state.invoice.invoiceDetail}
           ></CreateRefundInvoice>
         ) : (
-          <div className="refund-invoice-container">
+          <div className="refund-invoice-container general-container">
             <InvoiceSearch
               setInvoice={this.setInvoice}
               setMessage={this.setMessage}

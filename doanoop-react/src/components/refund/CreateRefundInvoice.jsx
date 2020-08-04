@@ -110,7 +110,7 @@ export default class CreateRefundInvoice extends Component {
     }
     return (
       <>
-        <div className="refund-invoice-container">
+        <div className="refund-invoice-container general-container">
           <SelectRefundItem
             detail={this.props.detail}
             setDetail={this.setInvoiceDetail}

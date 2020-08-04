@@ -23,6 +23,16 @@ export default class ProductInputForm extends Component {
     }));
   };
 
+  handleCancelButton = (event) => {
+    event.preventDefault();
+    this.setState({
+      product: {
+        name: "",
+        price: "",
+      }
+    });
+  };
+
   handleToggleModal = () => {
     const product = this.state.product;
     if (product.name === "" || product.price === "") {
@@ -103,7 +113,11 @@ export default class ProductInputForm extends Component {
           </div>
         </form>
         <div className="action-button">
-          <button className="btn-type-2 btn-cancel" href="/import">
+          <button
+            className="btn-type-2 btn-cancel"
+            href="/import"
+            onClick={this.handleCancelButton}
+          >
             Hủy bỏ
           </button>
           <button

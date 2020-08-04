@@ -2,8 +2,10 @@
   width: 80vw;
   height: 75vh;
   margin: 0 auto;
+  max-width: 1150px;
   border: 2px solid #e1e8ed;
   border-radius: 20px;
+  padding: 0px 0px;
 }
 #container-row {
   width: 100%;
@@ -120,3 +122,19 @@
   background-color: #e6ecf0;
   padding-left: 20px;
 }
+.col20p,
+.col80p {
+  position: relative;
+  width: 100%;
+}
+@media (min-width: 576px) {
+  .col20p {
+    flex: 0 0 20%;
+    max-width: 20%;
+  }
+  .col80p {
+    flex: 0 0 80%;
+    max-width: 80%;
+  }
+}
+

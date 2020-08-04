@@ -330,7 +330,7 @@ export default class SellingScreen extends Component {
     return (
       <>
         <NavigationBar pathname="/selling"></NavigationBar>
-        <div className="container">
+        <div className="container general-container">
           <div className="search-container">
             <div className="search-block">
               <input

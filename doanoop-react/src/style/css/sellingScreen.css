@@ -1,6 +1,8 @@
 .container {
+  width: 80vw;
+  max-width: 1150px;
   margin: 0 auto;
-  width: 100%;
+  padding: 25px 20px 67px;
 }
 
 .change-quantity div {

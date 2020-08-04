@@ -11,7 +11,7 @@ class ProductManagementScreen extends Component {
     return (
       <>
         <NavigationBar pathname="/product-management"></NavigationBar>
-        <div id="management-container">
+        <div id="management-container" className="general-container">
           <Tab.Container
             id="left-tabs-example"
             defaultActiveKey="first"
@@ -19,22 +19,20 @@ class ProductManagementScreen extends Component {
             unmountOnExit={true}
           >
             <Row id="container-row">
-              <Col variant="tabs" sm={2} id="management-tab">
+              <Col variant="tabs" className="col20p" id="management-tab">
                 <Nav className="flex-column nav-list">
                   <Nav.Item>
                     <Nav.Link eventKey="first">Thông tin hàng hóa</Nav.Link>
                   </Nav.Item>
                   <Nav.Item>
-                    <Nav.Link eventKey="second">
-                      Sản phẩm sắp hết hạn
-                    </Nav.Link>
+                    <Nav.Link eventKey="second">Lô SP sắp hết hạn</Nav.Link>
                   </Nav.Item>
                   <Nav.Item>
                     <Nav.Link eventKey="third">Liên hệ nhà cung cấp</Nav.Link>
                   </Nav.Item>
                 </Nav>
               </Col>
-              <Col sm={10} style={{padding: 0}}>
+              <Col className="col80p" style={{ padding: 0 }}>
                 <Tab.Content className="h-100">
                   <Tab.Pane className="h-100 overfl-auto" eventKey="first">
                     <ProductList></ProductList>

@@ -23,3 +23,12 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+.general-container {
+  background-color: #fff;
+  border-radius: 15px;
+  box-shadow: 0px 0px 10px 0px #d8d8d8;
+  padding-top: 15px;
+  padding-bottom: 40px;
+  margin-bottom: 60px !important;
+}

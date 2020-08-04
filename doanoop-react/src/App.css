@@ -6,10 +6,8 @@ body {
   font-weight: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* background-image: url("./style/img/01.jpg");
-  background-position: center;
-  background-size: 100% 100%;
-  background-repeat: no-repeat; */
+  height: 100vh;
+  background-color: #E9EBEE;
 }
 
 code {

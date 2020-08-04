@@ -1,4 +1,9 @@
-.refund-invoice-container,
+.refund-invoice-container {
+  width: 80vw;
+  max-width: 1150px;
+  margin: 0 auto;
+  padding: 25px 20px 40px;
+}
 .invoice-search {
   width: 50%;
   margin: 0 auto;

@@ -7,7 +7,7 @@ export default class ImportTab extends Component {
   render() {
     return (
       <>
-        <div className="import-container">
+        <div className="import-container general-container">
           <Tabs
             className="justify-content-center"
             defaultActiveKey="batchInputForm"

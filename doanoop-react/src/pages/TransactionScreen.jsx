@@ -67,30 +67,11 @@ export default class TransactionScreen extends Component {
       }
     );
   };
-  // getInvoice = () => {
-  //   fetch(
-  //     `http://localhost:8081/statistic/trans?time=${this.state.time}&type=${this.state.type}`,
-  //     {
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //     }
-  //   )
-  //     .then((res) => {
-  //       return res.json();
-  //     })
-  //     .then((data) => {
-  //       this.setState({ invoice: data });
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // };
   render() {
     return (
       <>
         <NavigationBar pathname="/trans-stats"></NavigationBar>
-        <div className="container statistic-container">
+        <div className="container statistic-container general-container">
           <div className="statistic-container__invoice">
             <Form className="statistic-form">
               {["today", "this_week", "this_month"].map((val) => (
