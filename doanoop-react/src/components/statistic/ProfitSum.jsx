@@ -47,7 +47,7 @@ export default class ProfitSum extends Component {
   render() {
     return (
       <>
-        <div className="profit-summary">
+        <div className="profit-summary general-container">
           {this.state.isFetching ? (
             <div>Đang tính toán...</div>
           ) : (

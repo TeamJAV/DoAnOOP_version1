@@ -10,8 +10,10 @@
 }
 .statistic-container__invoice {
   flex-basis: 75%;
+  height: 100%;
   border: 2px solid #e6ecf0;
   border-radius: 20px;
+  padding-top: 0px;
 }
 .statistic-container__modules {
   flex-grow: 1;

@@ -71,8 +71,8 @@ export default class TransactionScreen extends Component {
     return (
       <>
         <NavigationBar pathname="/trans-stats"></NavigationBar>
-        <div className="container statistic-container general-container">
-          <div className="statistic-container__invoice">
+        <div className="statistic-container">
+          <div className="statistic-container__invoice general-container">
             <Form className="statistic-form">
               {["today", "this_week", "this_month"].map((val) => (
                 <Form.Check
