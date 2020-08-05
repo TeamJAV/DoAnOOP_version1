@@ -64,9 +64,11 @@ class ProductModal extends Component {
         const productBatches = this.props.productDetail.productBatches;
         const averageCost = isArrayNull(productBatches)
           ? 0
-          : productBatches.reduce((sum, batch) => {
-              return sum + batch.importCost;
-            }, 0) / productBatches.length;
+          : Math.ceil(
+              productBatches.reduce((sum, batch) => {
+                return sum + batch.importCost;
+              }, 0) / productBatches.length
+            );
         return (
           <>
             <div className="supplier-modal-content">
