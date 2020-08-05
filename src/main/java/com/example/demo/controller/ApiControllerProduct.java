@@ -35,7 +35,7 @@ public class ApiControllerProduct {
         }
 
     }
-    @PutMapping(value = "/change/{id}",
+    @PostMapping(value = "/change/{id}",
                 produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> updatePrice(@PathVariable("id") Integer id,
                                          @RequestBody ProductsEntity productsEntity){
@@ -68,5 +68,8 @@ public class ApiControllerProduct {
         }
     }
 
-
+    @RequestMapping(value = "/outofdate", method = RequestMethod.GET)
+    public ResponseEntity<?> getOutOfDateBatches() {
+        return new ResponseEntity<>(productBatchesService.getOutOfDateBatches(), HttpStatus.OK);
+    }
 }

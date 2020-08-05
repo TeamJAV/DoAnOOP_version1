@@ -4,8 +4,11 @@ import com.example.demo.entity.RefundInvoiceEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.security.core.parameters.P;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 @Transactional
@@ -24,5 +27,14 @@ public interface RefundInvoiceRepository extends JpaRepository<RefundInvoiceEnti
     @Modifying
     @Query(nativeQuery = true, value = "select * from refund_invoice where month(date) = month(current_date)")
     List<RefundInvoiceEntity> RefundTransThisMonth();
+
+    @Transactional
+    @Modifying
+    @Query(nativeQuery = true, value = "select *\n" +
+            "from refund_invoice\n" +
+            "where date_format(refund_invoice.date, '%Y-%m-%d') between :fromDate and :toDate")
+//            "where :fromDate  <= refund_invoice.date and refund_invoice.date <= :toDate")
+    List<RefundInvoiceEntity> RefundTransSpecificTime(@Param("fromDate") String fromDate,
+                                                      @Param("toDate") String toDate);
 }
 

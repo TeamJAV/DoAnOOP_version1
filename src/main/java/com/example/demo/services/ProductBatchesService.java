@@ -40,4 +40,8 @@ public class ProductBatchesService {
     public List<ProductBatchesEntity> findBatchesByProductId(int id){
         return productBatchesRepository.findAllByProductsId(id);
     }
+
+    public List<ProductBatchesEntity> getOutOfDateBatches() {
+        return productBatchesRepository.getOutOfDateBatches();
+    }
 }

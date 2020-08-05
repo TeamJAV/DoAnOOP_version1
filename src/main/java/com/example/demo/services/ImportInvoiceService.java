@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -36,4 +37,5 @@ public class ImportInvoiceService {
     public List<ImportInvoiceEntity> ImportTransToday(){return importInvoiceRepository.ImportTransToday();}
     public List<ImportInvoiceEntity> ImportTransThisWeek(){return importInvoiceRepository.ImportTransThisWeek();}
     public List<ImportInvoiceEntity> ImportTransThisMonth(){return importInvoiceRepository.ImportTransThisMonth();}
+    public List<ImportInvoiceEntity> ImportTransSpecificTime(String from, String to){return importInvoiceRepository.ImportTransSpecificTime(from, to);}
 }
