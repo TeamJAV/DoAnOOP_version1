@@ -51,7 +51,8 @@ class ProductModal extends Component {
                 <th scope="col">Ngày nhập</th>
                 <th scope="col">Ngày hết hạn</th>
                 <th scope="col">Nhà cung cấp</th>
-                <th scope="col">Số lượng nhập</th>
+                <th scope="col">SL Tồn</th>
+                <th scope="col">SL Nhập</th>
                 <th scope="col">Đơn giá nhập</th>
                 <th scope="col">Tổng tiền</th>
               </tr>
@@ -126,6 +127,7 @@ class ProductModal extends Component {
           <td>{result.importInvoice.importDate}</td>
           <td>{result.expiredDate}</td>
           <td>{result.suppliers.name}</td>
+          <td>{result.quantity}</td>
           <td>{result.importQuantity}</td>
           <td>{result.importCost}</td>
           <td>{result.importInvoice.totalCost}</td>
