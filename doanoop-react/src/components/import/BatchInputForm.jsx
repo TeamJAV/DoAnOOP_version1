@@ -56,6 +56,12 @@ export default class BatchInputForm extends Component {
 
   handleClickContinue = (event) => {
     event.preventDefault();
+    for (const property in this.state) {
+      console.log(property);
+      if (this.state[property] === "") {
+        return;
+      }
+    }
     this.props.setBatches(this.state);
   };
 
